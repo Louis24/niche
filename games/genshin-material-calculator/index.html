@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Genshin Material Calculator | Ascension and Talent Guide</title>
+    <meta name="description" content="Calculate exact materials needed for character ascension and talent upgrades.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <link rel="canonical" href="https://neonstack.net/games/genshin-material-calculator/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/genshin-material-calculator/#webpage",
+          "url": "https://neonstack.net/games/genshin-material-calculator/",
+          "name": "Genshin Material Calculator",
+          "description": "Calculate exact materials needed for character ascension and talent upgrades.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Genshin Material Calculator",
+              "item": "https://neonstack.net/games/genshin-material-calculator/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Genshin<span>Calc</span></a>
+            <nav class="nav-links">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#games">Games</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>⚔️ Character Material Calculator</h1>
+                <p>Calculate exact materials needed for character ascension and talent upgrades.</p>
+            </div>
+
+            <div class="inputs-grid">
+                <div class="input-group">
+                    <label for="current-level">Current Level</label>
+                    <select id="current-level">
+                        <option value="1">1</option>
+                        <option value="20">20</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        <option value="60">60</option>
+                        <option value="70">70</option>
+                        <option value="80">80</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="target-level">Target Level</label>
+                    <select id="target-level">
+                        <option value="20">20</option>
+                        <option value="40">40</option>
+                        <option value="50">50</option>
+                        <option value="60">60</option>
+                        <option value="70">70</option>
+                        <option value="80">80</option>
+                        <option value="90" selected>90</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="rarity">Character Rarity</label>
+                    <select id="rarity">
+                        <option value="4">4-Star</option>
+                        <option value="5" selected>5-Star</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="calculate()">📊 Calculate Materials</button>
+
+            <div id="results" style="display:none; margin-top: 2rem;">
+                <h3 style="margin-bottom: 1rem;">Materials Needed:</h3>
+                <div class="table-container">
+                    <table class="profit-table">
+                        <thead>
+                            <tr>
+                                <th>Material Type</th>
+                                <th>Quantity</th>
+                                <th>Mora Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody id="materials-tbody"></tbody>
+                        <tfoot>
+                            <tr style="background: rgba(16,185,129,0.1); font-weight: 700;">
+                                <td colspan="2">Total Mora Required:</td>
+                                <td id="total-mora">0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding: 1rem; background: var(--panel-strong); border-radius: 10px;">
+                    <h4 style="margin-bottom: 0.5rem;">📝 Quick Tip:</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Focus on farming Character EXP Books from Ley Lines. Use Condensed Resin (40 Original Resin) to double rewards efficiently.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links">
+                <a href="../../about/">About</a>
+                <a href="../../privacy-policy/">Privacy</a>
+            </nav>
+            <p>&copy; 2026 NeonStack.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Real Genshin Impact ascension data
+        const ascensionData = {
+            5: { // 5-star character
+                levels: {
+                    20: { exp: 120175, mora: 20000, gems: { sliver: 1, fragment: 0, chunk: 0, gemstone: 0 }, boss: 3, local: 3 },
+                    40: { exp: 578325, mora: 40000, gems: { sliver: 0, fragment: 3, chunk: 0, gemstone: 0 }, boss: 15, local: 10 },
+                    50: { exp: 579100, mora: 60000, gems: { sliver: 0, fragment: 6, chunk: 0, gemstone: 0 }, boss: 12, local: 20 },
+                    60: { exp: 854125, mora: 80000, gems: { sliver: 0, fragment: 0, chunk: 3, gemstone: 0 }, boss: 18, local: 30 },
+                    70: { exp: 1195925, mora: 100000, gems: { sliver: 0, fragment: 0, chunk: 6, gemstone: 0 }, boss: 12, local: 45 },
+                    80: { exp: 1611875, mora: 120000, gems: { sliver: 0, fragment: 0, chunk: 0, gemstone: 3 }, boss: 24, local: 60 },
+                    90: { exp: 3423125, mora: 0, gems: { sliver: 0, fragment: 0, chunk: 0, gemstone: 0 }, boss: 0, local: 0 }
+                }
+            },
+            4: { // 4-star character
+                levels: {
+                    20: { exp: 120175, mora: 20000, gems: { sliver: 1, fragment: 0, chunk: 0, gemstone: 0 }, boss: 3, local: 3 },
+                    40: { exp: 578325, mora: 40000, gems: { sliver: 0, fragment: 3, chunk: 0, gemstone: 0 }, boss: 15, local: 10 },
+                    50: { exp: 579100, mora: 60000, gems: { sliver: 0, fragment: 6, chunk: 0, gemstone: 0 }, boss: 12, local: 20 },
+                    60: { exp: 854125, mora: 80000, gems: { sliver: 0, fragment: 0, chunk: 3, gemstone: 0 }, boss: 18, local: 30 },
+                    70: { exp: 854125, mora: 100000, gems: { sliver: 0, fragment: 0, chunk: 6, gemstone: 0 }, boss: 12, local: 45 }
+                }
+            }
+        };
+
+        function calculate() {
+            const current = parseInt(document.getElementById('current-level').value);
+            const target = parseInt(document.getElementById('target-level').value);
+            const rarity = parseInt(document.getElementById('rarity').value);
+
+            if (current >= target) {
+                alert('Target level must be higher than current level!');
+                return;
+            }
+
+            const data = ascensionData[rarity];
+            const levels = Object.keys(data.levels).map(Number).filter(l => l > current && l <= target);
+
+            let totalEXP = 0, totalMora = 0;
+            let totalGems = { sliver: 0, fragment: 0, chunk: 0, gemstone: 0 };
+            let totalBoss = 0, totalLocal = 0;
+
+            levels.forEach(level => {
+                const req = data.levels[level];
+                totalEXP += req.exp;
+                totalMora += req.mora;
+                totalGems.sliver += req.gems.sliver;
+                totalGems.fragment += req.gems.fragment;
+                totalGems.chunk += req.gems.chunk;
+                totalGems.gemstone += req.gems.gemstone;
+                totalBoss += req.boss;
+                totalLocal += req.local;
+            });
+
+            const expBooks = Math.ceil(totalEXP / 20000); // Hero's Wit = 20k EXP
+
+            const tbody = document.getElementById('materials-tbody');
+            tbody.innerHTML = `
+                <tr><td>Hero's Wit (EXP Books)</td><td>${expBooks}</td><td>—</td></tr>
+                <tr><td>Elemental Gems (Total)</td><td>Sliver: ${totalGems.sliver}, Fragment: ${totalGems.fragment}, Chunk: ${totalGems.chunk}, Gemstone: ${totalGems.gemstone}</td><td>—</td></tr>
+                <tr><td>Boss Material</td><td>${totalBoss}</td><td>—</td></tr>
+                <tr><td>Local Specialty</td><td>${totalLocal}</td><td>—</td></tr>
+            `;
+
+            document.getElementById('total-mora').textContent = totalMora.toLocaleString() + ' Mora';
+            document.getElementById('results').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

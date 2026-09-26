@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Corporate Buzzword Generator | Fun 趣味</title>
+    <meta name="description" content="Generate impressive-sounding corporate buzzwords and business jargon instantly. Synergize your stakeholder alignment with this enterprise-grade buzzword tool.">
+    <meta name="keywords" content="buzzword generator, corporate jargon, business speak, synergy generator, meeting phrases">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <link rel="canonical" href="https://neonstack.net/fun/buzzword-generator/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/buzzword-generator/#webpage",
+          "url": "https://neonstack.net/fun/buzzword-generator/",
+          "name": "Buzzword Generator",
+          "description": "Generate impressive-sounding corporate buzzwords and business jargon instantly. Synergize your stakeholder alignment with this enterprise-grade buzzword tool.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Buzzword Generator",
+              "item": "https://neonstack.net/fun/buzzword-generator/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <style>
+        .tool-area {
+            text-align: center;
+            padding: 2rem;
+        }
+        .result-box {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid rgba(16, 185, 129, 0.18);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            box-shadow: none;
+        }
+        .primary-btn {
+            background: var(--accent-color);
+            color: #04130e;
+            border: 1px solid rgba(16, 185, 129, 0.32);
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            background: var(--accent-hover);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+        }
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 800;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.2s;
+        }
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--border-hover);
+        }
+        .dictionary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .dict-item {
+            background: var(--panel-strong);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-color);
+            color: var(--text-secondary);
+        }
+        .dict-item strong {
+            color: var(--accent-hover);
+        }
+    </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Buzzword<span>Gen</span></a>
+            <nav class="nav-links">
+                <a href="#generator">Generator</a>
+                <a href="#dictionary">Dictionary</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container text-center">
+            <span class="badge">Enterprise-Grade</span>
+            <h1>Corporate Buzzword Generator</h1>
+            <p class="subtitle">Leverage synergistic paradigms to optimize stakeholder alignment and drive actionable insights.</p>
+        </div>
+    </section>
+
+    <section id="generator" class="comparison-section">
+        <div class="container">
+            <div class="card">
+                <div class="tool-area">
+                    <button id="generateBtn" class="primary-btn">🎯 Generate Buzzword</button>
+                    <div id="buzzwordDisplay" class="result-box" style="display:none;">Click the button to synergize your paradigm</div>
+                    <button id="copyBtn" class="secondary-btn" style="display:none;">📋 Copy to Clipboard</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="dictionary" class="reviews-section">
+        <div class="container">
+            <h2 class="section-title">Buzzword Dictionary</h2>
+            <div class="dictionary">
+                <div class="dict-item">
+                    <strong>Synergy:</strong> Working together (but sounds way cooler)
+                </div>
+                <div class="dict-item">
+                    <strong>Leverage:</strong> Use something (with extra gravitas)
+                </div>
+                <div class="dict-item">
+                    <strong>Paradigm:</strong> Model or pattern (for intellectuals)
+                </div>
+                <div class="dict-item">
+                    <strong>Stakeholder:</strong> Anyone who cares about this
+                </div>
+                <div class="dict-item">
+                    <strong>Bandwidth:</strong> Time or mental capacity
+                </div>
+                <div class="dict-item">
+                    <strong>Circle Back:</strong> Talk about this later (maybe)
+                </div>
+                <div class="dict-item">
+                    <strong>Low-hanging Fruit:</strong> Easy wins
+                </div>
+                <div class="dict-item">
+                    <strong>Move the Needle:</strong> Make noticeable progress
+                </div>
+                <div class="dict-item">
+                    <strong>Actionable Insights:</strong> Useful information
+                </div>
+                <div class="dict-item">
+                    <strong>Boil the Ocean:</strong> Attempt impossible task
+                </div>
+                <div class="dict-item">
+                    <strong>Deep Dive:</strong> Thorough analysis
+                </div>
+                <div class="dict-item">
+                    <strong>Touch Base:</strong> Quick meeting or check-in
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const subjects = [
+            "We need to", "Our team should", "The organization must", "Leadership requires us to", "We're going to"
+        ];
+        const verbs = [
+            "leverage", "synergize", "optimize", "streamline", "operationalize", "monetize", "facilitate"
+        ];
+        const objects = [
+            "core competencies", "strategic initiatives", "paradigm shifts", "best practices", "actionable insights"
+        ];
+        const modifiers = [
+            "to drive growth", "moving forward", "at scale", "in this space", "to move the needle", "going forward"
+        ];
+
+        const generateBtn = document.getElementById('generateBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const buzzwordDisplay = document.getElementById('buzzwordDisplay');
+
+        function random(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        generateBtn.addEventListener('click', () => {
+            const sentence = `${random(subjects)} ${random(verbs)} our ${random(objects)} ${random(modifiers)}.`;
+            buzzwordDisplay.textContent = sentence;
+            buzzwordDisplay.style.display = 'flex';
+            copyBtn.style.display = 'inline-block';
+        });
+
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(buzzwordDisplay.textContent);
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = '✅ Copied!';
+            setTimeout(() => copyBtn.textContent = originalText, 2000);
+        });
+    </script>
+
+</body>
+</html>

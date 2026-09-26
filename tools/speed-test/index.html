@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Internet Speed Test | Check Download Speed &amp; Latency</title>
+    <meta name="description" content="Test your connection speed by downloading test files and measuring latency.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .speed-meter {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: linear-gradient(135deg, rgba(16,185,129,0.1) 0%, rgba(56,189,248,0.1) 100%);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            margin: 2rem 0;
+        }
+        .speed-value {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            line-height: 1;
+        }
+        .speed-unit {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        .metric-card {
+            background: var(--panel-strong);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .metric-value {
+            display: block;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-hover);
+        }
+        .metric-label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        .test-status {
+            color: var(--text-secondary);
+            margin: 1rem 0;
+        }
+        @media (max-width: 680px) {
+            .metrics-grid { grid-template-columns: 1fr; }
+            .speed-value { font-size: 3rem; }
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/speed-test/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/speed-test/#webpage",
+          "url": "https://neonstack.net/tools/speed-test/",
+          "name": "Speed Test",
+          "description": "Test your connection speed by downloading test files and measuring latency.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Speed Test",
+              "item": "https://neonstack.net/tools/speed-test/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Speed<span>Test</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🚀 Internet Speed Test</h1>
+                <p>Test your connection speed by downloading test files and measuring latency.</p>
+            </div>
+
+            <div class="speed-meter">
+                <div class="speed-value" id="speed-display">0</div>
+                <div class="speed-unit">Mbps</div>
+                <div class="test-status" id="test-status">Click "Start Test" to begin</div>
+            </div>
+
+            <div style="text-align: center; margin: 1.5rem 0;">
+                <button class="btn btn-primary" id="start-btn" onclick="startTest()">▶️ Start Test</button>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <span class="metric-value" id="latency">—</span>
+                    <span class="metric-label">Latency (ms)</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value" id="jitter">—</span>
+                    <span class="metric-label">Jitter (ms)</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value" id="download">—</span>
+                    <span class="metric-label">Download (Mbps)</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const speedDisplay = document.getElementById('speed-display');
+        const testStatus = document.getElementById('test-status');
+        const latencyEl = document.getElementById('latency');
+        const jitterEl = document.getElementById('jitter');
+        const downloadEl = document.getElementById('download');
+        const startBtn = document.getElementById('start-btn');
+
+        async function measureLatency() {
+            const testUrl = 'https://www.google.com/favicon.ico';
+            const pings = [];
+            
+            for (let i = 0; i < 5; i++) {
+                const start = performance.now();
+                try {
+                    await fetch(testUrl + '?t=' + Date.now(), { method: 'HEAD', cache: 'no-store' });
+                    const end = performance.now();
+                    pings.push(end - start);
+                } catch (e) {
+                    pings.push(0);
+                }
+            }
+
+            const avgLatency = pings.reduce((a, b) => a + b, 0) / pings.length;
+            const jitter = Math.max(...pings) - Math.min(...pings);
+            
+            return { latency: avgLatency.toFixed(0), jitter: jitter.toFixed(0) };
+        }
+
+        async function measureDownloadSpeed() {
+            // Using a small test file approach
+            const testSize = 500000; // 500KB approximate
+            const testUrl = 'https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg';
+            
+            const startTime = performance.now();
+            
+            try {
+                const response = await fetch(testUrl + '?t=' + Date.now(), { cache: 'no-store' });
+                const blob = await response.blob();
+                const endTime = performance.now();
+                
+                const durationSeconds = (endTime - startTime) / 1000;
+                const fileSizeBytes = blob.size || testSize;
+                const speedBps = fileSizeBytes / durationSeconds;
+                const speedMbps = (speedBps * 8) / (1024 * 1024);
+                
+                return speedMbps.toFixed(2);
+            } catch (e) {
+                return '0.00';
+            }
+        }
+
+        async function startTest() {
+            startBtn.disabled = true;
+            startBtn.textContent = '⏳ Testing...';
+            speedDisplay.textContent = '0';
+            testStatus.textContent = 'Measuring latency...';
+            
+            // Test latency
+            const latencyData = await measureLatency();
+            latencyEl.textContent = latencyData.latency;
+            jitterEl.textContent = latencyData.jitter;
+            
+            testStatus.textContent = 'Testing download speed...';
+            
+            // Simulate speed increase animation
+            let currentSpeed = 0;
+            const targetSpeed = await measureDownloadSpeed();
+            const increment = parseFloat(targetSpeed) / 20;
+            
+            const interval = setInterval(() => {
+                currentSpeed += increment;
+                if (currentSpeed >= parseFloat(targetSpeed)) {
+                    currentSpeed = parseFloat(targetSpeed);
+                    clearInterval(interval);
+                    testStatus.textContent = 'Test complete!';
+                    startBtn.disabled = false;
+                    startBtn.textContent = '▶️ Start Test';
+                }
+                speedDisplay.textContent = currentSpeed.toFixed(1);
+            }, 50);
+            
+            downloadEl.textContent = targetSpeed;
+        }
+    </script>
+</body>
+</html>

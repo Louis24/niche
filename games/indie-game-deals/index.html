@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Indie Game Deals &amp; Free Games Tracker</title>
+    <meta name="description" content="Track indie game deals, free game giveaways, and bundle offers. Never miss a great deal!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .deal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .deal-card { background: var(--panel-strong); border-radius: 12px; padding: 1.5rem; border: 2px solid var(--border-color); }
+        .deal-badge { display: inline-block; background: #ef4444; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; font-weight: 700; }
+        .deal-badge.free { background: #22c55e; }
+        .price-row { display: flex; align-items: center; gap: 1rem; margin: 1rem 0; }
+        .old-price { text-decoration: line-through; color: var(--text-muted); font-size: 1.2rem; }
+        .new-price { font-size: 2rem; font-weight: 800; color: var(--accent-color); }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/games/indie-game-deals/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/indie-game-deals/#webpage",
+          "url": "https://neonstack.net/games/indie-game-deals/",
+          "name": "Indie Game Deals",
+          "description": "Track indie game deals, free game giveaways, and bundle offers. Never miss a great deal!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Indie Game Deals",
+              "item": "https://neonstack.net/games/indie-game-deals/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Indie<span>Deals</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🎮 Indie Game Deals</h1>
+                <p>Track free games, sales, and bundle offers across platforms.</p>
+            </div>
+            <div class="input-group">
+                <label>Filter Deals</label>
+                <select class="input" onchange="filter(this.value)">
+                    <option value="all">All Deals</option>
+                    <option value="free">Free Only</option>
+                    <option value="sale">On Sale</option>
+                </select>
+            </div>
+            <div class="deal-grid" id="deals"></div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        const deals = [
+            {title: 'Hollow Knight', platform: 'Steam', oldPrice: 14.99, newPrice: 7.49, type: 'sale', ends: '3 days'},
+            {title: 'Celeste', platform: 'Epic Games', oldPrice: 19.99, newPrice: 0, type: 'free', ends: '7 days'},
+            {title: 'Dead Cells', platform: 'GOG', oldPrice: 24.99, newPrice: 12.49, type: 'sale', ends: '5 days'},
+            {title: 'Stardew Valley', platform: 'Humble', oldPrice: 14.99, newPrice: 9.99, type: 'sale', ends: '2 days'},
+            {title: 'Hades', platform: 'Steam', oldPrice: 24.99, newPrice: 0, type: 'free', ends: '1 day'}
+        ];
+        let filtered = [...deals];
+        function filter(type) {
+            filtered = type === 'all' ? [...deals] : deals.filter(d => d.type === type);
+            render();
+        }
+        function render() {
+            document.getElementById('deals').innerHTML = filtered.map(d => `
+                <div class="deal-card">
+                    <span class="deal-badge ${d.type}">${d.type === 'free' ? 'FREE' : 'SALE'}</span>
+                    <h3 style="margin: 1rem 0 0.5rem;">${d.title}</h3>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">${d.platform}</div>
+                    <div class="price-row">
+                        ${d.oldPrice > 0 ? `<span class="old-price">$${d.oldPrice}</span>` : ''}
+                        <span class="new-price">${d.newPrice === 0 ? 'FREE' : '$' + d.newPrice}</span>
+                    </div>
+                    <div style="color: var(--text-muted); font-size: 0.85rem;">⏰ Ends in ${d.ends}</div>
+                    <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Claim Deal</button>
+                </div>
+            `).join('');
+        }
+        render();
+    </script>
+</body>
+</html>

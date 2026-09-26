@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Text Diff Checker | Compare Two Texts Side by Side</title>
+    <meta name="description" content="Compare two texts side by side and highlight changes. Perfect for document review and version comparison.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .diff-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        @media (max-width: 680px) { .diff-layout { grid-template-columns: 1fr; } }
+        .pane-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 0.5rem 0;
+        }
+        textarea {
+            min-height: 320px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .diff-result {
+            background: var(--panel-strong);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.8;
+            min-height: 200px;
+        }
+        .added {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+        .removed {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            text-decoration: line-through;
+        }
+        .stats-row {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin: 1rem 0;
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/text-diff-checker/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/text-diff-checker/#webpage",
+          "url": "https://neonstack.net/tools/text-diff-checker/",
+          "name": "Text Diff Checker",
+          "description": "Compare two texts side by side and highlight changes. Perfect for document review and version comparison.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Text Diff Checker",
+              "item": "https://neonstack.net/tools/text-diff-checker/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Text<span>Diff</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>📋 Text Difference Checker</h1>
+                <p>Compare two texts side by side and highlight changes. Perfect for document review and version comparison.</p>
+            </div>
+
+            <div class="diff-layout">
+                <div>
+                    <div class="pane-label">Original Text</div>
+                    <textarea id="text1" placeholder="Paste original text here...">The quick brown fox jumps over the lazy dog.</textarea>
+                </div>
+                <div>
+                    <div class="pane-label">Modified Text</div>
+                    <textarea id="text2" placeholder="Paste modified text here...">The quick red fox jumps over the sleepy dog.</textarea>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" onclick="comparTexts()">🔍 Compare Texts</button>
+
+            <div class="stats-row" id="stats-row" style="display: none;">
+                <span>Added: <strong style="color: #10b981;" id="added-count">0</strong></span>
+                <span>Removed: <strong style="color: #ef4444;" id="removed-count">0</strong></span>
+                <span>Unchanged: <strong id="unchanged-count">0</strong></span>
+            </div>
+
+            <div class="diff-result" id="diff-result">
+                Comparison result will appear here...
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        function escapeHtml(value) {
+            return value
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function comparTexts() {
+            const text1 = document.getElementById('text1').value;
+            const text2 = document.getElementById('text2').value;
+            
+            const words1 = text1.split(/\s+/);
+            const words2 = text2.split(/\s+/);
+            
+            let result = '';
+            let added = 0, removed = 0, unchanged = 0;
+            
+            const maxLen = Math.max(words1.length, words2.length);
+            const visited1 = new Set();
+            const visited2 = new Set();
+            
+            let i = 0, j = 0;
+            while (i < words1.length || j < words2.length) {
+                if (i < words1.length && j < words2.length && words1[i] === words2[j]) {
+                    result += escapeHtml(words1[i]) + ' ';
+                    unchanged++;
+                    i++; j++;
+                } else if (j < words2.length && (i >= words1.length || !words1.slice(i).includes(words2[j]))) {
+                    result += `<span class="added">${escapeHtml(words2[j])}</span> `;
+                    added++;
+                    j++;
+                } else if (i < words1.length) {
+                    result += `<span class="removed">${escapeHtml(words1[i])}</span> `;
+                    removed++;
+                    i++;
+                }
+            }
+            
+            document.getElementById('diff-result').innerHTML = result || 'No differences found.';
+            document.getElementById('added-count').textContent = added;
+            document.getElementById('removed-count').textContent = removed;
+            document.getElementById('unchanged-count').textContent = unchanged;
+            document.getElementById('stats-row').style.display = 'flex';
+        }
+
+        comparTexts();
+    </script>
+</body>
+</html>

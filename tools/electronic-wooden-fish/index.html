@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Electronic Wooden Fish | Digital Merit Maker 电子木鱼</title>
+    <meta name="description" content="Tap the electronic wooden fish to accumulate digital merit. Auto-tap available for enlightenment on autopilot.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .fish-container {
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+        .wooden-fish {
+            font-size: 12rem;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s;
+            display: inline-block;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+        }
+        .wooden-fish:active {
+            transform: scale(0.95);
+        }
+        .wooden-fish.tapped {
+            animation: tap-bounce 0.3s ease-out;
+        }
+        @keyframes tap-bounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1) rotate(5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .merit-counter {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .merit-label {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .floating-merit {
+            position: absolute;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffd700;
+            pointer-events: none;
+            animation: float-up 1.5s ease-out forwards;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.5);
+        }
+        @keyframes float-up {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .stat-card {
+            background: var(--panel-strong);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-color);
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        .auto-mode {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+            margin: 0 1rem;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--border-color);
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: var(--accent-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/electronic-wooden-fish/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/electronic-wooden-fish/#webpage",
+          "url": "https://neonstack.net/tools/electronic-wooden-fish/",
+          "name": "Electronic Wooden Fish",
+          "description": "Tap the electronic wooden fish to accumulate digital merit. Auto-tap available for enlightenment on autopilot.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Electronic Wooden Fish",
+              "item": "https://neonstack.net/tools/electronic-wooden-fish/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">电子<span>木鱼</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🪵 Electronic Wooden Fish</h1>
+                <p>Tap for digital merit. Auto-mode available for enlightenment on autopilot.</p>
+            </div>
+
+            <div class="fish-container" style="position: relative;">
+                <div class="wooden-fish" id="wooden-fish" onclick="tapFish(event)">🪵</div>
+            </div>
+
+            <div class="merit-counter" id="merit-count">0</div>
+            <div class="merit-label">功德 (Merit Points)</div>
+
+            <div class="auto-mode">
+                <label style="font-weight: 600; font-size: 1.1rem;">
+                    Manual
+                    <label class="switch">
+                        <input type="checkbox" id="auto-toggle" onchange="toggleAuto()">
+                        <span class="slider"></span>
+                    </label>
+                    Auto Mode
+                </label>
+                <p style="margin-top: 1rem; color: var(--text-muted); font-size: 0.9rem;">
+                    Enable auto-mode for passive merit accumulation
+                </p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="total-taps">0</div>
+                    <div class="stat-label">Total Taps</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="tap-rate">0</div>
+                    <div class="stat-label">Taps/Min</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="session-time">0:00</div>
+                    <div class="stat-label">Session Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="enlightenment">0%</div>
+                    <div class="stat-label">Enlightenment</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        let merit = 0;
+        let totalTaps = 0;
+        let autoMode = false;
+        let autoInterval;
+        let sessionStart = Date.now();
+        let tapHistory = [];
+
+        function tapFish(event) {
+            merit++;
+            totalTaps++;
+            tapHistory.push(Date.now());
+            
+            if (tapHistory.length > 60) {
+                tapHistory.shift();
+            }
+
+            updateDisplay();
+            
+            const fish = document.getElementById('wooden-fish');
+            fish.classList.add('tapped');
+            setTimeout(() => fish.classList.remove('tapped'), 300);
+
+            showFloatingMerit(event.clientX, event.clientY);
+            playSound();
+        }
+
+        function showFloatingMerit(x, y) {
+            const merit = document.createElement('div');
+            merit.className = 'floating-merit';
+            merit.textContent = '+1 功德';
+            merit.style.left = x + 'px';
+            merit.style.top = y + 'px';
+            document.body.appendChild(merit);
+            
+            setTimeout(() => {
+                merit.remove();
+            }, 1500);
+        }
+
+        function playSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
+
+        function toggleAuto() {
+            autoMode = document.getElementById('auto-toggle').checked;
+            
+            if (autoMode) {
+                autoInterval = setInterval(() => {
+                    const fish = document.getElementById('wooden-fish');
+                    const rect = fish.getBoundingClientRect();
+                    tapFish({
+                        clientX: rect.left + rect.width / 2,
+                        clientY: rect.top + rect.height / 2
+                    });
+                }, 500);
+            } else {
+                clearInterval(autoInterval);
+            }
+        }
+
+        function updateDisplay() {
+            document.getElementById('merit-count').textContent = merit.toLocaleString();
+            document.getElementById('total-taps').textContent = totalTaps.toLocaleString();
+
+            const now = Date.now();
+            const recentTaps = tapHistory.filter(t => now - t < 60000).length;
+            document.getElementById('tap-rate').textContent = recentTaps;
+
+            const sessionSeconds = Math.floor((now - sessionStart) / 1000);
+            const minutes = Math.floor(sessionSeconds / 60);
+            const seconds = sessionSeconds % 60;
+            document.getElementById('session-time').textContent = 
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            const enlightenment = Math.min(100, Math.floor(merit / 1000 * 100));
+            document.getElementById('enlightenment').textContent = enlightenment + '%';
+        }
+
+        setInterval(updateDisplay, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Screen Flashlight | Emergency Light Tool</title>
+    <meta name="description" content="Turn your screen into a bright flashlight. Perfect for finding things in the dark!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        body.light-mode { background: #fff !important; }
+        body.light-mode * { display: none !important; }
+        body.light-mode::before { content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #fff; display: block !important; }
+        .color-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0; }
+        .color-btn { height: 80px; border-radius: 12px; border: 3px solid var(--border-color); cursor: pointer; transition: transform 0.2s; }
+        .color-btn:hover { transform: scale(1.05); }
+        .brightness-control { margin: 2rem 0; }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/screen-flashlight/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/screen-flashlight/#webpage",
+          "url": "https://neonstack.net/fun/screen-flashlight/",
+          "name": "Screen Flashlight",
+          "description": "Turn your screen into a bright flashlight. Perfect for finding things in the dark!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Screen Flashlight",
+              "item": "https://neonstack.net/fun/screen-flashlight/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Screen<span>Light</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🔦 Screen Flashlight</h1>
+                <p>Turn your screen into a bright light. Tap to activate!</p>
+            </div>
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="btn btn-primary" onclick="toggleLight()" id="light-btn" style="font-size: 1.5rem; padding: 1.5rem 3rem;">
+                    💡 Turn On Light
+                </button>
+            </div>
+            <div class="input-group">
+                <label>Choose Color</label>
+                <div class="color-grid">
+                    <div class="color-btn" style="background: #fff;" onclick="setColor('#fff')"></div>
+                    <div class="color-btn" style="background: #ff0000;" onclick="setColor('#ff0000')"></div>
+                    <div class="color-btn" style="background: #00ff00;" onclick="setColor('#00ff00')"></div>
+                    <div class="color-btn" style="background: #0000ff;" onclick="setColor('#0000ff')"></div>
+                    <div class="color-btn" style="background: #ffff00;" onclick="setColor('#ffff00')"></div>
+                    <div class="color-btn" style="background: #ff00ff;" onclick="setColor('#ff00ff')"></div>
+                    <div class="color-btn" style="background: #00ffff;" onclick="setColor('#00ffff')"></div>
+                    <div class="color-btn" style="background: #ffa500;" onclick="setColor('#ffa500')"></div>
+                </div>
+            </div>
+            <div class="brightness-control">
+                <label>Brightness</label>
+                <input type="range" class="input" min="0.3" max="1" step="0.1" value="1" id="brightness" oninput="updateBrightness()">
+            </div>
+            <p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">
+                💡 Tip: For maximum brightness, enable fullscreen (F11)
+            </p>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        let isOn = false;
+        let currentColor = '#fff';
+        
+        function toggleLight() {
+            isOn = !isOn;
+            const btn = document.getElementById('light-btn');
+            
+            if (isOn) {
+                document.body.classList.add('light-mode');
+                document.body.style.background = currentColor;
+                btn.textContent = '🌙 Turn Off';
+                
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen().catch(() => {});
+                }
+            } else {
+                document.body.classList.remove('light-mode');
+                document.body.style.background = '';
+                btn.textContent = '💡 Turn On Light';
+                
+                if (document.exitFullscreen) {
+                    document.exitFullscreen().catch(() => {});
+                }
+            }
+        }
+        
+        function setColor(color) {
+            currentColor = color;
+            if (isOn) {
+                document.body.style.background = color;
+            }
+        }
+        
+        function updateBrightness() {
+            const brightness = document.getElementById('brightness').value;
+            document.body.style.opacity = brightness;
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isOn) {
+                toggleLight();
+            }
+        });
+    </script>
+</body>
+</html>

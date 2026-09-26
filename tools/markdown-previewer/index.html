@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Markdown Live Preview | Real-time MD to HTML Converter</title>
+    <meta name="description" content="Write Markdown on the left, see rendered HTML on the right in real-time.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .md-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        @media (max-width: 680px) { .md-layout { grid-template-columns: 1fr; } }
+        .pane-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+        }
+        .pane-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        #md-input {
+            width: 100%;
+            min-height: 400px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        #md-preview {
+            background: var(--panel-strong);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-height: 400px;
+            overflow-y: auto;
+        }
+        #md-preview h1 { font-size: 2em; margin: 0.5em 0; }
+        #md-preview h2 { font-size: 1.5em; margin: 0.5em 0; }
+        #md-preview h3 { font-size: 1.25em; margin: 0.5em 0; }
+        #md-preview p { margin: 0.8em 0; }
+        #md-preview ul, #md-preview ol { margin: 0.8em 0; padding-left: 2em; }
+        #md-preview code {
+            background: rgba(255,255,255,0.1);
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        #md-preview pre {
+            background: rgba(0,0,0,0.3);
+            padding: 1em;
+            border-radius: 6px;
+            overflow-x: auto;
+        }
+        #md-preview blockquote {
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1em;
+            margin: 1em 0;
+            color: var(--text-secondary);
+        }
+        .copy-btn-mini {
+            padding: 0.25rem 0.6rem;
+            font-size: 0.75rem;
+            min-height: 28px;
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/markdown-previewer/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/markdown-previewer/#webpage",
+          "url": "https://neonstack.net/tools/markdown-previewer/",
+          "name": "Markdown Previewer",
+          "description": "Write Markdown on the left, see rendered HTML on the right in real-time.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Markdown Previewer",
+              "item": "https://neonstack.net/tools/markdown-previewer/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Mark<span>Down</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h2>📝 Markdown Live Preview</h2>
+                <p>Write Markdown on the left, see rendered HTML on the right in real-time.</p>
+            </div>
+
+            <div class="md-layout">
+                <div>
+                    <div class="pane-header">
+                        <span class="pane-label">✏️ Markdown Input</span>
+                    </div>
+                    <textarea id="md-input" placeholder="# Start typing Markdown here..."></textarea>
+                </div>
+                <div>
+                    <div class="pane-header">
+                        <span class="pane-label">👁️ Preview</span>
+                        <button class="btn btn-secondary copy-btn-mini" onclick="copyHTML()">Copy HTML</button>
+                    </div>
+                    <div id="md-preview"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const mdInput = document.getElementById('md-input');
+        const mdPreview = document.getElementById('md-preview');
+
+        const sampleMd = `# Welcome to Markdown
+
+## What is Markdown?
+
+Markdown is a **lightweight markup language** with plain text formatting syntax. It's designed to be easy to write and read.
+
+### Features
+
+- **Bold** and *italic* text
+- [Links](https://example.com)
+- \`inline code\`
+- Lists and more!
+
+\`\`\`javascript
+console.log('Hello, World!');
+\`\`\`
+
+> Blockquotes for emphasis
+
+Start editing on the left to see changes here!`;
+
+        mdInput.value = sampleMd;
+
+        function escapeHtml(value) {
+            return value
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function safeUrl(value) {
+            try {
+                const url = new URL(value, window.location.href);
+                return ['http:', 'https:', 'mailto:'].includes(url.protocol) ? url.href : '#';
+            } catch (err) {
+                return '#';
+            }
+        }
+
+        function parseMarkdown(md) {
+            let html = escapeHtml(md)
+                // Headers
+                .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+                .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+                .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+                // Bold
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                // Italic
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                // Links
+                .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match, text, url) => {
+                    return `<a href="${safeUrl(url)}" rel="nofollow noopener">${text}</a>`;
+                })
+                // Code blocks
+                .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+                // Inline code
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                // Blockquotes
+                .replace(/^> (.*$)/gim, '<blockquote>$1</blockquote>')
+                // Unordered lists
+                .replace(/^\- (.*$)/gim, '<li>$1</li>')
+                // Line breaks
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+
+            // Wrap in paragraphs
+            html = '<p>' + html + '</p>';
+
+            // Wrap lists
+            html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+
+            return html;
+        }
+
+        function updatePreview() {
+            const markdown = mdInput.value;
+            mdPreview.innerHTML = parseMarkdown(markdown);
+        }
+
+        function copyHTML() {
+            const html = mdPreview.innerHTML;
+            navigator.clipboard.writeText(html).then(() => {
+                alert('HTML copied to clipboard!');
+            });
+        }
+
+        mdInput.addEventListener('input', updatePreview);
+        updatePreview();
+    </script>
+</body>
+</html>

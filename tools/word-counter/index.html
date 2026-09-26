@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Word Counter &amp; Text Analyzer | Quick Character Tracker</title>
+    <meta name="description" content="Analyze your copy in real-time. Count words, characters, sentences, and estimated reading time.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <link rel="canonical" href="https://neonstack.net/tools/word-counter/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/word-counter/#webpage",
+          "url": "https://neonstack.net/tools/word-counter/",
+          "name": "Word Counter",
+          "description": "Analyze your copy in real-time. Count words, characters, sentences, and estimated reading time.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Word Counter",
+              "item": "https://neonstack.net/tools/word-counter/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Word<span>Count</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="counter-card">
+            <div class="card-header">
+                <h1>Text Analyzer & Word Counter</h1>
+                <p>Analyze your copy in real-time. Count words, characters, sentences, and estimated reading time.</p>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-num" id="stat-words">0</span>
+                    <span class="stat-lbl">Words</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" id="stat-chars">0</span>
+                    <span class="stat-lbl">Characters</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" id="stat-paragraphs">0</span>
+                    <span class="stat-lbl">Paragraphs</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-num" id="stat-reading">0 min</span>
+                    <span class="stat-lbl">Reading Time</span>
+                </div>
+            </div>
+
+            <!-- Input area -->
+            <div class="text-input-wrapper">
+                <textarea id="text-input" placeholder="Type or paste your text here to analyze..."></textarea>
+            </div>
+
+            <!-- Advanced Metrics -->
+            <div class="details-grid" id="details-panel" style="display: none;">
+                <div class="density-box">
+                    <h3>Keyword Density (Top Words)</h3>
+                    <ul id="keyword-list" class="keyword-list">
+                        <!-- Filled by JS -->
+                    </ul>
+                </div>
+                <div class="meta-box">
+                    <h3>Readability & Stats</h3>
+                    <div class="meta-item">
+                        <span>Average Word Length:</span>
+                        <strong id="avg-word-len">0 chars</strong>
+                    </div>
+                    <div class="meta-item">
+                        <span>Sentence Count:</span>
+                        <strong id="sentence-count">0</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const textInput = document.getElementById('text-input');
+        const statWords = document.getElementById('stat-words');
+        const statChars = document.getElementById('stat-chars');
+        const statParagraphs = document.getElementById('stat-paragraphs');
+        const statReading = document.getElementById('stat-reading');
+        const detailsPanel = document.getElementById('details-panel');
+        const keywordList = document.getElementById('keyword-list');
+        const avgWordLen = document.getElementById('avg-word-len');
+        const sentenceCount = document.getElementById('sentence-count');
+
+        function analyzeText() {
+            const text = textInput.value;
+            
+            if (!text) {
+                statWords.textContent = '0';
+                statChars.textContent = '0';
+                statParagraphs.textContent = '0';
+                statReading.textContent = '0 min';
+                detailsPanel.style.display = 'none';
+                return;
+            }
+
+            detailsPanel.style.display = 'grid';
+
+            // Characters count (with spaces)
+            const chars = text.length;
+            statChars.textContent = chars.toLocaleString();
+
+            // Word count
+            const wordsArr = text.trim().split(/\s+/).filter(w => w.length > 0);
+            const wordCount = wordsArr.length;
+            statWords.textContent = wordCount.toLocaleString();
+
+            // Paragraphs count
+            const paragraphs = text.split(/\n+/).filter(p => p.trim().length > 0).length;
+            statParagraphs.textContent = paragraphs.toLocaleString();
+
+            // Reading time (average 200 words per minute)
+            const readingMinutes = Math.max(1, Math.round(wordCount / 200));
+            statReading.textContent = `${readingMinutes} min`;
+
+            // Sentence count
+            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+            sentenceCount.textContent = sentences.toLocaleString();
+
+            // Average word length
+            const totalCharsInWords = wordsArr.reduce((sum, word) => sum + word.length, 0);
+            const avgLen = wordCount > 0 ? (totalCharsInWords / wordCount).toFixed(1) : 0;
+            avgWordLen.textContent = `${avgLen} chars`;
+
+            // Keyword Density (Top 5 words)
+            const wordFreq = {};
+            wordsArr.forEach(w => {
+                const cleanWord = w.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
+                if (cleanWord.length > 3) { // Exclude short stop-words
+                    wordFreq[cleanWord] = (wordFreq[cleanWord] || 0) + 1;
+                }
+            });
+
+            const sortedWords = Object.keys(wordFreq).map(key => {
+                return { word: key, count: wordFreq[key] };
+            }).sort((a, b) => b.count - a.count).slice(0, 5);
+
+            keywordList.innerHTML = '';
+            if (sortedWords.length === 0) {
+                keywordList.innerHTML = '<li>Type longer words to view density</li>';
+            } else {
+                sortedWords.forEach(item => {
+                    const li = document.createElement('li');
+                    const percentage = ((item.count / wordCount) * 100).toFixed(1);
+                    li.innerHTML = `
+                        <span class="kw-name">${item.word}</span>
+                        <div class="kw-bar-wrapper">
+                            <div class="kw-bar" style="width: ${percentage}%"></div>
+                        </div>
+                        <span class="kw-count">${item.count} (${percentage}%)</span>
+                    `;
+                    keywordList.appendChild(li);
+                });
+            }
+        }
+
+        textInput.addEventListener('input', analyzeText);
+    </script>
+</body>
+</html>
+
+

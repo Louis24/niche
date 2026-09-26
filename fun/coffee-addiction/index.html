@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Coffee Addiction Calculator | Fun 趣味</title>
+    <meta name="description" content="Calculate your coffee addiction level. How many cups until you vibrate at the speed of sound?">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <link rel="canonical" href="https://neonstack.net/fun/coffee-addiction/">
+    <style>
+        .calculator { max-width: 500px; margin: 0 auto; padding: 30px; }
+        .input-group { margin: 20px 0; }
+        .input-group label { display: block; margin-bottom: 10px; font-weight: 700; color: var(--text-secondary); }
+        .input-group input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 1rem; font-family: 'Plus Jakarta Sans', sans-serif; background: #090d16; color: var(--text-primary); }
+        .calc-btn { background: var(--accent-color); color: #04130e; border: 1px solid rgba(16, 185, 129, 0.32); padding: 15px 40px; border-radius: 8px; font-size: 1.1rem; font-weight: 800; cursor: pointer; width: 100%; margin: 20px 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .result { background: rgba(16, 185, 129, 0.05); border: 1px solid rgba(16, 185, 129, 0.18); padding: 25px; border-radius: 12px; margin-top: 20px; text-align: center; display: none; }
+        .result-emoji { font-size: 64px; }
+        .result-text { font-size: 1.5rem; font-weight: 800; color: var(--accent-hover); margin: 15px 0; }
+    </style>
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/coffee-addiction/#webpage",
+          "url": "https://neonstack.net/fun/coffee-addiction/",
+          "name": "Coffee Addiction",
+          "description": "Calculate your coffee addiction level. How many cups until you vibrate at the speed of sound?",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Coffee Addiction",
+              "item": "https://neonstack.net/fun/coffee-addiction/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Coffee<span>Addiction</span></a>
+            <nav class="nav-links"><a href="../../">Home</a></nav>
+        </div>
+    </header>
+    <section class="hero">
+        <div class="container text-center">
+            <span class="badge">Caffeine Powered</span>
+            <h1>Coffee Addiction Calculator</h1>
+            <p class="subtitle">How addicted are you to coffee? Let's find out.</p>
+        </div>
+    </section>
+    <section class="comparison-section">
+        <div class="container">
+            <div class="card">
+                <div class="calculator">
+                    <div class="input-group">
+                        <label>Cups per day:</label>
+                        <input type="number" id="cups" min="0" max="20" value="3">
+                    </div>
+                    <div class="input-group">
+                        <label>Years drinking coffee:</label>
+                        <input type="number" id="years" min="0" max="50" value="5">
+                    </div>
+                    <div class="input-group">
+                        <label>Can you function without it? (1-10):</label>
+                        <input type="number" id="dependency" min="1" max="10" value="5">
+                    </div>
+                    <button class="calc-btn" onclick="calculate()">☕ Calculate Addiction</button>
+                    <div class="result" id="result">
+                        <div class="result-emoji" id="emoji">☕</div>
+                        <div class="result-text" id="level">Calculating...</div>
+                        <p id="message">Your diagnosis...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy Policy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+    <script>
+        function calculate() {
+            const cups = parseInt(document.getElementById('cups').value);
+            const years = parseInt(document.getElementById('years').value);
+            const dependency = parseInt(document.getElementById('dependency').value);
+            const score = (cups * 10) + (years * 2) + (dependency * 5);
+            const result = document.getElementById('result');
+            const emoji = document.getElementById('emoji');
+            const level = document.getElementById('level');
+            const message = document.getElementById('message');
+            if (score < 50) {
+                emoji.textContent = '😊';
+                level.textContent = 'Casual Sipper';
+                message.textContent = 'You can take it or leave it. Impressive self-control!';
+            } else if (score < 100) {
+                emoji.textContent = '☕';
+                level.textContent = 'Coffee Enthusiast';
+                message.textContent = 'You enjoy coffee, but you\'re not dependent. Yet.';
+            } else if (score < 150) {
+                emoji.textContent = '🤪';
+                level.textContent = 'Seriously Addicted';
+                message.textContent = 'Coffee is basically running through your veins now.';
+            } else {
+                emoji.textContent = '⚡';
+                level.textContent = 'Coffee IS Your Blood Type';
+                message.textContent = 'You don\'t drink coffee. Coffee drinks you.';
+            }
+            result.style.display = 'block';
+        }
+    </script>
+</body>
+</html>

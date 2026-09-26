@@ -1,0 +1,21 @@
+{
+  "title": "War3 Hotkey Editor",
+  "badge": "Web app",
+  "description": "See every Warcraft III command on one grid: click a cell and press a key to bind it. The editor warns you when two commands collide, saves your layout as you work, and exports the exact config file the game reads. No more editing text files by hand.",
+  "price": 200,
+  "license": [
+    "one-time"
+  ],
+  "platform": [
+    "Browser"
+  ],
+  "author": "momo",
+  "tags": [
+    "web",
+    "game",
+    "editor",
+    "hotkeys"
+  ],
+  "version": "1.3",
+  "updated": "2026-09"
+}

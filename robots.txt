@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /assets/
+Disallow: /policy/
+Disallow: /data/
+Disallow: /admin/
+
+Sitemap: https://neonstack.net/sitemap.xml

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>What to Eat Today | Food Decision Wheel 今天吃什么</title>
+    <meta name="description" content="Can't decide what to eat? Spin the wheel! Add your favorite foods and let fate decide.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .wheel-container {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            margin: 2rem auto;
+        }
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+        }
+        .wheel-segment {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        .spin-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #8b5cf6 100%);
+            color: white;
+            border: 4px solid white;
+            font-size: 1.2rem;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            z-index: 10;
+            transition: transform 0.2s;
+        }
+        .spin-button:hover {
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+        .spin-button:active {
+            transform: translate(-50%, -50%) scale(0.95);
+        }
+        .arrow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid var(--accent-color);
+            z-index: 5;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+        .result-display {
+            text-align: center;
+            margin: 2rem 0;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            min-height: 60px;
+        }
+        .food-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .food-tag {
+            background: var(--panel-strong);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .food-tag button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        .add-food-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        @media (max-width: 768px) {
+            .wheel-container {
+                width: 300px;
+                height: 300px;
+            }
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/food-decision-wheel/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/food-decision-wheel/#webpage",
+          "url": "https://neonstack.net/tools/food-decision-wheel/",
+          "name": "Food Decision Wheel",
+          "description": "Can't decide what to eat? Spin the wheel! Add your favorite foods and let fate decide.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Food Decision Wheel",
+              "item": "https://neonstack.net/tools/food-decision-wheel/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Food<span>Wheel</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🍜 What to Eat Today?</h1>
+                <p>Can't decide? Let the wheel choose for you! Add your favorite foods and spin.</p>
+            </div>
+
+            <div class="wheel-container">
+                <div class="arrow"></div>
+                <div class="wheel" id="wheel"></div>
+                <button class="spin-button" id="spin-btn" onclick="spinWheel()">SPIN</button>
+            </div>
+
+            <div class="result-display" id="result"></div>
+
+            <div class="input-group">
+                <label>🍕 Your Food Options</label>
+                <div class="food-list" id="food-list"></div>
+                <div class="add-food-form">
+                    <input type="text" id="new-food" class="input" placeholder="Add a food..." maxlength="20">
+                    <button class="btn btn-primary" onclick="addFood()">Add</button>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-secondary" onclick="resetToDefaults()">🔄 Reset to Defaults</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        let foods = ['🍕 Pizza', '🍔 Burger', '🍜 Ramen', '🌮 Tacos', '🍣 Sushi', '🍝 Pasta', '🥗 Salad', '🍛 Curry'];
+        let isSpinning = false;
+        
+        const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2'];
+
+        function renderWheel() {
+            const wheel = document.getElementById('wheel');
+            wheel.innerHTML = '';
+            
+            const segmentAngle = 360 / foods.length;
+            
+            foods.forEach((food, index) => {
+                const segment = document.createElement('div');
+                segment.className = 'wheel-segment';
+                segment.textContent = food;
+                segment.style.background = colors[index % colors.length];
+                segment.style.transform = `rotate(${segmentAngle * index}deg) skew(${90 - segmentAngle}deg)`;
+                
+                const text = document.createElement('span');
+                text.textContent = food;
+                text.style.transform = `skew(${-(90 - segmentAngle)}deg) rotate(${segmentAngle/2}deg)`;
+                text.style.display = 'block';
+                
+                segment.innerHTML = '';
+                segment.appendChild(text);
+                wheel.appendChild(segment);
+            });
+
+            renderFoodList();
+        }
+
+        function renderFoodList() {
+            const list = document.getElementById('food-list');
+            list.innerHTML = foods.map((food, index) => `
+                <div class="food-tag">
+                    <span>${food}</span>
+                    <button onclick="removeFood(${index})">×</button>
+                </div>
+            `).join('');
+        }
+
+        function spinWheel() {
+            if (isSpinning || foods.length === 0) return;
+            
+            isSpinning = true;
+            document.getElementById('spin-btn').textContent = '...';
+            document.getElementById('result').textContent = '';
+            
+            const wheel = document.getElementById('wheel');
+            const spins = 5 + Math.random() * 3;
+            const extraDegrees = Math.random() * 360;
+            const totalRotation = spins * 360 + extraDegrees;
+            
+            wheel.style.transform = `rotate(${totalRotation}deg)`;
+            
+            playSpinSound();
+            
+            setTimeout(() => {
+                const segmentAngle = 360 / foods.length;
+                const normalizedRotation = extraDegrees % 360;
+                const selectedIndex = Math.floor((360 - normalizedRotation) / segmentAngle) % foods.length;
+                
+                document.getElementById('result').textContent = `🎉 ${foods[selectedIndex]}!`;
+                document.getElementById('spin-btn').textContent = 'SPIN';
+                isSpinning = false;
+                
+                playWinSound();
+            }, 4000);
+        }
+
+        function addFood() {
+            const input = document.getElementById('new-food');
+            const food = input.value.trim();
+            
+            if (food && foods.length < 12) {
+                foods.push(food);
+                input.value = '';
+                renderWheel();
+            }
+        }
+
+        function removeFood(index) {
+            if (foods.length > 2) {
+                foods.splice(index, 1);
+                renderWheel();
+            }
+        }
+
+        function resetToDefaults() {
+            foods = ['🍕 Pizza', '🍔 Burger', '🍜 Ramen', '🌮 Tacos', '🍣 Sushi', '🍝 Pasta', '🥗 Salad', '🍛 Curry'];
+            renderWheel();
+            document.getElementById('result').textContent = '';
+        }
+
+        function playSpinSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(200, audioContext.currentTime + 0.5);
+            oscillator.type = 'triangle';
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        function playWinSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            [0, 0.15, 0.3].forEach((delay, i) => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 523 + (i * 100);
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime + delay);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + delay + 0.3);
+                
+                oscillator.start(audioContext.currentTime + delay);
+                oscillator.stop(audioContext.currentTime + delay + 0.3);
+            });
+        }
+
+        document.getElementById('new-food').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addFood();
+        });
+
+        renderWheel();
+    </script>
+</body>
+</html>

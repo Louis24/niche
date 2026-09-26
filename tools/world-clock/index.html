@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>World Clock | Multiple Time Zones Display</title>
+    <meta name="description" content="Track time across multiple time zones in real-time. Perfect for remote teams and international coordination.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .clocks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .clock-card {
+            background: var(--panel-strong);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+        .city-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+        .clock-time {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            font-family: 'Courier New', monospace;
+            line-height: 1;
+        }
+        .clock-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+        .timezone-offset {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/world-clock/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/world-clock/#webpage",
+          "url": "https://neonstack.net/tools/world-clock/",
+          "name": "World Clock",
+          "description": "Track time across multiple time zones in real-time. Perfect for remote teams and international coordination.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "World Clock",
+              "item": "https://neonstack.net/tools/world-clock/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">World<span>Clock</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🌍 World Clock</h1>
+                <p>Track time across multiple time zones in real-time. Perfect for remote teams and international coordination.</p>
+            </div>
+
+            <div class="clocks-grid" id="clocks-grid">
+                <!-- Clock cards will be generated here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const timezones = [
+            { city: 'New York', zone: 'America/New_York' },
+            { city: 'London', zone: 'Europe/London' },
+            { city: 'Paris', zone: 'Europe/Paris' },
+            { city: 'Tokyo', zone: 'Asia/Tokyo' },
+            { city: 'Beijing', zone: 'Asia/Shanghai' },
+            { city: 'Sydney', zone: 'Australia/Sydney' },
+        ];
+
+        const clocksGrid = document.getElementById('clocks-grid');
+
+        function createClockCard(tz) {
+            const card = document.createElement('div');
+            card.className = 'clock-card';
+            card.innerHTML = `
+                <div class="city-name">${tz.city}</div>
+                <div class="clock-time" id="time-${tz.zone.replace(/\//g, '-')}">--:--:--</div>
+                <div class="clock-date" id="date-${tz.zone.replace(/\//g, '-')}">--- --, ----</div>
+                <div class="timezone-offset" id="offset-${tz.zone.replace(/\//g, '-')}">UTC +0</div>
+            `;
+            return card;
+        }
+
+        timezones.forEach(tz => {
+            clocksGrid.appendChild(createClockCard(tz));
+        });
+
+        function updateClocks() {
+            const now = new Date();
+
+            timezones.forEach(tz => {
+                const zoneId = tz.zone.replace(/\//g, '-');
+                
+                const timeFormatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: tz.zone,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                    hour12: false
+                });
+
+                const dateFormatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: tz.zone,
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric'
+                });
+
+                document.getElementById(`time-${zoneId}`).textContent = timeFormatter.format(now);
+                document.getElementById(`date-${zoneId}`).textContent = dateFormatter.format(now);
+
+                // Calculate UTC offset
+                const offsetFormatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: tz.zone,
+                    timeZoneName: 'shortOffset'
+                });
+                const parts = offsetFormatter.formatToParts(now);
+                const offsetPart = parts.find(part => part.type === 'timeZoneName');
+                document.getElementById(`offset-${zoneId}`).textContent = offsetPart ? offsetPart.value : 'UTC';
+            });
+        }
+
+        updateClocks();
+        setInterval(updateClocks, 1000);
+    </script>
+</body>
+</html>

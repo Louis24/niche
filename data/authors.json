@@ -1,0 +1,26 @@
+{
+  "momo": {
+    "slug": "momo",
+    "name": "墨墨",
+    "role": "Map tools developer",
+    "bio": "Makes small utilities for classic RTS maps and game setup. Answers messages personally.",
+    "avatar": "assets/img/authors/momo.jpg",
+    "email": "",
+    "website": "",
+    "telegram": "",
+    "x": "",
+    "github": ""
+  },
+  "boomcat": {
+    "slug": "boomcat",
+    "name": "爆炸猫",
+    "role": "Indie developer",
+    "bio": "Builds lightweight web tools. Answers every message personally.",
+    "avatar": "assets/img/authors/boomcat.jpg",
+    "email": "",
+    "website": "",
+    "telegram": "",
+    "x": "",
+    "github": ""
+  }
+}

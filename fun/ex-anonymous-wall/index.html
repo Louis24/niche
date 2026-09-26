@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Ex Anonymous Wall | Vent About Your Ex</title>
+    <meta name="description" content="Anonymous wall to vent about your ex. Get it off your chest!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .wall { display: grid; gap: 1rem; margin: 2rem 0; }
+        .note { background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%); padding: 1.5rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transform: rotate(-1deg); }
+        .note:nth-child(even) { transform: rotate(1deg); }
+        .note-text { font-family: 'Comic Sans MS', cursive; line-height: 1.6; }
+        .note-footer { display: flex; justify-content: space-between; margin-top: 1rem; font-size: 0.85rem; opacity: 0.7; }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/ex-anonymous-wall/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/ex-anonymous-wall/#webpage",
+          "url": "https://neonstack.net/fun/ex-anonymous-wall/",
+          "name": "Ex Anonymous Wall",
+          "description": "Anonymous wall to vent about your ex. Get it off your chest!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Ex Anonymous Wall",
+              "item": "https://neonstack.net/fun/ex-anonymous-wall/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Ex<span>Wall</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>💔 Ex Anonymous Wall</h1>
+                <p>Get it off your chest. 100% anonymous.</p>
+            </div>
+            <div class="input-group">
+                <label>Your Message (Anonymous)</label>
+                <textarea id="message" class="input" placeholder="Write what you need to say..." rows="4"></textarea>
+            </div>
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="btn btn-primary" onclick="post()">📝 Post Anonymously</button>
+            </div>
+            <h3>Recent Posts</h3>
+            <div class="wall" id="wall"></div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        const samplePosts = [
+            "You never deserved me anyway. Moving on!",
+            "Why did you have to lie? Honesty was all I asked for.",
+            "Thanks for wasting 3 years of my life.",
+            "I hope you're happy now. I know I am.",
+            "You taught me what I DON'T want in a relationship."
+        ];
+        
+        let posts = [...samplePosts];
+        
+        function render() {
+            document.getElementById('wall').innerHTML = posts.map((p, i) => `
+                <div class="note">
+                    <div class="note-text">${p}</div>
+                    <div class="note-footer">
+                        <span>Anonymous</span>
+                        <span>${Math.floor(Math.random() * 24)}h ago</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function post() {
+            const msg = document.getElementById('message').value.trim();
+            if (!msg) {
+                alert('Please write something!');
+                return;
+            }
+            posts.unshift(msg);
+            document.getElementById('message').value = '';
+            render();
+            alert('✅ Posted anonymously! Your message is now on the wall.');
+        }
+        
+        render();
+    </script>
+</body>
+</html>

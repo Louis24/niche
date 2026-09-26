@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Countdown Timer Generator | Event Countdown Creator</title>
+    <meta name="description" content="Create a beautiful countdown timer for your special event. Set the date and watch the time tick down.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .countdown-display {
+            background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(56,189,248,0.15) 100%);
+            border: 2px solid var(--accent-color);
+            border-radius: 16px;
+            padding: 2.5rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .event-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .time-unit {
+            background: var(--panel-strong);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+        }
+        .time-value {
+            display: block;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            line-height: 1;
+        }
+        .time-label {
+            display: block;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        @media (max-width: 680px) {
+            .time-grid { grid-template-columns: repeat(2, 1fr); }
+            .time-value { font-size: 2rem; }
+        }
+        .fullscreen-btn {
+            background: var(--info);
+            border-color: var(--info);
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/countdown-generator/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/countdown-generator/#webpage",
+          "url": "https://neonstack.net/tools/countdown-generator/",
+          "name": "Countdown Generator",
+          "description": "Create a beautiful countdown timer for your special event. Set the date and watch the time tick down.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Countdown Generator",
+              "item": "https://neonstack.net/tools/countdown-generator/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Count<span>Down</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>⏰ Event Countdown Generator</h1>
+                <p>Create a beautiful countdown timer for your special event. Set the date and watch the time tick down.</p>
+            </div>
+
+            <div class="calc-grid">
+                <div class="inputs-panel">
+                    <div class="input-group">
+                        <label for="event-name">Event Name</label>
+                        <input type="text" id="event-name" value="Bitcoin Halving 2028" placeholder="e.g., New Year 2027">
+                    </div>
+                    <div class="input-group">
+                        <label for="event-date">Target Date & Time</label>
+                        <input type="datetime-local" id="event-date">
+                    </div>
+                    <button class="btn btn-primary" onclick="updateCountdown()">🔄 Update</button>
+                    <button class="btn fullscreen-btn" onclick="goFullscreen()">⛶ Fullscreen Mode</button>
+                </div>
+
+                <div class="countdown-display" id="countdown-area">
+                    <div class="event-title" id="display-title">Bitcoin Halving 2028</div>
+                    <div class="time-grid">
+                        <div class="time-unit">
+                            <span class="time-value" id="days">0</span>
+                            <span class="time-label">Days</span>
+                        </div>
+                        <div class="time-unit">
+                            <span class="time-value" id="hours">0</span>
+                            <span class="time-label">Hours</span>
+                        </div>
+                        <div class="time-unit">
+                            <span class="time-value" id="minutes">0</span>
+                            <span class="time-label">Minutes</span>
+                        </div>
+                        <div class="time-unit">
+                            <span class="time-value" id="seconds">0</span>
+                            <span class="time-label">Seconds</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const eventInput = document.getElementById('event-date');
+        const eventNameInput = document.getElementById('event-name');
+        
+        // Set default to 1 year from now
+        const defaultDate = new Date();
+        defaultDate.setFullYear(defaultDate.getFullYear() + 2);
+        eventInput.value = defaultDate.toISOString().slice(0, 16);
+
+        let targetDate = new Date(eventInput.value);
+        let intervalId;
+
+        function calculateTimeLeft() {
+            const now = new Date().getTime();
+            const distance = targetDate.getTime() - now;
+
+            if (distance < 0) {
+                return { days: 0, hours: 0, minutes: 0, seconds: 0, expired: true };
+            }
+
+            return {
+                days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+                hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+                minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+                seconds: Math.floor((distance % (1000 * 60)) / 1000),
+                expired: false
+            };
+        }
+
+        function displayCountdown() {
+            const time = calculateTimeLeft();
+            
+            document.getElementById('days').textContent = time.days;
+            document.getElementById('hours').textContent = String(time.hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(time.minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(time.seconds).padStart(2, '0');
+
+            if (time.expired) {
+                document.getElementById('display-title').textContent = eventNameInput.value + ' 🎉';
+                clearInterval(intervalId);
+            }
+        }
+
+        function updateCountdown() {
+            targetDate = new Date(eventInput.value);
+            document.getElementById('display-title').textContent = eventNameInput.value;
+            if (intervalId) clearInterval(intervalId);
+            displayCountdown();
+            intervalId = setInterval(displayCountdown, 1000);
+        }
+
+        function goFullscreen() {
+            const elem = document.getElementById('countdown-area');
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            }
+        }
+
+        updateCountdown();
+    </script>
+</body>
+</html>

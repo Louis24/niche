@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>TCG Deck Builder | Card Game Deck Calculator &amp; Pack Odds</title>
+    <meta name="description" content="Build optimal card game decks, calculate pack opening odds, and track your collection progress.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .deck-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .card-pool {
+            background: var(--panel-strong);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .card-item {
+            background: var(--panel-color);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: border-color 0.2s;
+        }
+        .card-item:hover {
+            border-color: var(--accent-color);
+        }
+        .card-info {
+            flex: 1;
+        }
+        .card-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        .card-type {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .card-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .card-count {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 700;
+            min-width: 40px;
+            text-align: center;
+        }
+        .deck-summary {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #8b5cf6 100%);
+            border-radius: 12px;
+            padding: 2rem;
+            color: white;
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+        }
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+        .stat-value {
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+        .pack-odds {
+            background: var(--panel-strong);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+        @media (max-width: 768px) {
+            .deck-container {
+                grid-template-columns: 1fr;
+            }
+            .deck-summary {
+                position: relative;
+                top: 0;
+            }
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/games/tcg-deck-builder/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/tcg-deck-builder/#webpage",
+          "url": "https://neonstack.net/games/tcg-deck-builder/",
+          "name": "Tcg Deck Builder",
+          "description": "Build optimal card game decks, calculate pack opening odds, and track your collection progress.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Tcg Deck Builder",
+              "item": "https://neonstack.net/games/tcg-deck-builder/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">TCG<span>Builder</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🃏 TCG Deck Builder</h1>
+                <p>Build your perfect card game deck and calculate pack opening odds.</p>
+            </div>
+
+            <div class="deck-container">
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Card Pool</h3>
+                    <div class="card-pool" id="card-pool"></div>
+                </div>
+
+                <div class="deck-summary">
+                    <h3 style="margin-top: 0;">Deck Stats</h3>
+                    <div class="stat-item">
+                        <span>Total Cards</span>
+                        <span class="stat-value" id="total-cards">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Creatures</span>
+                        <span class="stat-value" id="creature-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Spells</span>
+                        <span class="stat-value" id="spell-count">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Support</span>
+                        <span class="stat-value" id="support-count">0</span>
+                    </div>
+                    <div class="stat-item" style="border: none;">
+                        <span>Avg. Cost</span>
+                        <span class="stat-value" id="avg-cost">0</span>
+                    </div>
+                    <button class="btn btn-secondary" onclick="exportDeck()" style="width: 100%; margin-top: 1rem;">
+                        📋 Export List
+                    </button>
+                </div>
+            </div>
+
+            <div class="pack-odds">
+                <h3 style="margin-top: 0;">📦 Pack Opening Calculator</h3>
+                <div class="input-group">
+                    <label>Cards Still Needed</label>
+                    <input type="number" id="cards-needed" class="input" value="10" min="1" onchange="calculateOdds()">
+                </div>
+                <div class="input-group">
+                    <label>Total Cards in Set</label>
+                    <input type="number" id="total-set" class="input" value="200" min="1" onchange="calculateOdds()">
+                </div>
+                <div class="input-group">
+                    <label>Cards per Pack</label>
+                    <input type="number" id="cards-per-pack" class="input" value="5" min="1" onchange="calculateOdds()">
+                </div>
+                <div style="background: var(--panel-color); padding: 1.5rem; border-radius: 8px; margin-top: 1rem;">
+                    <div style="font-weight: 700; margin-bottom: 0.5rem;">Expected Packs Needed:</div>
+                    <div style="font-size: 2rem; color: var(--accent-color); font-weight: 800;" id="packs-needed">-</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-muted);">
+                        Probability to get at least 1 needed card per pack: <span id="probability" style="font-weight: 700;">-</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const cards = [
+            { name: 'Lightning Dragon', type: 'Creature', cost: 5 },
+            { name: 'Fireball', type: 'Spell', cost: 3 },
+            { name: 'Healing Potion', type: 'Support', cost: 1 },
+            { name: 'Shadow Assassin', type: 'Creature', cost: 4 },
+            { name: 'Ice Barrier', type: 'Support', cost: 2 },
+            { name: 'Meteor Storm', type: 'Spell', cost: 7 },
+            { name: 'Forest Guardian', type: 'Creature', cost: 3 },
+            { name: 'Divine Shield', type: 'Support', cost: 2 },
+            { name: 'Thunder Strike', type: 'Spell', cost: 4 },
+            { name: 'Ancient Golem', type: 'Creature', cost: 6 }
+        ];
+
+        let deck = {};
+
+        function renderCardPool() {
+            const pool = document.getElementById('card-pool');
+            pool.innerHTML = cards.map(card => `
+                <div class="card-item">
+                    <div class="card-info">
+                        <div class="card-name">${card.name}</div>
+                        <div class="card-type">${card.type} • Cost: ${card.cost}</div>
+                    </div>
+                    <div class="card-controls">
+                        <button class="btn btn-secondary" onclick="removeCard('${card.name}')" style="padding: 0.5rem 1rem;">-</button>
+                        <span class="card-count">${deck[card.name] || 0}</span>
+                        <button class="btn btn-primary" onclick="addCard('${card.name}')" style="padding: 0.5rem 1rem;">+</button>
+                    </div>
+                </div>
+            `).join('');
+
+            updateStats();
+        }
+
+        function addCard(cardName) {
+            deck[cardName] = (deck[cardName] || 0) + 1;
+            renderCardPool();
+        }
+
+        function removeCard(cardName) {
+            if (deck[cardName] > 0) {
+                deck[cardName]--;
+                if (deck[cardName] === 0) delete deck[cardName];
+            }
+            renderCardPool();
+        }
+
+        function updateStats() {
+            let total = 0;
+            let creatures = 0;
+            let spells = 0;
+            let support = 0;
+            let totalCost = 0;
+
+            Object.entries(deck).forEach(([name, count]) => {
+                const card = cards.find(c => c.name === name);
+                if (!card) return;
+
+                total += count;
+                totalCost += card.cost * count;
+
+                if (card.type === 'Creature') creatures += count;
+                else if (card.type === 'Spell') spells += count;
+                else if (card.type === 'Support') support += count;
+            });
+
+            document.getElementById('total-cards').textContent = total;
+            document.getElementById('creature-count').textContent = creatures;
+            document.getElementById('spell-count').textContent = spells;
+            document.getElementById('support-count').textContent = support;
+            document.getElementById('avg-cost').textContent = total > 0 ? (totalCost / total).toFixed(1) : '0';
+        }
+
+        function calculateOdds() {
+            const needed = parseInt(document.getElementById('cards-needed').value);
+            const totalSet = parseInt(document.getElementById('total-set').value);
+            const perPack = parseInt(document.getElementById('cards-per-pack').value);
+
+            const probSuccess = 1 - Math.pow((totalSet - needed) / totalSet, perPack);
+            const expectedPacks = Math.ceil(1 / probSuccess);
+
+            document.getElementById('packs-needed').textContent = expectedPacks;
+            document.getElementById('probability').textContent = (probSuccess * 100).toFixed(1) + '%';
+        }
+
+        function exportDeck() {
+            const deckList = Object.entries(deck)
+                .filter(([_, count]) => count > 0)
+                .map(([name, count]) => `${count}x ${name}`)
+                .join('\n');
+
+            if (!deckList) {
+                alert('Your deck is empty!');
+                return;
+            }
+
+            const blob = new Blob([deckList], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'my-deck.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        renderCardPool();
+        calculateOdds();
+    </script>
+</body>
+</html>

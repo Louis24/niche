@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Fake Bank Balance Generator | Meme Creator</title>
+    <meta name="description" content="Generate fake bank balance screenshots for fun. Perfect for memes and jokes!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .bank-screen { max-width: 400px; margin: 2rem auto; background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); border-radius: 20px; padding: 2rem; box-shadow: 0 20px 60px rgba(0,0,0,0.3); color: white; }
+        .bank-header { font-size: 1.5rem; font-weight: 700; margin-bottom: 2rem; }
+        .balance-label { font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem; }
+        .balance-amount { font-size: 4rem; font-weight: 900; margin-bottom: 2rem; }
+        .account-info { background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 12px; }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/fake-bank-balance/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/fake-bank-balance/#webpage",
+          "url": "https://neonstack.net/fun/fake-bank-balance/",
+          "name": "Fake Bank Balance",
+          "description": "Generate fake bank balance screenshots for fun. Perfect for memes and jokes!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Fake Bank Balance",
+              "item": "https://neonstack.net/fun/fake-bank-balance/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Fake<span>Bank</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>💰 Fake Bank Balance</h1>
+                <p>Generate fake bank screenshots for memes and jokes!</p>
+            </div>
+            <div class="input-group">
+                <label>Your Name</label>
+                <input type="text" id="name" class="input" value="John Doe" oninput="update()">
+            </div>
+            <div class="input-group">
+                <label>Balance Amount</label>
+                <input type="number" id="balance" class="input" value="1000000" oninput="update()">
+            </div>
+            <div class="bank-screen" id="bank">
+                <div class="bank-header">🏦 Swiss Private Bank</div>
+                <div class="balance-label">Available Balance</div>
+                <div class="balance-amount" id="amount">$1,000,000</div>
+                <div class="account-info">
+                    <div style="margin-bottom: 0.5rem;">Account Holder</div>
+                    <div style="font-weight: 700; font-size: 1.2rem;" id="holder">John Doe</div>
+                    <div style="margin-top: 1rem; opacity: 0.8; font-size: 0.85rem;">Account: ****8888</div>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-primary" onclick="screenshot()">📸 Download Screenshot</button>
+            </div>
+            <p style="text-align: center; color: var(--text-muted); margin-top: 1rem; font-size: 0.9rem;">
+                ⚠️ For entertainment purposes only. Do not use to deceive or defraud.
+            </p>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        function update() {
+            const name = document.getElementById('name').value;
+            const balance = parseFloat(document.getElementById('balance').value) || 0;
+            document.getElementById('holder').textContent = name;
+            document.getElementById('amount').textContent = '$' + balance.toLocaleString();
+        }
+        
+        function screenshot() {
+            alert('📸 Screenshot feature: Use your device\'s screenshot tool (PrtScn, Cmd+Shift+4, etc.) to capture the bank screen!');
+        }
+        
+        update();
+    </script>
+</body>
+</html>

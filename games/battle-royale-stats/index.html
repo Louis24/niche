@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Battle Royale Weapon Stats | Gun Damage &amp; DPS Calculator</title>
+    <meta name="description" content="Compare weapon damage, DPS, and ballistics for battle royale games. Find the best guns for your playstyle.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .weapon-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+        .weapon-card { background: var(--panel-strong); border-radius: 12px; padding: 1.5rem; border: 2px solid var(--border-color); transition: all 0.2s; }
+        .weapon-card:hover { border-color: var(--accent-color); transform: translateY(-4px); }
+        .weapon-name { font-size: 1.3rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .weapon-type { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+        .stat-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid var(--border-color); }
+        .stat-label { color: var(--text-muted); }
+        .stat-value { font-weight: 700; color: var(--accent-color); }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/games/battle-royale-stats/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/battle-royale-stats/#webpage",
+          "url": "https://neonstack.net/games/battle-royale-stats/",
+          "name": "Battle Royale Stats",
+          "description": "Compare weapon damage, DPS, and ballistics for battle royale games. Find the best guns for your playstyle.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Battle Royale Stats",
+              "item": "https://neonstack.net/games/battle-royale-stats/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">BR<span>Stats</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🎯 Battle Royale Weapon Stats</h1>
+                <p>Compare weapon damage, fire rate, and DPS for optimal loadouts.</p>
+            </div>
+            <div class="input-group">
+                <label>Filter by Type</label>
+                <select class="input" onchange="filterWeapons(this.value)">
+                    <option value="all">All Weapons</option>
+                    <option value="AR">Assault Rifles</option>
+                    <option value="SMG">SMGs</option>
+                    <option value="Sniper">Snipers</option>
+                    <option value="Shotgun">Shotguns</option>
+                </select>
+            </div>
+            <div class="weapon-grid" id="weapon-grid"></div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        const weapons = [
+            {name: 'M4A1', type: 'AR', damage: 41, fireRate: 800, magazine: 30, range: 'Medium'},
+            {name: 'AK-47', type: 'AR', damage: 47, fireRate: 600, magazine: 30, range: 'Medium'},
+            {name: 'MP5', type: 'SMG', damage: 33, fireRate: 900, magazine: 30, range: 'Close'},
+            {name: 'AWM', type: 'Sniper', damage: 132, fireRate: 40, magazine: 5, range: 'Long'},
+            {name: 'M870', type: 'Shotgun', damage: 24, fireRate: 60, magazine: 8, range: 'Close'}
+        ];
+        let filtered = [...weapons];
+        function filterWeapons(type) {
+            filtered = type === 'all' ? [...weapons] : weapons.filter(w => w.type === type);
+            render();
+        }
+        function render() {
+            document.getElementById('weapon-grid').innerHTML = filtered.map(w => {
+                const dps = Math.round(w.damage * (w.fireRate / 60));
+                return `<div class="weapon-card">
+                    <div class="weapon-name">${w.name}</div>
+                    <div class="weapon-type">${w.type}</div>
+                    <div class="stat-row"><span class="stat-label">Damage</span><span class="stat-value">${w.damage}</span></div>
+                    <div class="stat-row"><span class="stat-label">Fire Rate</span><span class="stat-value">${w.fireRate} RPM</span></div>
+                    <div class="stat-row"><span class="stat-label">DPS</span><span class="stat-value">${dps}</span></div>
+                    <div class="stat-row"><span class="stat-label">Magazine</span><span class="stat-value">${w.magazine}</span></div>
+                    <div class="stat-row" style="border:none"><span class="stat-label">Range</span><span class="stat-value">${w.range}</span></div>
+                </div>`;
+            }).join('');
+        }
+        render();
+    </script>
+</body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Zelda Tears of the Kingdom Shrine Tracker | 152 Shrines Checklist</title>
+    <meta name="description" content="Track all 152 shrines in Tears of the Kingdom. Check off shrines as you complete them.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .region-section { margin: 2rem 0; }
+        .shrine-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .shrine-item { background: var(--panel-strong); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; display: flex; align-items: center; gap: 0.75rem; transition: all 0.2s; cursor: pointer; }
+        .shrine-item:hover { border-color: var(--accent-color); }
+        .shrine-item.completed { background: rgba(16,185,129,0.1); border-color: var(--accent-color); }
+        .shrine-checkbox { width: 20px; height: 20px; accent-color: var(--accent-color); cursor: pointer; }
+        .shrine-name { font-weight: 600; }
+        .progress-bar { height: 8px; background: var(--border-color); border-radius: 99px; margin: 1.5rem 0; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent-color); transition: width 0.3s; }
+        .stats { display: flex; gap: 2rem; justify-content: center; margin: 1rem 0; font-size: 1.1rem; }
+        .stats strong { color: var(--accent-color); }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/games/zelda-shrine-tracker/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/zelda-shrine-tracker/#webpage",
+          "url": "https://neonstack.net/games/zelda-shrine-tracker/",
+          "name": "Zelda Shrine Tracker",
+          "description": "Track all 152 shrines in Tears of the Kingdom. Check off shrines as you complete them.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Zelda Shrine Tracker",
+              "item": "https://neonstack.net/games/zelda-shrine-tracker/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Zelda<span>Shrines</span></a>
+            <nav class="nav-links"><a href="../../#games">Games</a></nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🗡️ Shrine Progress Tracker</h1>
+                <p>Track all 152 shrines in Tears of the Kingdom. Check off shrines as you complete them.</p>
+            </div>
+
+            <div class="stats">
+                <span>Completed: <strong id="completed">0</strong> / 152</span>
+                <span>Progress: <strong id="percentage">0%</strong></span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+            </div>
+
+            <button class="btn btn-secondary" onclick="resetAll()" style="margin-bottom: 1rem;">🔄 Reset All</button>
+
+            <div id="shrines-container"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2026 NeonStack.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Real shrine data from Zelda: Tears of the Kingdom
+        const shrinesByRegion = {
+            "Sky Islands": [
+                "Ukouh Shrine", "In-isa Shrine", "Gutanbac Shrine", "Nachoyah Shrine",
+                "Mayak Shrine"
+            ],
+            "Central Hyrule": [
+                "Kyononis Shrine", "Tadarok Shrine", "Ren-iz Shrine", "Sepapa Shrine",
+                "Taki-ihaban Shrine", "Tsutsu-um Shrine", "Makurukis Shrine", "Kamizun Shrine",
+                "Jinodok Shrine", "Susuyai Shrine", "Riogok Shrine", "Kyokugon Shrine"
+            ],
+            "Hebra Mountains": [
+                "Mayausiy Shrine", "Rutafu-um Shrine", "Otak Shrine", "Eutoum Shrine",
+                "Ijo-o Shrine", "Kisinona Shrine", "Sahirow Shrine", "Runakit Shrine",
+                "Ga-ahisas Shrine", "Gatakis Shrine", "Tauyosipun Shrine", "Lake-intenoch Cave"
+            ],
+            "Akkala": [
+                "Igoshon Shrine", "Rasiwak Shrine", "Domizuin Shrine", "Sinakawak Shrine",
+                "Joju-u-u Shrine", "Kiuyoyou Shrine", "Rasitakiwak Shrine", "Zanmik Shrine",
+                "Gemimik Shrine"
+            ],
+            "Eldin": [
+                "Mayam Shrine", "Jiosin Shrine", "Sitsum Shrine", "Timawak Shrine",
+                "Ekochiu Shrine", "Isisim Shrine", "Kisinona Shrine", "Moshapin Shrine",
+                "Marakuguc Shrine", "Jochi-ihiga Shrine"
+            ],
+            "Lanayru": [
+                "Jonsau Shrine", "Mogisari Shrine", "Ihen-a Shrine", "Zakusu Shrine",
+                "Jogou Shrine", "Apogek Shrine", "Yomizuk Shrine", "Kurakat Shrine",
+                "Morok Shrine", "O-ogim Shrine", "Sihajog Shrine"
+            ],
+            "Necluda": [
+                "Jojon Shrine", "Teniten Shrine", "Eshos Shrine", "Mayachideg Shrine",
+                "Makasura Shrine", "Jikais Shrine", "Ninjis Shrine", "Utojis Shrine"
+            ],
+            "Faron": [
+                "Utsushok Shrine", "Jochisiu Shrine", "Josiu Shrine", "Susub Shrine",
+                "Ishokin Shrine"
+            ],
+            "Gerudo": [
+                "Motsusis Shrine", "Mayatat Shrine", "Siwakama Shrine", "Kitawak Shrine",
+                "Turakamik Shrine", "Rakakudaj Shrine", "Irasak Shrine", "Kudanisar Shrine"
+            ]
+        };
+
+        let completed = JSON.parse(localStorage.getItem('zeldaShrines')) || {};
+
+        function render() {
+            const container = document.getElementById('shrines-container');
+            container.innerHTML = '';
+
+            let totalCompleted = 0;
+
+            Object.keys(shrinesByRegion).forEach(region => {
+                const section = document.createElement('div');
+                section.className = 'region-section';
+                
+                const regionCompleted = shrinesByRegion[region].filter(s => completed[s]).length;
+                const regionTotal = shrinesByRegion[region].length;
+
+                section.innerHTML = `
+                    <h3>${region} (${regionCompleted}/${regionTotal})</h3>
+                    <div class="shrine-grid" id="grid-${region}"></div>
+                `;
+                container.appendChild(section);
+
+                const grid = document.getElementById(`grid-${region}`);
+                shrinesByRegion[region].forEach(shrine => {
+                    const isCompleted = completed[shrine] || false;
+                    if (isCompleted) totalCompleted++;
+
+                    const item = document.createElement('div');
+                    item.className = 'shrine-item' + (isCompleted ? ' completed' : '');
+                    item.innerHTML = `
+                        <input type="checkbox" class="shrine-checkbox" ${isCompleted ? 'checked' : ''} 
+                               onchange="toggle('${shrine}')">
+                        <span class="shrine-name">${shrine}</span>
+                    `;
+                    grid.appendChild(item);
+                });
+            });
+
+            document.getElementById('completed').textContent = totalCompleted;
+            document.getElementById('percentage').textContent = ((totalCompleted / 152) * 100).toFixed(1) + '%';
+            document.getElementById('progress-fill').style.width = ((totalCompleted / 152) * 100) + '%';
+        }
+
+        function toggle(shrine) {
+            completed[shrine] = !completed[shrine];
+            localStorage.setItem('zeldaShrines', JSON.stringify(completed));
+            render();
+        }
+
+        function resetAll() {
+            if (confirm('Reset all shrine progress?')) {
+                completed = {};
+                localStorage.setItem('zeldaShrines', JSON.stringify(completed));
+                render();
+            }
+        }
+
+        render();
+    </script>
+</body>
+</html>

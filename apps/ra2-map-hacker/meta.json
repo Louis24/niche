@@ -1,0 +1,21 @@
+{
+  "title": "RA2 Map Hacker",
+  "badge": "Desktop",
+  "description": "RA2 Map Hacker lifts the shroud in Red Alert 2 and Yuri's Revenge: see every unit, building and hidden corner of the map while you play. Built for skirmish, offline games and replays — respect the rules of whatever lobby you join.",
+  "price": 200,
+  "license": [
+    "one-time"
+  ],
+  "platform": [
+    "Windows"
+  ],
+  "author": "momo",
+  "tags": [
+    "desktop",
+    "ra2",
+    "maps",
+    "utility"
+  ],
+  "version": "1.0",
+  "updated": "2026-09"
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Pokemon Type Matchup Calculator | Battle Assistant</title>
+    <meta name="description" content="Select target Pokemon types to find its elemental weaknesses and resistances.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <link rel="canonical" href="https://neonstack.net/games/pokemon-type-calculator/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/pokemon-type-calculator/#webpage",
+          "url": "https://neonstack.net/games/pokemon-type-calculator/",
+          "name": "Pokemon Type Calculator",
+          "description": "Select target Pokemon types to find its elemental weaknesses and resistances.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Pokemon Type Calculator",
+              "item": "https://neonstack.net/games/pokemon-type-calculator/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Poke<span>Type</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>Pokemon Damage Multiplier Calculator</h1>
+                <p>Select target Pokemon types to find its elemental weaknesses and resistances.</p>
+            </div>
+
+            <!-- Input Pickers -->
+            <div class="selectors-wrapper">
+                <div class="input-group">
+                    <label for="type1-select">Primary Type</label>
+                    <select id="type1-select">
+                        <option value="Normal">Normal</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Water">Water</option>
+                        <option value="Grass">Grass</option>
+                        <option value="Electric">Electric</option>
+                        <option value="Ice">Ice</option>
+                        <option value="Fighting">Fighting</option>
+                        <option value="Poison">Poison</option>
+                        <option value="Ground">Ground</option>
+                        <option value="Flying">Flying</option>
+                        <option value="Psychic">Psychic</option>
+                        <option value="Bug">Bug</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Ghost">Ghost</option>
+                        <option value="Dragon">Dragon</option>
+                        <option value="Dark">Dark</option>
+                        <option value="Steel">Steel</option>
+                        <option value="Fairy">Fairy</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="type2-select">Secondary Type (Optional)</label>
+                    <select id="type2-select">
+                        <option value="None">None (Single Type)</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Water">Water</option>
+                        <option value="Grass">Grass</option>
+                        <option value="Electric">Electric</option>
+                        <option value="Ice">Ice</option>
+                        <option value="Fighting">Fighting</option>
+                        <option value="Poison">Poison</option>
+                        <option value="Ground">Ground</option>
+                        <option value="Flying">Flying</option>
+                        <option value="Psychic">Psychic</option>
+                        <option value="Bug">Bug</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Ghost">Ghost</option>
+                        <option value="Dragon">Dragon</option>
+                        <option value="Dark">Dark</option>
+                        <option value="Steel">Steel</option>
+                        <option value="Fairy">Fairy</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="results-panel">
+                <div class="result-box weakness">
+                    <h3>Weak To (Takes 2x / 4x Damage)</h3>
+                    <div id="weak-container" class="type-badge-container">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+
+                <div class="result-box resistance">
+                    <h3>Resists (Takes 0.5x / 0.25x Damage)</h3>
+                    <div id="resist-container" class="type-badge-container">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+
+                <div class="result-box immune">
+                    <h3>Immune To (Takes 0x Damage)</h3>
+                    <div id="immune-container" class="type-badge-container">
+                        <!-- Loaded via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple type chart definition
+        const types = ["Normal", "Fire", "Water", "Grass", "Electric", "Ice", "Fighting", "Poison", "Ground", "Flying", "Psychic", "Bug", "Rock", "Ghost", "Dragon", "Dark", "Steel", "Fairy"];
+        
+        const typeChart = {
+            Normal: { Rock: 0.5, Ghost: 0, Steel: 0.5 },
+            Fire: { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 2, Bug: 2, Rock: 0.5, Dragon: 0.5, Steel: 2 },
+            Water: { Fire: 2, Water: 0.5, Grass: 0.5, Ground: 2, Rock: 2, Dragon: 0.5 },
+            Grass: { Fire: 0.5, Water: 2, Grass: 0.5, Poison: 0.5, Ground: 2, Flying: 0.5, Bug: 0.5, Rock: 2, Dragon: 0.5, Steel: 0.5 },
+            Electric: { Water: 2, Grass: 0.5, Electric: 0.5, Ground: 0, Flying: 2, Dragon: 0.5 },
+            Ice: { Fire: 0.5, Water: 0.5, Grass: 2, Ice: 0.5, Ground: 2, Flying: 2, Dragon: 2, Steel: 0.5 },
+            Fighting: { Normal: 2, Ice: 2, Poison: 0.5, Flying: 0.5, Psychic: 0.5, Bug: 0.5, Rock: 2, Ghost: 0, Steel: 2, Fairy: 0.5 },
+            Poison: { Grass: 2, Poison: 0.5, Ground: 0.5, Rock: 0.5, Ghost: 0.5, Steel: 0, Fairy: 2 },
+            Ground: { Fire: 2, Grass: 0.5, Electric: 2, Poison: 2, Flying: 0, Bug: 0.5, Rock: 2, Steel: 2 },
+            Flying: { Grass: 2, Electric: 0.5, Fighting: 2, Bug: 2, Rock: 0.5, Steel: 0.5 },
+            Psychic: { Fighting: 2, Poison: 2, Psychic: 0.5, Steel: 0.5, Dark: 0 },
+            Bug: { Fire: 0.5, Grass: 2, Fighting: 0.5, Poison: 0.5, Flying: 0.5, Psychic: 2, Ghost: 0.5, Steel: 0.5, Fairy: 0.5 },
+            Rock: { Fire: 2, Ice: 2, Fighting: 0.5, Ground: 0.5, Flying: 2, Bug: 2, Steel: 0.5 },
+            Ghost: { Normal: 0, Psychic: 2, Ghost: 2, Dark: 0.5 },
+            Dragon: { Dragon: 2, Steel: 0.5, Fairy: 0 },
+            Dark: { Fighting: 0.5, Psychic: 2, Ghost: 2, Dark: 0.5, Fairy: 0.5 },
+            Steel: { Water: 0.5, Electric: 0.5, Ice: 2, Rock: 2, Steel: 0.5, Fairy: 2 },
+            Fairy: { Fire: 0.5, Fighting: 2, Poison: 0.5, Dragon: 2, Steel: 0.5, Dark: 2 }
+        };
+
+        const type1Select = document.getElementById('type1-select');
+        const type2Select = document.getElementById('type2-select');
+        const weakContainer = document.getElementById('weak-container');
+        const resistContainer = document.getElementById('resist-container');
+        const immuneContainer = document.getElementById('immune-container');
+
+        function calculateMatchups() {
+            const t1 = type1Select.value;
+            const t2 = type2Select.value;
+
+            const finalChart = {};
+            types.forEach(type => {
+                finalChart[type] = 1.0;
+            });
+
+            // Calculate defending multipliers for each attacking type
+            types.forEach(attacker => {
+                // Damage from Attacker to t1
+                let m1 = 1.0;
+                if (typeChart[attacker] && typeChart[attacker][t1] !== undefined) {
+                    m1 = typeChart[attacker][t1];
+                }
+
+                // Damage from Attacker to t2
+                let m2 = 1.0;
+                if (t2 !== 'None') {
+                    if (typeChart[attacker] && typeChart[attacker][t2] !== undefined) {
+                        m2 = typeChart[attacker][t2];
+                    }
+                }
+
+                finalChart[attacker] = m1 * m2;
+            });
+
+            // Categorize
+            weakContainer.innerHTML = '';
+            resistContainer.innerHTML = '';
+            immuneContainer.innerHTML = '';
+
+            Object.keys(finalChart).forEach(type => {
+                const multiplier = finalChart[type];
+                const badge = document.createElement('span');
+                badge.className = `type-badge type-${type.toLowerCase()}`;
+                
+                if (multiplier > 1) {
+                    badge.innerHTML = `${type} <small>x${multiplier}</small>`;
+                    weakContainer.appendChild(badge);
+                } else if (multiplier > 0 && multiplier < 1) {
+                    badge.innerHTML = `${type} <small>x${multiplier}</small>`;
+                    resistContainer.appendChild(badge);
+                } else if (multiplier === 0) {
+                    badge.innerHTML = `${type} <small>x0</small>`;
+                    immuneContainer.appendChild(badge);
+                }
+            });
+
+            if (weakContainer.innerHTML === '') weakContainer.innerHTML = '<span class="none">None</span>';
+            if (resistContainer.innerHTML === '') resistContainer.innerHTML = '<span class="none">None</span>';
+            if (immuneContainer.innerHTML === '') immuneContainer.innerHTML = '<span class="none">None</span>';
+        }
+
+        type1Select.addEventListener('change', calculateMatchups);
+        type2Select.addEventListener('change', calculateMatchups);
+
+        calculateMatchups();
+    </script>
+</body>
+</html>
+
+

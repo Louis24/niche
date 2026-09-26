@@ -1,0 +1,35 @@
+﻿slug,kind,a,b,c
+linkedin-toolkit,feature,Automatic apply,Fill and submit Easy Apply forms automatically, within the limits you set.
+linkedin-toolkit,feature,Saved profile,"Store phone, location and work history once and reuse them on every form."
+linkedin-toolkit,feature,Daily limits,Cap applications per day and per company so your account never looks automated.
+linkedin-toolkit,feature,Application log,Every submission is recorded with time, company and result.
+linkedin-toolkit,changelog,v1.8,Sep 2026,Added daily limits per company and a fix for multi-step forms that reset after the second page.
+linkedin-toolkit,changelog,v1.5,Jul 2026,Custom field mapping for questions the script does not recognize.
+linkedin-toolkit,requirement,Browser,Chrome 90+ or any Chromium browser
+linkedin-toolkit,requirement,Extension host,Tampermonkey 4.18+
+linkedin-toolkit,requirement,Account,Your own LinkedIn account
+linkedin-toolkit,requirement,Operating system,Windows macOS or Linux
+war3-hotkey-editor,feature,Visual key grid,Bind any command by clicking a cell and pressing a key.
+war3-hotkey-editor,feature,Conflict detection,Assigning a key twice highlights both entries before you export.
+war3-hotkey-editor,feature,Preset layouts,Start from grid QWER or the classic default and edit from there.
+war3-hotkey-editor,feature,Auto-save,Your layout persists in the browser between visits.
+war3-hotkey-editor,feature,Export,Writes the exact config file the game reads.
+war3-hotkey-editor,changelog,v1.3,Sep 2026,Added preset layouts and a fix for imported files with a different line ending.
+war3-hotkey-editor,changelog,v1.0,Jun 2026,First release with grid editing and export.
+war3-hotkey-editor,requirement,Game,Warcraft III any modern patch
+war3-hotkey-editor,requirement,Account,None required
+war3-map-hacker,feature,Full map view,"See the entire minimap and every unit, including areas inside the fog of war."
+war3-map-hacker,feature,Enemy builds,Watch what opponents are building while the game is running.
+war3-map-hacker,feature,Replay review,Open replays with the same full vision to study your own games.
+war3-map-hacker,requirement,Game,Warcraft III any modern patch
+war3-map-hacker,requirement,Operating system,Windows 7 or newer
+ra2-map-hacker,feature,Full map view,Remove the shroud and see the entire battlefield.
+ra2-map-hacker,feature,Live unit tracking,Watch enemy movement and build order as it happens.
+ra2-map-hacker,feature,Skirmish and replay,Works in single-player skirmish and when reviewing saved games.
+ra2-map-hacker,requirement,Game,Red Alert 2 or Yuri's Revenge
+ra2-map-hacker,requirement,Operating system,Windows 7 or newer
+canada28,feature,Draw calculator,Enter a result and get sum big/small odd/even and wave instantly.
+canada28,feature,Pattern tools,Dragon wave and streak values computed automatically.
+canada28,feature,Local history,Every calculation is stored on your device. Nothing is uploaded.
+canada28,requirement,Browser,Any current Chrome Firefox Edge or Safari
+canada28,requirement,Account,None required

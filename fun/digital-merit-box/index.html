@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Digital Merit Box | Cyber Donation Counter 电子功德箱</title>
+    <meta name="description" content="Accumulate cyber merit through virtual donations. Track your good karma digitally!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .merit-box { max-width: 400px; margin: 2rem auto; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 3rem 2rem; border-radius: 20px; box-shadow: 0 20px 60px rgba(240, 147, 251, 0.3); color: white; text-align: center; }
+        .coin-display { font-size: 6rem; margin: 2rem 0; animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .merit-counter { font-size: 3rem; font-weight: 900; margin: 1rem 0; }
+        .coin-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+        .coin-btn { padding: 1.5rem; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); border-radius: 12px; cursor: pointer; transition: all 0.2s; }
+        .coin-btn:hover { background: rgba(255,255,255,0.3); transform: translateY(-4px); }
+        .blessing-text { font-size: 1.1rem; opacity: 0.9; margin-top: 1rem; min-height: 60px; }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/digital-merit-box/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/digital-merit-box/#webpage",
+          "url": "https://neonstack.net/fun/digital-merit-box/",
+          "name": "Digital Merit Box",
+          "description": "Accumulate cyber merit through virtual donations. Track your good karma digitally!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Digital Merit Box",
+              "item": "https://neonstack.net/fun/digital-merit-box/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Merit<span>Box</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🪙 Digital Merit Box</h1>
+                <p>Accumulate cyber merit through virtual offerings!</p>
+            </div>
+            <div class="merit-box">
+                <div class="coin-display">💰</div>
+                <div>Total Merit</div>
+                <div class="merit-counter" id="merit">0</div>
+                <div class="coin-buttons">
+                    <div class="coin-btn" onclick="donate(1)">
+                        <div style="font-size: 2rem;">🪙</div>
+                        <div>+1</div>
+                    </div>
+                    <div class="coin-btn" onclick="donate(5)">
+                        <div style="font-size: 2rem;">💵</div>
+                        <div>+5</div>
+                    </div>
+                    <div class="coin-btn" onclick="donate(10)">
+                        <div style="font-size: 2rem;">💎</div>
+                        <div>+10</div>
+                    </div>
+                </div>
+                <div class="blessing-text" id="blessing">Click to donate and receive blessings</div>
+            </div>
+            <div style="background: var(--panel-strong); padding: 2rem; border-radius: 12px; margin-top: 2rem;">
+                <h3 style="margin-top: 0;">📊 Merit Statistics</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-color);" id="donations">0</div>
+                        <div style="color: var(--text-muted);">Total Donations</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 800; color: var(--accent-color);" id="level">Novice</div>
+                        <div style="color: var(--text-muted);">Merit Level</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        let totalMerit = 0;
+        let donationCount = 0;
+        
+        const blessings = [
+            "May good fortune follow you! 🍀",
+            "Your kindness will be rewarded! 🌟",
+            "Prosperity is coming your way! 💫",
+            "May peace be with you! ☮️",
+            "Blessings upon your path! 🙏",
+            "Your merit shines bright! ✨",
+            "Good karma is accumulating! 🎋",
+            "May happiness find you! 😊",
+            "Fortune smiles upon you! 🌈",
+            "Your spirit grows stronger! 💪"
+        ];
+        
+        const levels = [
+            {min: 0, name: 'Novice', emoji: '🌱'},
+            {min: 50, name: 'Believer', emoji: '🕯️'},
+            {min: 100, name: 'Devotee', emoji: '🙏'},
+            {min: 200, name: 'Enlightened', emoji: '✨'},
+            {min: 500, name: 'Master', emoji: '👑'},
+            {min: 1000, name: 'Legend', emoji: '🌟'}
+        ];
+        
+        function donate(amount) {
+            totalMerit += amount;
+            donationCount++;
+            
+            document.getElementById('merit').textContent = totalMerit;
+            document.getElementById('donations').textContent = donationCount;
+            
+            const randomBlessing = blessings[Math.floor(Math.random() * blessings.length)];
+            document.getElementById('blessing').textContent = randomBlessing;
+            
+            updateLevel();
+            playCoinSound();
+            showCoinAnimation();
+        }
+        
+        function updateLevel() {
+            const currentLevel = levels.reverse().find(l => totalMerit >= l.min) || levels[0];
+            document.getElementById('level').textContent = currentLevel.emoji + ' ' + currentLevel.name;
+            levels.reverse();
+        }
+        
+        function playCoinSound() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            
+            osc.frequency.value = 800;
+            osc.type = 'sine';
+            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+            
+            osc.start();
+            osc.stop(ctx.currentTime + 0.1);
+        }
+        
+        function showCoinAnimation() {
+            const coin = document.querySelector('.coin-display');
+            coin.style.animation = 'none';
+            setTimeout(() => coin.style.animation = '', 10);
+        }
+    </script>
+</body>
+</html>

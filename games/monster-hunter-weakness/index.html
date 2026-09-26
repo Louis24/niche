@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Monster Hunter Rise Weakness Guide | Monster Elemental Weaknesses</title>
+    <meta name="description" content="Quick reference for monster elemental weaknesses in Monster Hunter Rise.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .monster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin: 2rem 0; }
+        .monster-card { background: var(--panel-strong); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; }
+        .monster-card h3 { color: var(--accent-color); margin-bottom: 0.75rem; }
+        .weakness-row { display: flex; justify-content: space-between; margin: 0.5rem 0; font-size: 0.9rem; }
+        .element { padding: 0.25rem 0.5rem; border-radius: 5px; font-weight: 600; }
+        .fire { background: rgba(239,68,68,0.2); color: #ef4444; }
+        .water { background: rgba(56,189,248,0.2); color: #38bdf8; }
+        .thunder { background: rgba(234,179,8,0.2); color: #eab308; }
+        .ice { background: rgba(147,197,253,0.2); color: #93c5fd; }
+        .dragon { background: rgba(168,85,247,0.2); color: #a855f7; }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/games/monster-hunter-weakness/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/monster-hunter-weakness/#webpage",
+          "url": "https://neonstack.net/games/monster-hunter-weakness/",
+          "name": "Monster Hunter Weakness",
+          "description": "Quick reference for monster elemental weaknesses in Monster Hunter Rise.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Monster Hunter Weakness",
+              "item": "https://neonstack.net/games/monster-hunter-weakness/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">MH<span>Guide</span></a>
+            <nav class="nav-links"><a href="../../#games">Games</a></nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🐉 Monster Weakness Guide</h1>
+                <p>Quick reference for monster elemental weaknesses in Monster Hunter Rise.</p>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="search" placeholder="Search monster..." style="width: 100%; padding: 1rem;" oninput="filterMonsters()">
+            </div>
+
+            <div class="monster-grid" id="monster-grid"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center"><p>&copy; 2026 NeonStack.</p></div>
+    </footer>
+
+    <script>
+        // Real Monster Hunter Rise data
+        const monsters = [
+            { name: "Rathalos", primary: "dragon", secondary: "thunder", breakable: "Head, Wings, Back, Tail" },
+            { name: "Rathian", primary: "dragon", secondary: "thunder", breakable: "Head, Wings, Back, Tail" },
+            { name: "Zinogre", primary: "ice", secondary: "water", breakable: "Head, Back, Forelegs, Tail" },
+            { name: "Nargacuga", primary: "thunder", secondary: "fire", breakable: "Head, Wings, Tail" },
+            { name: "Tigrex", primary: "thunder", secondary: "dragon", breakable: "Head, Forelegs, Tail" },
+            { name: "Diablos", primary: "ice", secondary: "water", breakable: "Head, Wings, Back, Tail" },
+            { name: "Anjanath", primary: "water", secondary: "ice", breakable: "Head, Back, Legs, Tail" },
+            { name: "Tobi-Kadachi", primary: "water", secondary: "ice", breakable: "Head, Back, Tail" },
+            { name: "Mizutsune", primary: "thunder", secondary: "dragon", breakable: "Head, Forelegs, Tail" },
+            { name: "Magnamalo", primary: "water", secondary: "dragon", breakable: "Head, Forelegs, Tail" },
+            { name: "Goss Harag", primary: "fire", secondary: "thunder", breakable: "Head, Chest, Arms" },
+            { name: "Almudron", primary: "fire", secondary: "thunder", breakable: "Head, Back, Tail" },
+            { name: "Rakna-Kadaki", primary: "ice", secondary: "water", breakable: "Head, Abdomen, Sac" },
+            { name: "Aknosom", primary: "water", secondary: "ice", breakable: "Head, Crest, Wings, Tail" },
+            { name: "Tetranadon", primary: "fire", secondary: "ice", breakable: "Head, Belly, Tail" },
+            { name: "Bishaten", primary: "fire", secondary: "ice", breakable: "Head, Tail" }
+        ];
+
+        function render(filtered = monsters) {
+            const grid = document.getElementById('monster-grid');
+            grid.innerHTML = '';
+
+            filtered.forEach(monster => {
+                const card = document.createElement('div');
+                card.className = 'monster-card';
+                card.innerHTML = `
+                    <h3>${monster.name}</h3>
+                    <div class="weakness-row">
+                        <span>Primary Weakness:</span>
+                        <span class="element ${monster.primary}">${monster.primary.toUpperCase()}</span>
+                    </div>
+                    <div class="weakness-row">
+                        <span>Secondary:</span>
+                        <span class="element ${monster.secondary}">${monster.secondary.toUpperCase()}</span>
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+                        <div style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.3rem;">Breakable Parts:</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">${monster.breakable}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterMonsters() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const filtered = monsters.filter(m => m.name.toLowerCase().includes(query));
+            render(filtered);
+        }
+
+        render();
+    </script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Rhythm Game Score Calculator | PP &amp; Rating Calculator</title>
+    <meta name="description" content="Calculate your rhythm game performance points, rating, and accuracy. For osu!, Arcaea, and similar games.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .score-display { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 3rem 2rem; color: white; text-align: center; margin: 2rem 0; }
+        .big-number { font-size: 4rem; font-weight: 900; margin: 1rem 0; }
+        .grade { font-size: 6rem; font-weight: 900; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/games/rhythm-game-calculator/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/rhythm-game-calculator/#webpage",
+          "url": "https://neonstack.net/games/rhythm-game-calculator/",
+          "name": "Rhythm Game Calculator",
+          "description": "Calculate your rhythm game performance points, rating, and accuracy. For osu!, Arcaea, and similar games.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Rhythm Game Calculator",
+              "item": "https://neonstack.net/games/rhythm-game-calculator/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Rhythm<span>Calc</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🎵 Rhythm Game Score Calculator</h1>
+                <p>Calculate accuracy, performance points, and rating for rhythm games.</p>
+            </div>
+            <div class="input-group"><label>Total Notes</label><input type="number" id="total" class="input" value="500" oninput="calc()"></div>
+            <div class="input-group"><label>Perfect (300)</label><input type="number" id="perfect" class="input" value="450" oninput="calc()"></div>
+            <div class="input-group"><label>Great (100)</label><input type="number" id="great" class="input" value="40" oninput="calc()"></div>
+            <div class="input-group"><label>Good (50)</label><input type="number" id="good" class="input" value="8" oninput="calc()"></div>
+            <div class="input-group"><label>Miss (0)</label><input type="number" id="miss" class="input" value="2" oninput="calc()"></div>
+            <div class="input-group"><label>Song Difficulty</label><input type="range" id="diff" class="input" min="1" max="10" value="7" oninput="calc()"><span id="diff-val">7★</span></div>
+            <div class="score-display">
+                <div class="grade" id="grade">S</div>
+                <div class="big-number" id="acc">98.5%</div>
+                <div style="font-size: 1.2rem;">Accuracy</div>
+                <div class="big-number" id="pp" style="font-size: 2.5rem; margin-top: 2rem;">450 pp</div>
+                <div style="font-size: 1rem; opacity: 0.9;">Performance Points</div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        function calc() {
+            const total = parseInt(document.getElementById('total').value) || 0;
+            const perfect = parseInt(document.getElementById('perfect').value) || 0;
+            const great = parseInt(document.getElementById('great').value) || 0;
+            const good = parseInt(document.getElementById('good').value) || 0;
+            const miss = parseInt(document.getElementById('miss').value) || 0;
+            const diff = parseInt(document.getElementById('diff').value);
+            document.getElementById('diff-val').textContent = diff + '★';
+            const score = perfect * 300 + great * 100 + good * 50;
+            const maxScore = total * 300;
+            const acc = maxScore > 0 ? (score / maxScore * 100).toFixed(2) : 0;
+            let grade = 'D';
+            if (acc >= 95) grade = 'SS';
+            else if (acc >= 90) grade = 'S';
+            else if (acc >= 80) grade = 'A';
+            else if (acc >= 70) grade = 'B';
+            else if (acc >= 60) grade = 'C';
+            const pp = Math.round(diff * 100 * (acc / 100) * (1 - miss / total));
+            document.getElementById('acc').textContent = acc + '%';
+            document.getElementById('grade').textContent = grade;
+            document.getElementById('pp').textContent = pp + ' pp';
+        }
+        calc();
+    </script>
+</body>
+</html>

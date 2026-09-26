@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Software Market | NeonStack Apps</title>
+    <meta name="description" content="Small, focused software from indie developers. Browser extensions, desktop tools, and scripts that solve one real problem.">
+    <link rel="canonical" href="https://neonstack.net/apps/">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/site.css">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../" class="logo">Neon<span>Stack</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../#tools">Tools</a>
+                <a href="../#reviews">Reviews</a>
+                <a href="../#games">Games</a>
+                <a href="../apps/">Apps</a>
+                <a href="../contact/">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="site-hero">
+            <div class="container text-center">
+                <span class="badge">Software Market</span>
+                <h1>Small software that solves one real problem.</h1>
+                <p>Every app here is built and maintained by an independent developer. Pay once, keep it forever, and talk directly to the person who wrote it.</p>
+                <div class="market-search">
+                    <input id="app-search" type="search" placeholder="Search apps, tags, or developers..." aria-label="Search apps">
+                </div>
+                <div class="market-actions">
+                    <a class="btn" href="#all-apps">Browse apps</a>
+                    <a class="btn btn-secondary" href="../contact/">Sell your app</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-band">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <span class="stat-num">5</span>
+                        <span class="stat-lbl">Apps</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">2</span>
+                        <span class="stat-lbl">Developers</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">30d</span>
+                        <span class="stat-lbl">Refund window</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num">&infin;</span>
+                        <span class="stat-lbl">Updates included</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="all-apps" class="section-band">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <h2>All apps</h2>
+                        <p>Filter by type and price, or search by name.</p>
+                    </div>
+                </div>
+
+                <div class="filter-bar">
+                    <div class="filter-row" role="group" aria-label="Filter by category">
+                        <span class="filter-label">Type</span>
+                        <button class="chip is-active" data-filter="category" data-value="all">All</button>
+                        <button class="chip" data-filter="category" data-value="script">Script</button>
+                        <button class="chip" data-filter="category" data-value="desktop">Desktop</button>
+                        <button class="chip" data-filter="category" data-value="web">Web app</button>
+                        <button class="chip" data-filter="category" data-value="template">Template</button>
+                    </div>
+                    <div class="filter-row" role="group" aria-label="Filter by price">
+                        <span class="filter-label">Price</span>
+                        <button class="chip is-active" data-filter="price" data-value="all">Any</button>
+                        <button class="chip" data-filter="price" data-value="free">Free</button>
+                        <button class="chip" data-filter="price" data-value="paid">Paid</button>
+                    </div>
+                    <div class="filter-row">
+                        <span class="filter-label">Sort</span>
+                        <button class="chip is-active" data-filter="sort" data-value="featured">Featured</button>
+                        <button class="chip" data-filter="sort" data-value="price-asc">Price low to high</button>
+                        <button class="chip" data-filter="sort" data-value="price-desc">Price high to low</button>
+                        <button class="chip" data-filter="sort" data-value="name">Name A-Z</button>
+                        <span class="filter-count" id="result-count">5 apps</span>
+                    </div>
+                </div>
+
+                <div class="app-grid" id="app-grid">
+
+                    <a class="app-card" href="linkedin-toolkit/"
+                       data-category="script" data-price="paid" data-amount="200"
+                       data-name="LinkedIn Toolkit" data-author="墨墨"
+                       data-tags="script chrome linkedin automation">
+                        <div class="app-card-head">
+                            <div class="app-icon alt">LT</div>
+                            <div>
+                                <h3 class="app-title">LinkedIn Toolkit</h3>
+                                <p class="app-author">by 墨墨</p>
+                            </div>
+                        </div>
+                        <p class="app-desc">Fill and submit LinkedIn Easy Apply forms automatically, within limits you set.</p>
+                        <div class="app-tags">
+                            <span class="tag">script</span>
+                            <span class="tag">chrome</span>
+                            <span class="tag">linkedin</span>
+                        </div>
+                        <div class="app-foot">
+                            <div class="price">$200<small>one-time</small></div>
+                            <span class="app-cta">View details</span>
+                        </div>
+                    </a>
+
+                    <a class="app-card" href="war3-hotkey-editor/"
+                       data-category="web" data-price="paid" data-amount="200"
+                       data-name="War3 Hotkey Editor" data-author="墨墨"
+                       data-tags="web game editor hotkeys">
+                        <div class="app-card-head">
+                            <div class="app-icon warn">W3</div>
+                            <div>
+                                <h3 class="app-title">War3 Hotkey Editor</h3>
+                                <p class="app-author">by 墨墨</p>
+                            </div>
+                        </div>
+                        <p class="app-desc">Design a custom Warcraft III hotkey layout on a visual grid, then export it.</p>
+                        <div class="app-tags">
+                            <span class="tag">web</span>
+                            <span class="tag">game</span>
+                            <span class="tag">editor</span>
+                        </div>
+                        <div class="app-foot">
+                            <div class="price">$200<small>one-time</small></div>
+                            <span class="app-cta">View details</span>
+                        </div>
+                    </a>
+
+                    <a class="app-card" href="war3-map-hacker/"
+                       data-category="desktop" data-price="paid" data-amount="200"
+                       data-name="War3 Map Hacker" data-author="墨墨"
+                       data-tags="desktop war3 maps utility">
+                        <div class="app-card-head">
+                            <div class="app-icon">MH</div>
+                            <div>
+                                <h3 class="app-title">War3 Map Hacker</h3>
+                                <p class="app-author">by 墨墨</p>
+                            </div>
+                        </div>
+                        <p class="app-desc">Reveal the whole battlefield in Warcraft III, including fogged ground and enemy builds.</p>
+                        <div class="app-tags">
+                            <span class="tag">desktop</span>
+                            <span class="tag">war3</span>
+                            <span class="tag">maps</span>
+                        </div>
+                        <div class="app-foot">
+                            <div class="price">$200<small>one-time</small></div>
+                            <span class="app-cta">View details</span>
+                        </div>
+                    </a>
+
+                    <a class="app-card" href="ra2-map-hacker/"
+                       data-category="desktop" data-price="paid" data-amount="200"
+                       data-name="RA2 Map Hacker" data-author="墨墨"
+                       data-tags="desktop ra2 maps utility">
+                        <div class="app-card-head">
+                            <div class="app-icon violet">R2</div>
+                            <div>
+                                <h3 class="app-title">RA2 Map Hacker</h3>
+                                <p class="app-author">by 墨墨</p>
+                            </div>
+                        </div>
+                        <p class="app-desc">Reveal the whole map in Red Alert 2 and Yuri's Revenge.</p>
+                        <div class="app-tags">
+                            <span class="tag">desktop</span>
+                            <span class="tag">ra2</span>
+                            <span class="tag">maps</span>
+                        </div>
+                        <div class="app-foot">
+                            <div class="price">$200<small>one-time</small></div>
+                            <span class="app-cta">View details</span>
+                        </div>
+                    </a>
+
+                    <a class="app-card" href="canada28/"
+                       data-category="web" data-price="paid" data-amount="500"
+                       data-name="Canada28" data-author="爆炸猫"
+                       data-tags="web calculator trends">
+                        <div class="app-card-head">
+                            <div class="app-icon">C8</div>
+                            <div>
+                                <h3 class="app-title">Canada28</h3>
+                                <p class="app-author">by 爆炸猫</p>
+                            </div>
+                        </div>
+                        <p class="app-desc">A calculator for the Canada 28 draw: sums, patterns and history in one place.</p>
+                        <div class="app-tags">
+                            <span class="tag">web</span>
+                            <span class="tag">calculator</span>
+                            <span class="tag">trends</span>
+                        </div>
+                        <div class="app-foot">
+                            <div class="price">$500<small>one-time</small></div>
+                            <span class="app-cta">View details</span>
+                        </div>
+                    </a>
+
+                </div>
+
+                <p class="no-results" id="no-results" hidden>No apps match that filter. Try clearing the search box.</p>
+            </div>
+        </section>
+
+        <section class="section-band">
+            <div class="container">
+                <div class="content-panel text-center">
+                    <span class="badge">Developers</span>
+                    <h2>Have a tool people would pay for?</h2>
+                    <p>List it here and keep 85% of every sale. You keep your code, your users, and your roadmap.</p>
+                    <div class="market-actions">
+                        <a class="btn" href="../contact/">Submit your app</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="faq-section">
+            <div class="container">
+                <div class="section-heading">
+                    <div>
+                        <h2>Before you buy</h2>
+                        <p>The short version of how this works.</p>
+                    </div>
+                </div>
+                    <div class="qa-list">
+                        <div class="qa-item">
+                            <h4>How do I receive the app?</h4>
+                            <p>The developer contacts you by email after you get in touch, and sends the download and license key directly.</p>
+                        </div>
+                        <div class="qa-item">
+                            <h4>How do I pay?</h4>
+                            <p>Any way the developer accepts — they tell you the options by email. No card details are entered on this site.</p>
+                        </div>
+                        <div class="qa-item">
+                            <h4>Can I get a refund?</h4>
+                            <p>Yes. Email within 30 days and you get a full refund, no questions asked.</p>
+                        </div>
+                        <div class="qa-item">
+                            <h4>Are updates included?</h4>
+                            <p>Every purchase includes all future updates for that major version.</p>
+                        </div>
+                        <div class="qa-item">
+                            <h4>Who do I contact for support?</h4>
+                            <p>The developer directly. Their contact details are on every app page.</p>
+                        </div>
+                    </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../about/">About</a>
+                <a href="../contact/">Contact</a>
+                <a href="../privacy-policy/">Privacy Policy</a>
+                <a href="../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Apps are sold by their developers.</p>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        var grid = document.getElementById('app-grid');
+        var cards = Array.prototype.slice.call(grid.querySelectorAll('.app-card'));
+        var search = document.getElementById('app-search');
+        var count = document.getElementById('result-count');
+        var empty = document.getElementById('no-results');
+        var state = { category: 'all', price: 'all', sort: 'featured', query: '' };
+
+        function apply() {
+            var visible = cards.filter(function (card) {
+                var data = card.dataset;
+                if (state.category !== 'all' && data.category !== state.category) return false;
+                if (state.price !== 'all' && data.price !== state.price) return false;
+                if (state.query) {
+                    var haystack = (data.name + ' ' + data.author + ' ' + data.tags).toLowerCase();
+                    if (haystack.indexOf(state.query) === -1) return false;
+                }
+                return true;
+            });
+
+            if (state.sort === 'price-asc') {
+                visible.sort(function (a, b) { return Number(a.dataset.amount) - Number(b.dataset.amount); });
+            } else if (state.sort === 'price-desc') {
+                visible.sort(function (a, b) { return Number(b.dataset.amount) - Number(a.dataset.amount); });
+            } else if (state.sort === 'name') {
+                visible.sort(function (a, b) { return a.dataset.name.localeCompare(b.dataset.name); });
+            }
+
+            cards.forEach(function (card) { card.hidden = true; });
+            visible.forEach(function (card) { grid.appendChild(card); card.hidden = false; });
+
+            count.textContent = visible.length + (visible.length === 1 ? ' app' : ' apps');
+            empty.hidden = visible.length !== 0;
+        }
+
+        document.querySelectorAll('.chip').forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                var group = chip.dataset.filter;
+                document.querySelectorAll('.chip[data-filter="' + group + '"]').forEach(function (other) {
+                    other.classList.toggle('is-active', other === chip);
+                });
+                state[group] = chip.dataset.value;
+                apply();
+            });
+        });
+
+        search.addEventListener('input', function () {
+            state.query = search.value.trim().toLowerCase();
+            apply();
+        });
+
+        apply();
+    })();
+    </script>
+</body>
+</html>

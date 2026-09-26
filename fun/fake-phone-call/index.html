@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Fake Phone Call | Social Escape Tool</title>
+    <meta name="description" content="Schedule a fake phone call to escape awkward situations. Realistic caller ID and ringtone!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .phone-screen { max-width: 400px; margin: 2rem auto; background: #000; border-radius: 40px; padding: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+        .incoming-call { background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border-radius: 30px; padding: 3rem 2rem; text-align: center; color: white; min-height: 600px; display: flex; flex-direction: column; justify-content: space-between; }
+        .caller-avatar { width: 150px; height: 150px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-color) 0%, #8b5cf6 100%); margin: 2rem auto; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
+        .caller-name { font-size: 2rem; font-weight: 800; margin: 1rem 0; }
+        .call-type { color: #888; font-size: 1rem; }
+        .call-buttons { display: flex; gap: 2rem; justify-content: center; margin-top: 2rem; }
+        .call-btn { width: 80px; height: 80px; border-radius: 50%; border: none; font-size: 2rem; cursor: pointer; transition: transform 0.2s; }
+        .call-btn:active { transform: scale(0.9); }
+        .accept { background: #22c55e; }
+        .decline { background: #ef4444; }
+        .ringing { animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/fake-phone-call/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/fake-phone-call/#webpage",
+          "url": "https://neonstack.net/fun/fake-phone-call/",
+          "name": "Fake Phone Call",
+          "description": "Schedule a fake phone call to escape awkward situations. Realistic caller ID and ringtone!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Fake Phone Call",
+              "item": "https://neonstack.net/fun/fake-phone-call/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Fake<span>Call</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>📞 Fake Phone Call</h1>
+                <p>Escape awkward situations with a scheduled fake call!</p>
+            </div>
+            <div class="input-group">
+                <label>Caller Name</label>
+                <input type="text" id="caller-name" class="input" value="Mom" placeholder="Who's calling?">
+            </div>
+            <div class="input-group">
+                <label>Delay (seconds)</label>
+                <input type="number" id="delay" class="input" value="10" min="1" max="60">
+            </div>
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="btn btn-primary" onclick="scheduleCall()" id="schedule-btn" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                    ⏰ Schedule Call
+                </button>
+            </div>
+            <div class="phone-screen" id="phone" style="display: none;">
+                <div class="incoming-call">
+                    <div>
+                        <div class="caller-avatar" id="avatar">📱</div>
+                        <div class="caller-name" id="display-name">Mom</div>
+                        <div class="call-type">mobile</div>
+                    </div>
+                    <div class="call-buttons">
+                        <button class="call-btn decline" onclick="endCall()">📵</button>
+                        <button class="call-btn accept" onclick="answerCall()">📞</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        let callTimeout;
+        let ringtoneInterval;
+        
+        function scheduleCall() {
+            const delay = parseInt(document.getElementById('delay').value) * 1000;
+            const btn = document.getElementById('schedule-btn');
+            btn.disabled = true;
+            btn.textContent = `⏳ Call in ${delay/1000}s...`;
+            
+            callTimeout = setTimeout(() => {
+                showIncomingCall();
+                btn.disabled = false;
+                btn.textContent = '⏰ Schedule Call';
+            }, delay);
+        }
+        
+        function showIncomingCall() {
+            const name = document.getElementById('caller-name').value || 'Unknown';
+            document.getElementById('display-name').textContent = name;
+            document.getElementById('phone').style.display = 'block';
+            document.querySelector('.incoming-call').classList.add('ringing');
+            
+            playRingtone();
+        }
+        
+        function playRingtone() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            ringtoneInterval = setInterval(() => {
+                const notes = [659, 587, 523];
+                notes.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.frequency.value = freq;
+                    osc.type = 'sine';
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime + i * 0.15);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.15 + 0.15);
+                    
+                    osc.start(ctx.currentTime + i * 0.15);
+                    osc.stop(ctx.currentTime + i * 0.15 + 0.15);
+                });
+            }, 2000);
+        }
+        
+        function answerCall() {
+            clearInterval(ringtoneInterval);
+            alert('Call answered! Now act busy and walk away 😉');
+            endCall();
+        }
+        
+        function endCall() {
+            clearInterval(ringtoneInterval);
+            document.getElementById('phone').style.display = 'none';
+            document.querySelector('.incoming-call').classList.remove('ringing');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "title": "LinkedIn Toolkit",
+  "badge": "Script",
+  "description": "LinkedIn Toolkit fills Easy Apply forms from the profile you save once and submits applications that match your rules. You choose the job titles, the locations, the companies to skip, and how many applications go out per day. Every submission is logged with time, company and result, so you always know exactly what was sent.",
+  "price": 200,
+  "license": [
+    "one-time"
+  ],
+  "platform": [
+    "Chrome",
+    "Windows",
+    "macOS"
+  ],
+  "author": "momo",
+  "tags": [
+    "script",
+    "chrome",
+    "linkedin",
+    "automation"
+  ],
+  "version": "1.8",
+  "updated": "2026-09"
+}

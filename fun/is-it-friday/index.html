@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Is It Friday? | Single Purpose Website</title>
+    <meta name="description" content="The most important question. Is it Friday yet?">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .answer { font-size: 15rem; font-weight: 900; text-align: center; margin: 4rem 0; line-height: 1; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .answer.yes { color: #22c55e; animation: celebrate 1s infinite; }
+        .answer.no { color: #ef4444; }
+        @keyframes celebrate { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .countdown { text-align: center; font-size: 2rem; color: var(--text-muted); margin-top: 2rem; }
+        @media (max-width: 768px) { .answer { font-size: 8rem; } }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/is-it-friday/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/is-it-friday/#webpage",
+          "url": "https://neonstack.net/fun/is-it-friday/",
+          "name": "Is It Friday",
+          "description": "The most important question. Is it Friday yet?",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Is It Friday",
+              "item": "https://neonstack.net/fun/is-it-friday/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Is It<span>Friday?</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <div class="answer" id="answer">NO</div>
+        <div class="countdown" id="countdown"></div>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        function check() {
+            const now = new Date();
+            const day = now.getDay();
+            const answer = document.getElementById('answer');
+            const countdown = document.getElementById('countdown');
+            
+            if (day === 5) {
+                answer.textContent = 'YES! 🎉';
+                answer.className = 'answer yes';
+                countdown.textContent = 'Happy Friday!';
+            } else {
+                answer.textContent = 'NO';
+                answer.className = 'answer no';
+                
+                const daysUntil = (5 - day + 7) % 7 || 7;
+                const hours = 24 - now.getHours();
+                const mins = 60 - now.getMinutes();
+                
+                countdown.textContent = `${daysUntil} days, ${hours} hours, ${mins} minutes until Friday`;
+            }
+        }
+        
+        check();
+        setInterval(check, 60000);
+    </script>
+</body>
+</html>

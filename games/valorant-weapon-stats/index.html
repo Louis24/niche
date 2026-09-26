@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Valorant Weapon Stats &amp; Damage Guide | Gun Comparison</title>
+    <meta name="description" content="Compare damage, fire rate, and magazine size for all Valorant weapons.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <link rel="canonical" href="https://neonstack.net/games/valorant-weapon-stats/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/valorant-weapon-stats/#webpage",
+          "url": "https://neonstack.net/games/valorant-weapon-stats/",
+          "name": "Valorant Weapon Stats",
+          "description": "Compare damage, fire rate, and magazine size for all Valorant weapons.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Valorant Weapon Stats",
+              "item": "https://neonstack.net/games/valorant-weapon-stats/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Valorant<span>Stats</span></a>
+            <nav class="nav-links"><a href="../../#games">Games</a></nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🔫 Valorant Weapon Stats</h1>
+                <p>Compare damage, fire rate, and magazine size for all Valorant weapons.</p>
+            </div>
+
+            <div class="input-group">
+                <label for="category-filter">Filter by Category</label>
+                <select id="category-filter" onchange="filterWeapons()">
+                    <option value="all">All Weapons</option>
+                    <option value="Rifle">Rifles</option>
+                    <option value="SMG">SMGs</option>
+                    <option value="Sniper">Snipers</option>
+                    <option value="Shotgun">Shotguns</option>
+                    <option value="Pistol">Pistols</option>
+                </select>
+            </div>
+
+            <div class="table-container">
+                <table class="profit-table">
+                    <thead>
+                        <tr>
+                            <th>Weapon</th>
+                            <th>Category</th>
+                            <th>Cost</th>
+                            <th>Head Damage (0-50m)</th>
+                            <th>Body Damage</th>
+                            <th>Fire Rate</th>
+                            <th>Magazine</th>
+                        </tr>
+                    </thead>
+                    <tbody id="weapons-tbody"></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center"><p>&copy; 2026 NeonStack.</p></div>
+    </footer>
+
+    <script>
+        // Real Valorant weapon stats
+        const weapons = [
+            { name: "Vandal", category: "Rifle", cost: 2900, headDamage: 160, bodyDamage: 40, fireRate: 9.75, magazine: 25 },
+            { name: "Phantom", category: "Rifle", cost: 2900, headDamage: 156, bodyDamage: 39, fireRate: 11, magazine: 30 },
+            { name: "Guardian", category: "Rifle", cost: 2250, headDamage: 195, bodyDamage: 65, fireRate: 4.75, magazine: 12 },
+            { name: "Bulldog", category: "Rifle", cost: 2050, headDamage: 116, bodyDamage: 35, fireRate: 9.15, magazine: 24 },
+            { name: "Operator", category: "Sniper", cost: 4700, headDamage: 255, bodyDamage: 150, fireRate: 0.6, magazine: 5 },
+            { name: "Marshal", category: "Sniper", cost: 950, headDamage: 202, bodyDamage: 101, fireRate: 1.5, magazine: 5 },
+            { name: "Spectre", category: "SMG", cost: 1600, headDamage: 78, bodyDamage: 26, fireRate: 13.33, magazine: 30 },
+            { name: "Stinger", category: "SMG", cost: 950, headDamage: 67, bodyDamage: 27, fireRate: 16, magazine: 20 },
+            { name: "Judge", category: "Shotgun", cost: 1850, headDamage: 34, bodyDamage: 17, fireRate: 3.5, magazine: 7 },
+            { name: "Bucky", category: "Shotgun", cost: 850, headDamage: 44, bodyDamage: 22, fireRate: 1.1, magazine: 5 },
+            { name: "Ghost", category: "Pistol", cost: 500, headDamage: 105, bodyDamage: 30, fireRate: 6.75, magazine: 15 },
+            { name: "Sheriff", category: "Pistol", cost: 800, headDamage: 160, bodyDamage: 55, fireRate: 4, magazine: 6 },
+            { name: "Classic", category: "Pistol", cost: 0, headDamage: 78, bodyDamage: 26, fireRate: 6.75, magazine: 12 }
+        ];
+
+        function render(filtered = weapons) {
+            const tbody = document.getElementById('weapons-tbody');
+            tbody.innerHTML = '';
+
+            filtered.forEach(weapon => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${weapon.name}</strong></td>
+                    <td>${weapon.category}</td>
+                    <td>${weapon.cost === 0 ? 'Free' : weapon.cost + ' credits'}</td>
+                    <td style="color: #ef4444;">${weapon.headDamage}</td>
+                    <td>${weapon.bodyDamage}</td>
+                    <td>${weapon.fireRate} rounds/sec</td>
+                    <td>${weapon.magazine}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function filterWeapons() {
+            const category = document.getElementById('category-filter').value;
+            const filtered = category === 'all' ? weapons : weapons.filter(w => w.category === category);
+            render(filtered);
+        }
+
+        render();
+    </script>
+</body>
+</html>

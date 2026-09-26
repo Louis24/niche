@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+
+# Note: content-manifest.json and assets/content-manifest.js should be committed!
+# They are the generated indexes that the site needs to load
+
+# Documentation and scripts (privacy)
+docs/
+scripts/
+sql/
+python/
+deploy/

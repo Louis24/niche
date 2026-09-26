@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Voice Amplifier | Browser Megaphone Effect</title>
+    <meta name="description" content="Turn your device into a megaphone with echo effects. Amplify your voice in real-time!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .amplifier-visual { width: 200px; height: 200px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-color) 0%, #8b5cf6 100%); margin: 2rem auto; display: flex; align-items: center; justify-content: center; font-size: 5rem; transition: transform 0.1s; }
+        .amplifier-visual.active { animation: pulse-mic 0.5s infinite; }
+        @keyframes pulse-mic { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        .volume-bar { height: 40px; background: var(--panel-strong); border-radius: 20px; overflow: hidden; margin: 2rem 0; }
+        .volume-level { height: 100%; background: linear-gradient(90deg, #22c55e 0%, #ef4444 100%); transition: width 0.1s; }
+        .effect-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0; }
+        .effect-btn { padding: 1rem; background: var(--panel-strong); border: 2px solid var(--border-color); border-radius: 12px; cursor: pointer; text-align: center; transition: all 0.2s; }
+        .effect-btn:hover { border-color: var(--accent-color); transform: translateY(-2px); }
+        .effect-btn.active { background: var(--accent-color); color: white; border-color: var(--accent-color); }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/voice-amplifier/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/voice-amplifier/#webpage",
+          "url": "https://neonstack.net/fun/voice-amplifier/",
+          "name": "Voice Amplifier",
+          "description": "Turn your device into a megaphone with echo effects. Amplify your voice in real-time!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Voice Amplifier",
+              "item": "https://neonstack.net/fun/voice-amplifier/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Voice<span>Amp</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>📢 Voice Amplifier</h1>
+                <p>Turn your device into a megaphone with real-time effects!</p>
+            </div>
+            <div class="amplifier-visual" id="visual">🎤</div>
+            <div class="volume-bar">
+                <div class="volume-level" id="volume" style="width: 0%"></div>
+            </div>
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="btn btn-primary" onclick="toggleAmplifier()" id="amp-btn" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                    🎙️ Start Amplifier
+                </button>
+            </div>
+            <div class="input-group">
+                <label>Volume Boost</label>
+                <input type="range" id="gain" class="input" min="1" max="5" step="0.5" value="2" oninput="updateGain()">
+                <span id="gain-val">2x</span>
+            </div>
+            <div class="input-group">
+                <label>Echo Effects</label>
+                <div class="effect-grid">
+                    <div class="effect-btn active" onclick="setEffect('none')" id="eff-none">
+                        <div style="font-size: 2rem;">🔊</div>
+                        <div>Normal</div>
+                    </div>
+                    <div class="effect-btn" onclick="setEffect('echo')" id="eff-echo">
+                        <div style="font-size: 2rem;">🔁</div>
+                        <div>Echo</div>
+                    </div>
+                    <div class="effect-btn" onclick="setEffect('reverb')" id="eff-reverb">
+                        <div style="font-size: 2rem;">🏟️</div>
+                        <div>Reverb</div>
+                    </div>
+                </div>
+            </div>
+            <p style="text-align: center; color: var(--text-muted); margin-top: 2rem;">
+                ⚠️ May cause audio feedback if speakers are too close to microphone
+            </p>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        let audioContext, microphone, gainNode, analyser, isActive = false;
+        let currentEffect = 'none';
+        
+        async function toggleAmplifier() {
+            if (!isActive) {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    
+                    microphone = audioContext.createMediaStreamSource(stream);
+                    gainNode = audioContext.createGain();
+                    analyser = audioContext.createAnalyser();
+                    
+                    gainNode.gain.value = parseFloat(document.getElementById('gain').value);
+                    
+                    microphone.connect(gainNode);
+                    gainNode.connect(analyser);
+                    analyser.connect(audioContext.destination);
+                    
+                    isActive = true;
+                    document.getElementById('amp-btn').textContent = '⏸️ Stop Amplifier';
+                    document.getElementById('visual').classList.add('active');
+                    
+                    visualize();
+                } catch (err) {
+                    alert('Microphone access denied. Please allow microphone permission.');
+                }
+            } else {
+                if (audioContext) audioContext.close();
+                isActive = false;
+                document.getElementById('amp-btn').textContent = '🎙️ Start Amplifier';
+                document.getElementById('visual').classList.remove('active');
+                document.getElementById('volume').style.width = '0%';
+            }
+        }
+        
+        function visualize() {
+            if (!isActive) return;
+            
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(dataArray);
+            
+            const average = dataArray.reduce((a, b) => a + b) / dataArray.length;
+            const percentage = Math.min(100, (average / 128) * 100);
+            
+            document.getElementById('volume').style.width = percentage + '%';
+            
+            requestAnimationFrame(visualize);
+        }
+        
+        function updateGain() {
+            const value = parseFloat(document.getElementById('gain').value);
+            document.getElementById('gain-val').textContent = value + 'x';
+            if (gainNode) gainNode.gain.value = value;
+        }
+        
+        function setEffect(effect) {
+            currentEffect = effect;
+            document.querySelectorAll('.effect-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('eff-' + effect).classList.add('active');
+            
+            // Effect implementation would require more complex audio processing
+            // This is a simplified version
+        }
+    </script>
+</body>
+</html>

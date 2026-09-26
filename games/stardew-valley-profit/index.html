@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Stardew Valley Crop Profit Calculator | Maximize Farm Revenue</title>
+    <meta name="description" content="Maximize your farm's gold yield per tile. Dynamically adjust days and select seasons.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <link rel="canonical" href="https://neonstack.net/games/stardew-valley-profit/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/stardew-valley-profit/#webpage",
+          "url": "https://neonstack.net/games/stardew-valley-profit/",
+          "name": "Stardew Valley Profit",
+          "description": "Maximize your farm's gold yield per tile. Dynamically adjust days and select seasons.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Stardew Valley Profit",
+              "item": "https://neonstack.net/games/stardew-valley-profit/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Stardew<span>Profits</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>Crop Yield & Profit Calculator</h1>
+                <p>Maximize your farm's gold yield per tile. Dynamically adjust days and select seasons.</p>
+            </div>
+
+            <div class="inputs-grid">
+                <div class="input-group">
+                    <label for="season-select">Select Season</label>
+                    <select id="season-select">
+                        <option value="spring">Spring</option>
+                        <option value="summer">Summer</option>
+                        <option value="fall">Fall</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="days-left">Days Left in Season (1-28)</label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="days-left" min="1" max="28" value="28">
+                        <span id="days-display">28 days</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="farming-level">Farming Level Bonus</label>
+                    <select id="farming-level">
+                        <option value="0">Level 0 (Normal Quality)</option>
+                        <option value="5">Level 5 (Tiller +10% Crop Value)</option>
+                        <option value="10">Level 10 (Artisan +40% Processed Value)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="profit-table">
+                    <thead>
+                        <tr>
+                            <th>Crop Name</th>
+                            <th>Seed Cost</th>
+                            <th>Sell Price (Min)</th>
+                            <th>Growth Time</th>
+                            <th>Harvests</th>
+                            <th class="sortable active" onclick="calculateAndSort()">Total Net Profit / Tile</th>
+                        </tr>
+                    </thead>
+                    <tbody id="crop-tbody">
+                        <!-- Calculated rows go here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const cropData = {
+            spring: [
+                { name: "Blueberry", seedCost: 80, sellPrice: 50, growthTime: 13, regrowTime: 4, yieldCount: 3 },
+                { name: "Cauliflower", seedCost: 80, sellPrice: 175, growthTime: 12, regrowTime: 0, yieldCount: 1 },
+                { name: "Coffee Bean", seedCost: 2500, sellPrice: 15, growthTime: 10, regrowTime: 2, yieldCount: 4 },
+                { name: "Garlic", seedCost: 40, sellPrice: 60, growthTime: 4, regrowTime: 0, yieldCount: 1 },
+                { name: "Green Bean", seedCost: 60, sellPrice: 40, growthTime: 10, regrowTime: 3, yieldCount: 1 },
+                { name: "Kale", seedCost: 70, sellPrice: 110, growthTime: 6, regrowTime: 0, yieldCount: 1 },
+                { name: "Parsnip", seedCost: 20, sellPrice: 35, growthTime: 4, regrowTime: 0, yieldCount: 1 },
+                { name: "Potato", seedCost: 50, sellPrice: 80, growthTime: 6, regrowTime: 0, yieldCount: 1.2 },
+                { name: "Rhubarb", seedCost: 100, sellPrice: 220, growthTime: 13, regrowTime: 0, yieldCount: 1 },
+                { name: "Strawberry", seedCost: 100, sellPrice: 120, growthTime: 8, regrowTime: 4, yieldCount: 1 }
+            ],
+            summer: [
+                { name: "Blueberry", seedCost: 80, sellPrice: 50, growthTime: 13, regrowTime: 4, yieldCount: 3 },
+                { name: "Corn", seedCost: 150, sellPrice: 50, growthTime: 14, regrowTime: 4, yieldCount: 1 },
+                { name: "Hops", seedCost: 60, sellPrice: 25, growthTime: 11, regrowTime: 1, yieldCount: 1 },
+                { name: "Hot Pepper", seedCost: 40, sellPrice: 40, growthTime: 5, regrowTime: 3, yieldCount: 1 },
+                { name: "Melon", seedCost: 80, sellPrice: 250, growthTime: 12, regrowTime: 0, yieldCount: 1 },
+                { name: "Radish", seedCost: 40, sellPrice: 90, growthTime: 6, regrowTime: 0, yieldCount: 1 },
+                { name: "Red Cabbage", seedCost: 100, sellPrice: 260, growthTime: 9, regrowTime: 0, yieldCount: 1 },
+                { name: "Starfruit", seedCost: 400, sellPrice: 750, growthTime: 13, regrowTime: 0, yieldCount: 1 },
+                { name: "Tomato", seedCost: 50, sellPrice: 60, growthTime: 11, regrowTime: 4, yieldCount: 1 },
+                { name: "Wheat", seedCost: 10, sellPrice: 25, growthTime: 4, regrowTime: 0, yieldCount: 1 }
+            ],
+            fall: [
+                { name: "Amaranth", seedCost: 70, sellPrice: 150, growthTime: 7, regrowTime: 0, yieldCount: 1 },
+                { name: "Artichoke", seedCost: 30, sellPrice: 160, growthTime: 8, regrowTime: 0, yieldCount: 1 },
+                { name: "Beet", seedCost: 20, sellPrice: 100, growthTime: 6, regrowTime: 0, yieldCount: 1 },
+                { name: "Bok Choy", seedCost: 50, sellPrice: 80, growthTime: 4, regrowTime: 0, yieldCount: 1 },
+                { name: "Cranberries", seedCost: 240, sellPrice: 75, growthTime: 7, regrowTime: 5, yieldCount: 2 },
+                { name: "Eggplant", seedCost: 20, sellPrice: 60, growthTime: 5, regrowTime: 5, yieldCount: 1 },
+                { name: "Fairy Rose", seedCost: 200, sellPrice: 290, growthTime: 12, regrowTime: 0, yieldCount: 1 },
+                { name: "Grape", seedCost: 60, sellPrice: 80, growthTime: 10, regrowTime: 3, yieldCount: 1 },
+                { name: "Pumpkin", seedCost: 100, sellPrice: 320, growthTime: 13, regrowTime: 0, yieldCount: 1 },
+                { name: "Sweet Gem Berry", seedCost: 1000, sellPrice: 3000, growthTime: 24, regrowTime: 0, yieldCount: 1 },
+                { name: "Yam", seedCost: 60, sellPrice: 160, growthTime: 10, regrowTime: 0, yieldCount: 1 }
+            ]
+        };
+
+        const seasonSelect = document.getElementById('season-select');
+        const daysSlider = document.getElementById('days-left');
+        const daysDisplay = document.getElementById('days-display');
+        const farmingLevel = document.getElementById('farming-level');
+        const tbody = document.getElementById('crop-tbody');
+
+        function calculateAndSort() {
+            const season = seasonSelect.value;
+            const daysLeft = parseInt(daysSlider.value, 10);
+            const levelBonus = parseInt(farmingLevel.value, 10);
+            
+            let priceMultiplier = 1;
+            if (levelBonus === 5) priceMultiplier = 1.1;
+            if (levelBonus === 10) priceMultiplier = 1.4;
+
+            const crops = cropData[season];
+            const calculatedCrops = crops.map(crop => {
+                let harvests = 0;
+                let cost = 0;
+                let revenue = 0;
+
+                if (daysLeft >= crop.growthTime) {
+                    if (crop.regrowTime > 0) {
+                        harvests = 1 + Math.floor((daysLeft - crop.growthTime) / crop.regrowTime);
+                        cost = crop.seedCost;
+                        revenue = harvests * (crop.sellPrice * crop.yieldCount * priceMultiplier);
+                    } else {
+                        harvests = Math.floor(daysLeft / crop.growthTime);
+                        cost = harvests * crop.seedCost;
+                        revenue = harvests * (crop.sellPrice * crop.yieldCount * priceMultiplier);
+                    }
+                }
+
+                const netProfit = Math.round(revenue - cost);
+
+                return {
+                    ...crop,
+                    harvests,
+                    cost,
+                    netProfit
+                };
+            });
+
+            calculatedCrops.sort((a, b) => b.netProfit - a.netProfit);
+
+            tbody.innerHTML = '';
+            calculatedCrops.forEach(crop => {
+                const row = document.createElement('tr');
+                if (crop.netProfit > 0) {
+                    row.className = 'profitable';
+                }
+                row.innerHTML = `
+                    <td><strong>${crop.name}</strong></td>
+                    <td>${crop.seedCost}g</td>
+                    <td>${Math.round(crop.sellPrice * crop.yieldCount * priceMultiplier)}g</td>
+                    <td>${crop.growthTime} days</td>
+                    <td>${crop.harvests}</td>
+                    <td class="profit-val">${crop.netProfit > 0 ? `${crop.netProfit}g` : '0g (No yield)'}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        seasonSelect.addEventListener('change', calculateAndSort);
+        daysSlider.addEventListener('input', (e) => {
+            daysDisplay.textContent = `${e.target.value} days`;
+            calculateAndSort();
+        });
+        farmingLevel.addEventListener('change', calculateAndSort);
+
+        calculateAndSort();
+    </script>
+</body>
+</html>
+
+

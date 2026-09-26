@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Cat Keyboard Translator | Decode Your Cat's Messages</title>
+    <meta name="description" content="Your cat walked on your keyboard? Translate their random keystrokes into cat language!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .cat-display { font-size: 8rem; text-align: center; margin: 2rem 0; animation: bounce 1s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .translation-box { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); color: white; padding: 2rem; border-radius: 12px; margin: 2rem 0; min-height: 100px; }
+        .cat-mood { display: inline-block; padding: 0.5rem 1rem; background: rgba(255,255,255,0.2); border-radius: 20px; margin: 0.5rem; }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/cat-keyboard-translator/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/cat-keyboard-translator/#webpage",
+          "url": "https://neonstack.net/fun/cat-keyboard-translator/",
+          "name": "Cat Keyboard Translator",
+          "description": "Your cat walked on your keyboard? Translate their random keystrokes into cat language!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Cat Keyboard Translator",
+              "item": "https://neonstack.net/fun/cat-keyboard-translator/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Cat<span>Translator</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🐱 Cat Keyboard Translator</h1>
+                <p>Did your cat walk on your keyboard? Let's decode their message!</p>
+            </div>
+            <div class="cat-display">😺</div>
+            <div class="input-group">
+                <label>Cat's Keyboard Typing</label>
+                <textarea id="cat-input" class="input" placeholder="Paste what your cat typed... e.g. jfkdlsajfkld" rows="4" oninput="translate()"></textarea>
+            </div>
+            <div class="translation-box" id="translation">
+                <h3 style="margin-top: 0;">🐾 Translation</h3>
+                <p id="message">Type something to see what your cat is trying to say...</p>
+                <div id="moods"></div>
+            </div>
+            <div style="text-align: center;">
+                <button class="btn btn-secondary" onclick="generateRandom()">🎲 Random Cat Message</button>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        const messages = [
+            "I demand food RIGHT NOW! 🍖",
+            "Pet me... but only on MY terms 😼",
+            "The red dot... WHERE IS IT?! 🔴",
+            "I knocked something off the table for you 💕",
+            "3 AM is the perfect time for zoomies! 🏃",
+            "This box is now MY throne 📦",
+            "I've been staring at this wall for hours... fascinating 🧱",
+            "Your lap looks comfortable. Moving in. 😴",
+            "I'm not fat, I'm FLUFFY! 🎈",
+            "The void under the couch called to me 🕳️"
+        ];
+        
+        const moods = [
+            "Hungry", "Playful", "Sleepy", "Demanding", "Mysterious", 
+            "Chaotic", "Loving", "Judgmental", "Curious", "Dramatic"
+        ];
+        
+        function translate() {
+            const input = document.getElementById('cat-input').value;
+            if (!input.trim()) {
+                document.getElementById('message').textContent = "Type something to see what your cat is trying to say...";
+                document.getElementById('moods').innerHTML = '';
+                return;
+            }
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            const randomMoods = [];
+            for (let i = 0; i < 3; i++) {
+                const mood = moods[Math.floor(Math.random() * moods.length)];
+                if (!randomMoods.includes(mood)) randomMoods.push(mood);
+            }
+            
+            document.getElementById('message').textContent = randomMessage;
+            document.getElementById('moods').innerHTML = randomMoods.map(m => 
+                `<span class="cat-mood">${m}</span>`
+            ).join('');
+            
+            const catEmojis = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '😾'];
+            document.querySelector('.cat-display').textContent = catEmojis[Math.floor(Math.random() * catEmojis.length)];
+        }
+        
+        function generateRandom() {
+            const chars = 'asdfjklqwertyuiopzxcvbnm';
+            let random = '';
+            for (let i = 0; i < Math.floor(Math.random() * 30) + 10; i++) {
+                random += chars[Math.floor(Math.random() * chars.length)];
+            }
+            document.getElementById('cat-input').value = random;
+            translate();
+        }
+    </script>
+</body>
+</html>

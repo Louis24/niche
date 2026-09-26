@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Pomodoro Timer | Focus Timer with White Noise</title>
+    <meta name="description" content="Stay productive with 25-minute focus sessions followed by 5-minute breaks.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .timer-display {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(16,185,129,0.15) 0%, rgba(56,189,248,0.15) 100%);
+            border: 2px solid var(--accent-color);
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+        .timer-value {
+            font-size: 6rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            font-family: 'Courier New', monospace;
+            line-height: 1;
+        }
+        .timer-label {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+        .timer-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .timer-controls button {
+            min-width: 140px;
+        }
+        .progress-ring {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 2rem;
+        }
+        .progress-ring circle {
+            fill: transparent;
+            stroke: var(--border-color);
+            stroke-width: 8;
+        }
+        .progress-ring .progress {
+            stroke: var(--accent-color);
+            stroke-dasharray: 880;
+            stroke-dashoffset: 880;
+            transition: stroke-dashoffset 1s linear;
+        }
+        .session-counter {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+        @media (max-width: 680px) {
+            .timer-value { font-size: 4rem; }
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/pomodoro-timer/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/pomodoro-timer/#webpage",
+          "url": "https://neonstack.net/tools/pomodoro-timer/",
+          "name": "Pomodoro Timer",
+          "description": "Stay productive with 25-minute focus sessions followed by 5-minute breaks.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Pomodoro Timer",
+              "item": "https://neonstack.net/tools/pomodoro-timer/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Pomo<span>Timer</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🍅 Pomodoro Focus Timer</h1>
+                <p>Stay productive with 25-minute focus sessions followed by 5-minute breaks.</p>
+            </div>
+
+            <div class="timer-display">
+                <div class="timer-value" id="timer-display">25:00</div>
+                <div class="timer-label" id="timer-label">Focus Session</div>
+                <div class="session-counter" id="session-counter">Session 0 of 4</div>
+            </div>
+
+            <div class="timer-controls">
+                <button class="btn btn-primary" id="start-btn" onclick="startTimer()">▶️ Start</button>
+                <button class="btn btn-secondary" id="pause-btn" onclick="pauseTimer()" style="display: none;">⏸️ Pause</button>
+                <button class="btn btn-secondary" onclick="resetTimer()">🔄 Reset</button>
+                <button class="btn btn-secondary" onclick="skipSession()">⏭️ Skip</button>
+            </div>
+
+            <div style="text-align: center; margin-top: 1.5rem;">
+                <label style="color: var(--text-secondary); font-size: 0.9rem;">
+                    <input type="checkbox" id="sound-toggle" style="margin-right: 0.5rem;">
+                    Enable completion sound
+                </label>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const WORK_TIME = 25 * 60;
+        const BREAK_TIME = 5 * 60;
+        const LONG_BREAK_TIME = 15 * 60;
+
+        let timeLeft = WORK_TIME;
+        let isRunning = false;
+        let isPause = false;
+        let sessionCount = 0;
+        let currentSession = 'work';
+        let intervalId;
+
+        const timerDisplay = document.getElementById('timer-display');
+        const timerLabel = document.getElementById('timer-label');
+        const sessionCounter = document.getElementById('session-counter');
+        const startBtn = document.getElementById('start-btn');
+        const pauseBtn = document.getElementById('pause-btn');
+        const soundToggle = document.getElementById('sound-toggle');
+
+        function updateDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (!isRunning) {
+                isRunning = true;
+                isPause = false;
+                startBtn.style.display = 'none';
+                pauseBtn.style.display = 'inline-flex';
+                
+                intervalId = setInterval(() => {
+                    timeLeft--;
+                    updateDisplay();
+                    
+                    if (timeLeft <= 0) {
+                        completeSession();
+                    }
+                }, 1000);
+            }
+        }
+
+        function pauseTimer() {
+            isRunning = false;
+            isPause = true;
+            clearInterval(intervalId);
+            startBtn.style.display = 'inline-flex';
+            pauseBtn.style.display = 'none';
+            startBtn.textContent = '▶️ Resume';
+        }
+
+        function resetTimer() {
+            isRunning = false;
+            clearInterval(intervalId);
+            sessionCount = 0;
+            currentSession = 'work';
+            timeLeft = WORK_TIME;
+            updateDisplay();
+            timerLabel.textContent = 'Focus Session';
+            sessionCounter.textContent = `Session 0 of 4`;
+            startBtn.style.display = 'inline-flex';
+            pauseBtn.style.display = 'none';
+            startBtn.textContent = '▶️ Start';
+        }
+
+        function completeSession() {
+            clearInterval(intervalId);
+            isRunning = false;
+            
+            if (soundToggle.checked) playCompletionSound();
+            
+            if (currentSession === 'work') {
+                sessionCount++;
+                if (sessionCount % 4 === 0) {
+                    currentSession = 'longBreak';
+                    timeLeft = LONG_BREAK_TIME;
+                    timerLabel.textContent = 'Long Break!';
+                } else {
+                    currentSession = 'break';
+                    timeLeft = BREAK_TIME;
+                    timerLabel.textContent = 'Short Break';
+                }
+            } else {
+                currentSession = 'work';
+                timeLeft = WORK_TIME;
+                timerLabel.textContent = 'Focus Session';
+            }
+            
+            sessionCounter.textContent = `Session ${sessionCount} of 4`;
+            updateDisplay();
+            startBtn.style.display = 'inline-flex';
+            pauseBtn.style.display = 'none';
+            startBtn.textContent = '▶️ Start';
+        }
+
+        function skipSession() {
+            clearInterval(intervalId);
+            completeSession();
+        }
+
+        function playCompletionSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        updateDisplay();
+    </script>
+</body>
+</html>

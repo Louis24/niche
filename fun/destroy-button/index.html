@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Destroy Button | Stress Relief Tool 毁灭吧</title>
+    <meta name="description" content="Press the big red button for satisfying destruction sounds and animations. The ultimate stress relief!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        body.destroyed { background: #000; animation: shake 0.5s; }
+        @keyframes shake { 0%, 100% { transform: translate(0, 0); } 25% { transform: translate(-10px, 10px); } 50% { transform: translate(10px, -10px); } 75% { transform: translate(-10px, -10px); } }
+        .button-container { display: flex; justify-content: center; align-items: center; min-height: 400px; }
+        .destroy-btn { width: 300px; height: 300px; border-radius: 50%; background: linear-gradient(135deg, #ff0000 0%, #8b0000 100%); border: 10px solid #fff; color: white; font-size: 3rem; font-weight: 900; cursor: pointer; transition: all 0.3s; box-shadow: 0 20px 60px rgba(255, 0, 0, 0.5); }
+        .destroy-btn:hover { transform: scale(1.1); box-shadow: 0 30px 80px rgba(255, 0, 0, 0.7); }
+        .destroy-btn:active { transform: scale(0.9); }
+        .explosion { position: fixed; pointer-events: none; font-size: 4rem; animation: explode 1s forwards; }
+        @keyframes explode { 0% { opacity: 1; transform: translate(0, 0) scale(1); } 100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(2); } }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2rem; }
+        .stat-box { background: var(--panel-strong); padding: 1.5rem; border-radius: 12px; text-align: center; }
+        .stat-value { font-size: 2rem; font-weight: 800; color: var(--accent-color); }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/destroy-button/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/destroy-button/#webpage",
+          "url": "https://neonstack.net/fun/destroy-button/",
+          "name": "Destroy Button",
+          "description": "Press the big red button for satisfying destruction sounds and animations. The ultimate stress relief!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Destroy Button",
+              "item": "https://neonstack.net/fun/destroy-button/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Destroy<span>Button</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>💥 Destroy Button</h1>
+                <p>Press the button for satisfying destruction. Perfect for stress relief!</p>
+            </div>
+            <div class="button-container">
+                <button class="destroy-btn" onclick="destroy()">DESTROY</button>
+            </div>
+            <div class="stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="count">0</div>
+                    <div>Destructions</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="stress">100%</div>
+                    <div>Stress Level</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="relief">0%</div>
+                    <div>Relief</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        let count = 0;
+        function destroy() {
+            count++;
+            document.getElementById('count').textContent = count;
+            const stress = Math.max(0, 100 - count * 5);
+            const relief = Math.min(100, count * 5);
+            document.getElementById('stress').textContent = stress + '%';
+            document.getElementById('relief').textContent = relief + '%';
+            
+            document.body.classList.add('destroyed');
+            setTimeout(() => document.body.classList.remove('destroyed'), 500);
+            
+            const emojis = ['💥', '💣', '🔥', '⚡', '💀', '☢️'];
+            for (let i = 0; i < 10; i++) {
+                setTimeout(() => {
+                    const exp = document.createElement('div');
+                    exp.className = 'explosion';
+                    exp.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                    exp.style.left = Math.random() * window.innerWidth + 'px';
+                    exp.style.top = Math.random() * window.innerHeight + 'px';
+                    exp.style.setProperty('--tx', (Math.random() - 0.5) * 200 + 'px');
+                    exp.style.setProperty('--ty', (Math.random() - 0.5) * 200 + 'px');
+                    document.body.appendChild(exp);
+                    setTimeout(() => exp.remove(), 1000);
+                }, i * 50);
+            }
+            
+            playExplosion();
+        }
+        
+        function playExplosion() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const duration = 0.5;
+            
+            for (let i = 0; i < 3; i++) {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.frequency.setValueAtTime(200 - i * 50, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(20, ctx.currentTime + duration);
+                osc.type = 'sawtooth';
+                
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+                
+                osc.start(ctx.currentTime + i * 0.05);
+                osc.stop(ctx.currentTime + duration);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>CS:GO Utility Guide | Smoke &amp; Flash Lineups</title>
+    <meta name="description" content="Learn essential CS:GO smoke and flash lineups for every map. Improve your utility game.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .map-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .map-card { background: var(--panel-strong); border-radius: 12px; padding: 1.5rem; border: 2px solid var(--border-color); cursor: pointer; transition: all 0.2s; }
+        .map-card:hover { border-color: var(--accent-color); transform: translateY(-4px); }
+        .utility-type { background: var(--accent-color); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.85rem; display: inline-block; margin: 0.25rem; }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/games/csgo-utility-guide/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/csgo-utility-guide/#webpage",
+          "url": "https://neonstack.net/games/csgo-utility-guide/",
+          "name": "Csgo Utility Guide",
+          "description": "Learn essential CS:GO smoke and flash lineups for every map. Improve your utility game.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Csgo Utility Guide",
+              "item": "https://neonstack.net/games/csgo-utility-guide/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">CS<span>Utility</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>💣 CS:GO Utility Guide</h1>
+                <p>Essential smoke and flash lineups for competitive play.</p>
+            </div>
+            <div class="input-group">
+                <label>Select Map</label>
+                <select class="input" id="map-select" onchange="showLineups()">
+                    <option value="mirage">Mirage</option>
+                    <option value="dust2">Dust II</option>
+                    <option value="inferno">Inferno</option>
+                    <option value="nuke">Nuke</option>
+                </select>
+            </div>
+            <div class="map-grid" id="lineups"></div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        const lineups = {
+            mirage: [
+                {name: 'A Site Stairs Smoke', type: 'Smoke', desc: 'Stand at T spawn, aim at corner of building, jumpthrow'},
+                {name: 'Jungle Flash', type: 'Flash', desc: 'From top mid, bounce off left wall'},
+                {name: 'CT Smoke', type: 'Smoke', desc: 'From T ramp, aim at antenna, throw'}
+            ],
+            dust2: [
+                {name: 'Long Doors Smoke', type: 'Smoke', desc: 'From T spawn, aim at corner, walk forward'},
+                {name: 'Xbox Smoke', type: 'Smoke', desc: 'Outside long, aim above doors'},
+                {name: 'A Site CT Flash', type: 'Flash', desc: 'Throw over long towards CT'}
+            ]
+        };
+        function showLineups() {
+            const map = document.getElementById('map-select').value;
+            const items = lineups[map] || lineups.mirage;
+            document.getElementById('lineups').innerHTML = items.map(l => `
+                <div class="map-card">
+                    <h3 style="margin-top: 0;">${l.name}</h3>
+                    <span class="utility-type">${l.type}</span>
+                    <p style="color: var(--text-muted); margin-top: 1rem;">${l.desc}</p>
+                </div>
+            `).join('');
+        }
+        showLineups();
+    </script>
+</body>
+</html>

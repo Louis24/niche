@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Fake System Update | Prank Tool</title>
+    <meta name="description" content="Fake Windows update screen for pranks. Press F11 for full effect!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        body.update-mode { background: #0078d4; margin: 0; overflow: hidden; }
+        body.update-mode .header, body.update-mode .footer, body.update-mode .calculator-card { display: none; }
+        .update-screen { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0078d4; color: white; font-family: 'Segoe UI', sans-serif; justify-content: center; align-items: center; flex-direction: column; }
+        body.update-mode .update-screen { display: flex; }
+        .spinner { width: 60px; height: 60px; border: 6px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; margin: 2rem 0; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .progress { font-size: 4rem; font-weight: 300; margin: 2rem 0; }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/fake-system-update/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/fake-system-update/#webpage",
+          "url": "https://neonstack.net/fun/fake-system-update/",
+          "name": "Fake System Update",
+          "description": "Fake Windows update screen for pranks. Press F11 for full effect!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Fake System Update",
+              "item": "https://neonstack.net/fun/fake-system-update/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Fake<span>Update</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🖥️ Fake System Update</h1>
+                <p>Prank your friends with a realistic update screen. Press F11 for full effect!</p>
+            </div>
+            <div class="input-group">
+                <label>Update Style</label>
+                <select class="input" id="style">
+                    <option value="windows">Windows Update</option>
+                    <option value="mac">macOS Update</option>
+                </select>
+            </div>
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="btn btn-primary" onclick="startUpdate()" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                    🚀 Start Fake Update
+                </button>
+            </div>
+            <p style="text-align: center; color: var(--text-muted);">Press ESC to exit anytime</p>
+        </section>
+    </main>
+    <div class="update-screen">
+        <div style="text-align: center;">
+            <h1 style="font-size: 3rem; font-weight: 300; margin: 0;">Working on updates</h1>
+            <div class="spinner"></div>
+            <div class="progress" id="progress">0%</div>
+            <p style="font-size: 1.5rem; opacity: 0.8;">Don't turn off your PC</p>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        let updateInterval;
+        
+        function startUpdate() {
+            document.body.classList.add('update-mode');
+            let progress = 0;
+            
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            }
+            
+            updateInterval = setInterval(() => {
+                progress++;
+                if (progress > 99) {
+                    progress = 99;
+                    clearInterval(updateInterval);
+                }
+                document.getElementById('progress').textContent = progress + '%';
+            }, Math.random() * 2000 + 500);
+        }
+        
+        function stopUpdate() {
+            clearInterval(updateInterval);
+            document.body.classList.remove('update-mode');
+            if (document.exitFullscreen) {
+                document.exitFullscreen().catch(() => {});
+            }
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') stopUpdate();
+        });
+    </script>
+</body>
+</html>

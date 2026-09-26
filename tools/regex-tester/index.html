@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Regex Tester | Regular Expression Testing Tool</title>
+    <meta name="description" content="Test regular expressions in real-time. See matches highlighted instantly as you type.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .regex-input {
+            background: var(--panel-strong);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .regex-input input {
+            width: 100%;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--accent-color);
+        }
+        .flags {
+            display: flex;
+            gap: 1rem;
+            margin: 0.5rem 0;
+            font-size: 0.85rem;
+        }
+        .flags label {
+            text-transform: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+        .test-text {
+            min-height: 200px;
+            margin: 1rem 0;
+        }
+        .match-result {
+            background: var(--panel-strong);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            line-height: 1.8;
+            min-height: 150px;
+        }
+        .highlight {
+            background: rgba(16, 185, 129, 0.3);
+            color: var(--accent-color);
+            font-weight: 700;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+        .match-info {
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/regex-tester/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/regex-tester/#webpage",
+          "url": "https://neonstack.net/tools/regex-tester/",
+          "name": "Regex Tester",
+          "description": "Test regular expressions in real-time. See matches highlighted instantly as you type.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Regex Tester",
+              "item": "https://neonstack.net/tools/regex-tester/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Regex<span>Test</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🔍 Regex Pattern Tester</h1>
+                <p>Test regular expressions in real-time. See matches highlighted instantly as you type.</p>
+            </div>
+
+            <div class="regex-input">
+                <label style="font-size: 0.7rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem;">REGULAR EXPRESSION</label>
+                <input type="text" id="regex-pattern" placeholder="Enter regex pattern..." value="\b[A-Z][a-z]+\b">
+                <div class="flags">
+                    <label><input type="checkbox" id="flag-g" checked> g (global)</label>
+                    <label><input type="checkbox" id="flag-i"> i (case insensitive)</label>
+                    <label><input type="checkbox" id="flag-m"> m (multiline)</label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="test-text">Test String</label>
+                <textarea id="test-text" class="test-text" placeholder="Enter text to test against...">The Quick Brown Fox jumps over the lazy dog. This is a Test String with Various words.</textarea>
+            </div>
+
+            <div class="match-result" id="match-result">
+                <!-- Results will appear here -->
+            </div>
+
+            <div class="match-info" id="match-info" style="display: none;">
+                <strong>Match Information:</strong><br>
+                <span id="match-count">0 matches found</span>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const regexInput = document.getElementById('regex-pattern');
+        const testText = document.getElementById('test-text');
+        const matchResult = document.getElementById('match-result');
+        const matchInfo = document.getElementById('match-info');
+        const matchCount = document.getElementById('match-count');
+
+        function escapeHtml(value) {
+            return value
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function testRegex() {
+            const pattern = regexInput.value;
+            const text = testText.value;
+            
+            if (!pattern) {
+                matchResult.textContent = 'Enter a regex pattern to test.';
+                matchInfo.style.display = 'none';
+                return;
+            }
+
+            try {
+                let flags = '';
+                if (document.getElementById('flag-g').checked) flags += 'g';
+                if (document.getElementById('flag-i').checked) flags += 'i';
+                if (document.getElementById('flag-m').checked) flags += 'm';
+
+                const regex = new RegExp(pattern, flags);
+                const matches = [...text.matchAll(new RegExp(pattern, flags + (flags.includes('g') ? '' : 'g')))];
+                
+                if (matches.length === 0) {
+                    matchResult.textContent = 'No matches found.';
+                    matchCount.textContent = '0 matches found';
+                } else {
+                    let highlightedText = text;
+                    const sortedMatches = matches.sort((a, b) => b.index - a.index);
+                    
+                    sortedMatches.forEach(match => {
+                        const matchText = match[0];
+                        const start = match.index;
+                        const end = start + matchText.length;
+                        highlightedText = highlightedText.slice(0, start) +
+                            `\u0000${matchText}\u0000` +
+                            highlightedText.slice(end);
+                    });
+
+                    matchResult.innerHTML = escapeHtml(highlightedText)
+                        .replace(/\u0000([\s\S]*?)\u0000/g, '<span class="highlight">$1</span>');
+                    matchCount.textContent = `${matches.length} match${matches.length !== 1 ? 'es' : ''} found`;
+                }
+                
+                matchInfo.style.display = 'block';
+            } catch (e) {
+                matchResult.textContent = `Error: ${e.message}`;
+                matchInfo.style.display = 'none';
+            }
+        }
+
+        regexInput.addEventListener('input', testRegex);
+        testText.addEventListener('input', testRegex);
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', testRegex);
+        });
+
+        testRegex();
+    </script>
+</body>
+</html>

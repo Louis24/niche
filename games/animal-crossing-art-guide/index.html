@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Animal Crossing Art Authenticity Guide | Real vs Fake Paintings</title>
+    <meta name="description" content="Spot the fake! Learn how to identify counterfeit paintings and statues from Redd.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .art-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .art-card { background: var(--panel-strong); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+        .art-card h3 { margin-bottom: 1rem; color: var(--accent-color); }
+        .comparison { background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; margin: 0.5rem 0; }
+        .real { color: #10b981; font-weight: 600; }
+        .fake { color: #ef4444; font-weight: 600; }
+        .search-box { margin: 1.5rem 0; }
+        .search-box input { width: 100%; padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--panel-strong); color: var(--text-primary); }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/games/animal-crossing-art-guide/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/animal-crossing-art-guide/#webpage",
+          "url": "https://neonstack.net/games/animal-crossing-art-guide/",
+          "name": "Animal Crossing Art Guide",
+          "description": "Spot the fake! Learn how to identify counterfeit paintings and statues from Redd.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Animal Crossing Art Guide",
+              "item": "https://neonstack.net/games/animal-crossing-art-guide/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">AC<span>Art</span></a>
+            <nav class="nav-links"><a href="../../#games">Games</a></nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🖼️ Redd's Art Authenticity Guide</h1>
+                <p>Spot the fake! Learn how to identify counterfeit paintings and statues from Redd.</p>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="search" placeholder="Search artwork..." oninput="filterArt()">
+            </div>
+
+            <div class="art-grid" id="art-grid"></div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center"><p>&copy; 2026 NeonStack.</p></div>
+    </footer>
+
+    <script>
+        // Real data from Animal Crossing: New Horizons
+        const artworks = [
+            {
+                name: "Academic Painting",
+                realName: "Vitruvian Man (Leonardo da Vinci)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Amazing Painting",
+                realName: "The Night Watch (Rembrandt)",
+                real: "Man in black has no hat",
+                fake: "Man in black is wearing a white hat"
+            },
+            {
+                name: "Basic Painting",
+                realName: "The Blue Boy (Thomas Gainsborough)",
+                real: "Boy's hair doesn't cover his forehead",
+                fake: "Boy has bangs covering forehead"
+            },
+            {
+                name: "Calm Painting",
+                realName: "A Sunday Afternoon (Georges Seurat)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Common Painting",
+                realName: "The Gleaners (Jean-François Millet)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Detailed Painting",
+                realName: "Ajisai Sokeizu (Itō Jakuchū)",
+                real: "Purple and blue flowers only",
+                fake: "Has extra white and pink flowers"
+            },
+            {
+                name: "Dynamic Painting",
+                realName: "The Great Wave off Kanagawa (Hokusai)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Famous Painting",
+                realName: "Mona Lisa (Leonardo da Vinci)",
+                real: "Mona Lisa's eyebrows visible",
+                fake: "No eyebrows on Mona Lisa"
+            },
+            {
+                name: "Glowing Painting",
+                realName: "The Fighting Temeraire (Turner)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Graceful Painting",
+                realName: "Beauty Looking Back (Hishikawa Moronobu)",
+                real: "Woman facing right (looking back over left shoulder)",
+                fake: "Woman facing left"
+            },
+            {
+                name: "Jolly Painting",
+                realName: "Summer (Giuseppe Arcimboldo)",
+                real: "Made of vegetables with white chest",
+                fake: "Has a carrot on chest area"
+            },
+            {
+                name: "Moody Painting",
+                realName: "The Sower (Jean-François Millet)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Moving Painting",
+                realName: "The Birth of Venus (Botticelli)",
+                real: "Venus covers herself modestly",
+                fake: "Venus not covering herself, tree on right side"
+            },
+            {
+                name: "Mysterious Painting",
+                realName: "Isle of the Dead (Arnold Böcklin)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Perfect Painting",
+                realName: "Apples and Oranges (Paul Cézanne)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Quaint Painting",
+                realName: "The Milkmaid (Johannes Vermeer)",
+                real: "Milk pouring from jug is thin stream",
+                fake: "Large volume of milk pouring out"
+            },
+            {
+                name: "Scary Painting",
+                realName: "Otani Oniji (Tōshūsai Sharaku)",
+                real: "Eyebrows slanting down, hands in fists",
+                fake: "Eyebrows slanting up, hands spread wide"
+            },
+            {
+                name: "Scenic Painting",
+                realName: "The Hunters in the Snow (Pieter Bruegel)",
+                real: "Two people without dogs on left",
+                fake: "Three people, one with dog on left"
+            },
+            {
+                name: "Serene Painting",
+                realName: "Lady with an Ermine (Leonardo da Vinci)",
+                real: "Ermine is white/grey",
+                fake: "Ermine is black/dark"
+            },
+            {
+                name: "Sinking Painting",
+                realName: "Ophelia (John Everett Millais)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Solemn Painting",
+                realName: "Las Meninas (Diego Velázquez)",
+                real: "Man in doorway has right arm raised",
+                fake: "Man in doorway has no arm raised"
+            },
+            {
+                name: "Twinkling Painting",
+                realName: "The Starry Night (Vincent van Gogh)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Warm Painting",
+                realName: "The Clothed Maja (Francisco Goya)",
+                fake: "None - Always real"
+            },
+            {
+                name: "Wild Painting (Left Half)",
+                realName: "Wind God and Thunder God (Tawaraya Sōtatsu)",
+                real: "Green god on right side",
+                fake: "White/blue god on right side"
+            },
+            {
+                name: "Wild Painting (Right Half)",
+                realName: "Wind God and Thunder God (Tawaraya Sōtatsu)",
+                real: "White god on left side",
+                fake: "Green god on left side"
+            },
+            {
+                name: "Wistful Painting",
+                realName: "Girl with a Pearl Earring (Vermeer)",
+                real: "Girl wears a small pearl earring",
+                fake: "Girl wears a star-shaped earring"
+            },
+            {
+                name: "Worthy Painting",
+                realName: "Liberty Leading the People (Delacroix)",
+                fake: "None - Always real"
+            }
+        ];
+
+        function render() {
+            const grid = document.getElementById('art-grid');
+            grid.innerHTML = '';
+
+            artworks.forEach(art => {
+                const card = document.createElement('div');
+                card.className = 'art-card';
+                card.setAttribute('data-name', art.name.toLowerCase());
+                
+                card.innerHTML = `
+                    <h3>${art.name}</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">${art.realName}</p>
+                    ${art.fake === 'None - Always real' ? 
+                        `<div class="comparison"><span class="real">✓ Always Authentic</span><br>This artwork has no fake version.</div>` :
+                        `
+                        <div class="comparison">
+                            <span class="real">✓ Real:</span> ${art.real || 'See description'}
+                        </div>
+                        <div class="comparison">
+                            <span class="fake">✗ Fake:</span> ${art.fake}
+                        </div>
+                        `
+                    }
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterArt() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const cards = document.querySelectorAll('.art-card');
+            
+            cards.forEach(card => {
+                const name = card.getAttribute('data-name');
+                card.style.display = name.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        render();
+    </script>
+</body>
+</html>

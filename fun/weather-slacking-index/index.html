@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Weather Slacking Index | Perfect Day to Skip Work?</title>
+    <meta name="description" content="Is today's weather perfect for slacking off? Check the scientific slacking index!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .weather-display { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 3rem 2rem; color: white; text-align: center; margin: 2rem 0; }
+        .weather-icon { font-size: 8rem; margin-bottom: 1rem; }
+        .slacking-score { font-size: 5rem; font-weight: 900; margin: 1rem 0; }
+        .verdict { font-size: 1.5rem; margin-top: 1rem; opacity: 0.9; }
+        .excuse-box { background: var(--panel-strong); padding: 2rem; border-radius: 12px; margin-top: 2rem; }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/weather-slacking-index/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/weather-slacking-index/#webpage",
+          "url": "https://neonstack.net/fun/weather-slacking-index/",
+          "name": "Weather Slacking Index",
+          "description": "Is today's weather perfect for slacking off? Check the scientific slacking index!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Weather Slacking Index",
+              "item": "https://neonstack.net/fun/weather-slacking-index/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Slacking<span>Index</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🌤️ Weather Slacking Index</h1>
+                <p>Scientific analysis of today's slack-off potential!</p>
+            </div>
+            <div class="input-group">
+                <label>Weather Type</label>
+                <select class="input" id="weather" onchange="calculate()">
+                    <option value="sunny">☀️ Sunny</option>
+                    <option value="cloudy">☁️ Cloudy</option>
+                    <option value="rainy">🌧️ Rainy</option>
+                    <option value="snowy">❄️ Snowy</option>
+                    <option value="stormy">⛈️ Stormy</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Temperature (°C)</label>
+                <input type="number" id="temp" class="input" value="22" oninput="calculate()">
+            </div>
+            <div class="input-group">
+                <label>Day of Week</label>
+                <select class="input" id="day" onchange="calculate()">
+                    <option value="1">Monday</option>
+                    <option value="2">Tuesday</option>
+                    <option value="3">Wednesday</option>
+                    <option value="4">Thursday</option>
+                    <option value="5" selected>Friday</option>
+                    <option value="6">Saturday</option>
+                    <option value="7">Sunday</option>
+                </select>
+            </div>
+            <div class="weather-display">
+                <div class="weather-icon" id="icon">☀️</div>
+                <div>Slacking Index</div>
+                <div class="slacking-score" id="score">85/100</div>
+                <div class="verdict" id="verdict">HIGHLY RECOMMENDED</div>
+            </div>
+            <div class="excuse-box">
+                <h3 style="margin-top: 0;">💡 Suggested Excuse</h3>
+                <p id="excuse" style="font-size: 1.1rem; line-height: 1.6;"></p>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        const excuses = {
+            sunny: "It's too beautiful outside to be stuck indoors. Mental health day needed!",
+            rainy: "The weather is affecting my productivity. Better to work from home... or bed.",
+            snowy: "Roads are too dangerous. Safety first!",
+            stormy: "Internet might go out. Better stay home just in case.",
+            cloudy: "The gloomy weather is affecting my mood. Need a personal day."
+        };
+        
+        const icons = {
+            sunny: '☀️', cloudy: '☁️', rainy: '🌧️', snowy: '❄️', stormy: '⛈️'
+        };
+        
+        function calculate() {
+            const weather = document.getElementById('weather').value;
+            const temp = parseFloat(document.getElementById('temp').value);
+            const day = parseInt(document.getElementById('day').value);
+            
+            let score = 0;
+            
+            // Weather bonus
+            if (weather === 'sunny' && temp >= 20 && temp <= 28) score += 40;
+            else if (weather === 'rainy') score += 30;
+            else if (weather === 'snowy') score += 35;
+            else if (weather === 'stormy') score += 45;
+            else score += 20;
+            
+            // Temperature bonus
+            if (temp >= 25 && temp <= 30) score += 20;
+            else if (temp < 10 || temp > 35) score += 25;
+            else score += 10;
+            
+            // Day of week bonus
+            if (day === 5) score += 30; // Friday
+            else if (day === 1) score += 25; // Monday
+            else if (day === 6 || day === 7) score += 40; // Weekend
+            else score += 15;
+            
+            score = Math.min(100, score);
+            
+            let verdict = '';
+            if (score >= 80) verdict = 'HIGHLY RECOMMENDED 🎉';
+            else if (score >= 60) verdict = 'WORTH CONSIDERING 🤔';
+            else if (score >= 40) verdict = 'MAYBE LATER 😐';
+            else verdict = 'BETTER GO TO WORK 😅';
+            
+            document.getElementById('icon').textContent = icons[weather];
+            document.getElementById('score').textContent = score + '/100';
+            document.getElementById('verdict').textContent = verdict;
+            document.getElementById('excuse').textContent = excuses[weather];
+        }
+        
+        calculate();
+    </script>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>AI Compliment Generator | Mood Booster 夸夸助手</title>
+    <meta name="description" content="Feeling down? Get uplifting compliments and encouragement. Everyone deserves to feel appreciated!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .compliment-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            color: white;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+        }
+        .compliment-text {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+        .emoji-display {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .scenario-card {
+            background: var(--panel-strong);
+            padding: 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+        .scenario-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .scenario-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .scenario-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .loading {
+            opacity: 0;
+            animation: fadeInOut 1.5s;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/ai-compliment-generator/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/ai-compliment-generator/#webpage",
+          "url": "https://neonstack.net/tools/ai-compliment-generator/",
+          "name": "Ai Compliment Generator",
+          "description": "Feeling down? Get uplifting compliments and encouragement. Everyone deserves to feel appreciated!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Ai Compliment Generator",
+              "item": "https://neonstack.net/tools/ai-compliment-generator/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">AI<span>Praise</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>💖 AI Compliment Generator</h1>
+                <p>Feeling down? Let AI cheer you up with genuine compliments and encouragement!</p>
+            </div>
+
+            <div class="compliment-box" id="compliment-box">
+                <div class="emoji-display">🌟</div>
+                <div class="compliment-text">
+                    Select a scenario below to receive your personalized compliment!
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 1rem 0;">
+                <button class="btn btn-primary" onclick="generateRandom()" style="font-size: 1.1rem;">
+                    🎲 Random Compliment
+                </button>
+            </div>
+
+            <div class="input-group">
+                <label>Choose Your Situation</label>
+                <div class="scenario-grid">
+                    <div class="scenario-card" onclick="generateCompliment('work')">
+                        <div class="scenario-icon">💼</div>
+                        <div class="scenario-title">Tough Day at Work</div>
+                        <div style="font-size: 0.9rem; color: var(--text-muted);">Need motivation</div>
+                    </div>
+                    <div class="scenario-card" onclick="generateCompliment('lonely')">
+                        <div class="scenario-icon">😔</div>
+                        <div class="scenario-title">Feeling Lonely</div>
+                        <div style="font-size: 0.9rem; color: var(--text-muted);">Need warmth</div>
+                    </div>
+                    <div class="scenario-card" onclick="generateCompliment('failure')">
+                        <div class="scenario-icon">💔</div>
+                        <div class="scenario-title">Experienced Failure</div>
+                        <div style="font-size: 0.9rem; color: var(--text-muted);">Need encouragement</div>
+                    </div>
+                    <div class="scenario-card" onclick="generateCompliment('anxious')">
+                        <div class="scenario-icon">😰</div>
+                        <div class="scenario-title">Feeling Anxious</div>
+                        <div style="font-size: 0.9rem; color: var(--text-muted);">Need reassurance</div>
+                    </div>
+                    <div class="scenario-card" onclick="generateCompliment('tired')">
+                        <div class="scenario-icon">😴</div>
+                        <div class="scenario-title">Exhausted</div>
+                        <div style="font-size: 0.9rem; color: var(--text-muted);">Need rest</div>
+                    </div>
+                    <div class="scenario-card" onclick="generateCompliment('proud')">
+                        <div class="scenario-icon">🎉</div>
+                        <div class="scenario-title">Small Win</div>
+                        <div style="font-size: 0.9rem; color: var(--text-muted);">Celebrate it!</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>📝 Share Your Story (Optional)</label>
+                <textarea id="user-story" class="input" placeholder="Tell me what happened today..." rows="4"></textarea>
+                <button class="btn btn-secondary" onclick="generateFromStory()" style="margin-top: 0.5rem;">
+                    Generate Custom Compliment
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const compliments = {
+            work: [
+                { emoji: '💪', text: 'Your resilience in the face of workplace challenges is truly admirable. You tackle problems with grace and determination. Remember, every difficult day builds your strength and expertise. You\'re doing better than you think!' },
+                { emoji: '🌟', text: 'The effort you put into your work doesn\'t go unnoticed. Your dedication and professionalism set a wonderful example. Even on tough days, you show up and give your best. That\'s the mark of true excellence!' },
+                { emoji: '🎯', text: 'You bring unique value to everything you do. Your perspective, skills, and hard work make a real difference. Difficult days are just stepping stones to greater achievements. Keep going - you\'re on the right path!' }
+            ],
+            lonely: [
+                { emoji: '🤗', text: 'You are worthy of love and connection, even in moments of solitude. Your presence makes the world brighter. Remember, being alone doesn\'t mean being less valuable. You are complete and wonderful just as you are.' },
+                { emoji: '💝', text: 'Your capacity for introspection and self-awareness is a gift. You\'re stronger than you realize, and you deserve all the warmth and connection you seek. Loneliness is temporary, but your worth is permanent.' },
+                { emoji: '🌈', text: 'You have so much love to give, and that kindness starts with being gentle to yourself. You\'re never truly alone - you have yourself, and that\'s someone worth celebrating. Better days and deeper connections are coming.' }
+            ],
+            failure: [
+                { emoji: '🚀', text: 'Failure is not the opposite of success - it\'s part of the journey to it. Your willingness to try, to risk, to push forward despite setbacks shows incredible courage. You\'re learning and growing in ways that will serve you forever!' },
+                { emoji: '💎', text: 'Every successful person has faced setbacks. What makes you special is that you keep going. This experience is shaping you into someone even more capable and wise. Your breakthrough is closer than you think!' },
+                { emoji: '🌱', text: 'Failure means you dared greatly. That alone makes you remarkable. You\'re building resilience, wisdom, and character. These "failures" are actually investments in your future success. Keep believing in yourself!' }
+            ],
+            anxious: [
+                { emoji: '🧘', text: 'Your feelings are valid, but they don\'t define you. You have overcome anxious moments before, and you will again. You are stronger and more capable than your anxiety tells you. Take it one breath at a time.' },
+                { emoji: '🌊', text: 'Anxiety is like a wave - it rises, peaks, and falls. You have the strength to ride it out. You\'ve handled everything life has thrown at you so far with grace. This moment will pass, and you will be okay.' },
+                { emoji: '☮️', text: 'Your anxiety shows how much you care, and that\'s actually beautiful. But remember, you don\'t have to be perfect or have everything figured out. You\'re doing remarkably well, even when it doesn\'t feel like it.' }
+            ],
+            tired: [
+                { emoji: '🌙', text: 'Rest is not a reward; it\'s a necessity. You\'ve been working so hard, and it\'s okay to be tired. Your exhaustion is proof of your effort. Please be kind to yourself and take the rest you deserve.' },
+                { emoji: '☕', text: 'You\'ve been giving so much of yourself, and that\'s beautiful but also exhausting. Remember that taking care of yourself isn\'t selfish - it\'s necessary. You can\'t pour from an empty cup. You deserve rest and renewal.' },
+                { emoji: '🛌', text: 'Tiredness is your body\'s way of asking for care. Listen to it. You\'re not lazy for being tired - you\'re human. Rest well, recharge fully, and know that tomorrow is a new opportunity to shine.' }
+            ],
+            proud: [
+                { emoji: '🎊', text: 'Yes! Celebrate this win, no matter how small it seems! Progress is progress, and you made it happen. Your effort, persistence, and dedication led to this moment. You should be incredibly proud of yourself!' },
+                { emoji: '🏆', text: 'Look at you go! This achievement is proof of your capabilities. You set a goal, worked toward it, and succeeded. That\'s amazing! Keep this momentum going - you\'re capable of so much more!' },
+                { emoji: '✨', text: 'Every big success is built on small wins like this one. You\'re building something great, one step at a time. This win matters, and you matter. Keep celebrating your progress - you\'ve earned it!' }
+            ],
+            random: [
+                { emoji: '🌟', text: 'You are enough, exactly as you are right now. Your unique combination of qualities makes you irreplaceable. The world is better because you\'re in it!' },
+                { emoji: '💫', text: 'Your kindness, even in small moments, creates ripples of positivity. You make a difference in ways you might never fully realize. Thank you for being you!' },
+                { emoji: '🎨', text: 'The way you see the world is special and valuable. Your perspective, your creativity, your voice - they all matter. Keep expressing yourself authentically!' },
+                { emoji: '🌺', text: 'You\'ve survived 100% of your worst days. That\'s an incredible track record! Your resilience is inspiring, and your future is bright!' }
+            ]
+        };
+
+        function generateCompliment(type) {
+            const box = document.getElementById('compliment-box');
+            box.classList.add('loading');
+            
+            setTimeout(() => {
+                const options = compliments[type];
+                const chosen = options[Math.floor(Math.random() * options.length)];
+                
+                box.innerHTML = `
+                    <div class="emoji-display">${chosen.emoji}</div>
+                    <div class="compliment-text">${chosen.text}</div>
+                `;
+                box.classList.remove('loading');
+            }, 800);
+        }
+
+        function generateRandom() {
+            const types = ['work', 'lonely', 'failure', 'anxious', 'tired', 'proud', 'random'];
+            const randomType = types[Math.floor(Math.random() * types.length)];
+            generateCompliment(randomType);
+        }
+
+        function generateFromStory() {
+            const story = document.getElementById('user-story').value.trim();
+            
+            if (!story) {
+                generateRandom();
+                return;
+            }
+
+            const box = document.getElementById('compliment-box');
+            box.classList.add('loading');
+            
+            setTimeout(() => {
+                const keywords = {
+                    work: ['work', 'job', 'boss', 'project', 'deadline', 'meeting'],
+                    lonely: ['alone', 'lonely', 'friends', 'isolated', 'miss'],
+                    failure: ['failed', 'mistake', 'wrong', 'lost', 'rejected'],
+                    anxious: ['anxious', 'worried', 'scared', 'nervous', 'stress'],
+                    tired: ['tired', 'exhausted', 'sleep', 'rest', 'fatigue'],
+                    proud: ['won', 'achieved', 'finished', 'success', 'proud']
+                };
+
+                let detectedType = 'random';
+                const lowerStory = story.toLowerCase();
+                
+                for (const [type, words] of Object.entries(keywords)) {
+                    if (words.some(word => lowerStory.includes(word))) {
+                        detectedType = type;
+                        break;
+                    }
+                }
+
+                const options = compliments[detectedType];
+                const chosen = options[Math.floor(Math.random() * options.length)];
+                
+                box.innerHTML = `
+                    <div class="emoji-display">${chosen.emoji}</div>
+                    <div class="compliment-text">${chosen.text}</div>
+                    <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.8;">Based on your story about: "${story.substring(0, 50)}${story.length > 50 ? '...' : ''}"</div>
+                `;
+                box.classList.remove('loading');
+            }, 1200);
+        }
+    </script>
+</body>
+</html>

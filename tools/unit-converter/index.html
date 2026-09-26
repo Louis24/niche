@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Unit Converter | Length, Weight, Temperature Converter</title>
+    <meta name="description" content="Convert between different units of measurement quickly and accurately.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .category-pills {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1.5rem 0;
+        }
+        .pill {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--panel-strong);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .pill:hover, .pill.active {
+            background: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+        }
+        .converter-row {
+            display: grid;
+            grid-template-columns: 2fr auto 2fr;
+            gap: 1rem;
+            align-items: end;
+            margin: 2rem 0;
+        }
+        .swap-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            background: var(--panel-strong);
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .swap-btn:hover {
+            background: var(--accent-color);
+            color: #000;
+            transform: rotate(180deg);
+        }
+        @media (max-width: 680px) {
+            .converter-row { grid-template-columns: 1fr; }
+            .swap-btn { margin: 0 auto; }
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/unit-converter/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/unit-converter/#webpage",
+          "url": "https://neonstack.net/tools/unit-converter/",
+          "name": "Unit Converter",
+          "description": "Convert between different units of measurement quickly and accurately.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Unit Converter",
+              "item": "https://neonstack.net/tools/unit-converter/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Unit<span>Convert</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🔄 Unit Converter</h1>
+                <p>Convert between different units of measurement quickly and accurately.</p>
+            </div>
+
+            <div class="category-pills" id="category-pills"></div>
+
+            <div class="converter-row">
+                <div class="input-group">
+                    <label for="from-value">From</label>
+                    <input type="number" id="from-value" value="1" step="any">
+                    <select id="from-unit" style="margin-top: 0.5rem;"></select>
+                </div>
+
+                <button class="swap-btn" onclick="swapUnits()">⇄</button>
+
+                <div class="input-group">
+                    <label for="to-value">To</label>
+                    <input type="number" id="to-value" readonly>
+                    <select id="to-unit" style="margin-top: 0.5rem;"></select>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const conversions = {
+            'Length': {
+                'meter': 1,
+                'kilometer': 0.001,
+                'centimeter': 100,
+                'millimeter': 1000,
+                'mile': 0.000621371,
+                'yard': 1.09361,
+                'foot': 3.28084,
+                'inch': 39.3701
+            },
+            'Weight': {
+                'kilogram': 1,
+                'gram': 1000,
+                'milligram': 1000000,
+                'pound': 2.20462,
+                'ounce': 35.274,
+                'ton': 0.001
+            },
+            'Temperature': {
+                'celsius': { to: (v, u) => u === 'fahrenheit' ? v * 9/5 + 32 : u === 'kelvin' ? v + 273.15 : v },
+                'fahrenheit': { to: (v, u) => u === 'celsius' ? (v - 32) * 5/9 : u === 'kelvin' ? (v - 32) * 5/9 + 273.15 : v },
+                'kelvin': { to: (v, u) => u === 'celsius' ? v - 273.15 : u === 'fahrenheit' ? (v - 273.15) * 9/5 + 32 : v }
+            },
+            'Volume': {
+                'liter': 1,
+                'milliliter': 1000,
+                'gallon': 0.264172,
+                'quart': 1.05669,
+                'pint': 2.11338,
+                'cup': 4.22675,
+                'fluid ounce': 33.814
+            }
+        };
+
+        let currentCategory = 'Length';
+        const categoryPills = document.getElementById('category-pills');
+        const fromValue = document.getElementById('from-value');
+        const toValue = document.getElementById('to-value');
+        const fromUnit = document.getElementById('from-unit');
+        const toUnit = document.getElementById('to-unit');
+
+        Object.keys(conversions).forEach(category => {
+            const pill = document.createElement('button');
+            pill.className = 'pill' + (category === currentCategory ? ' active' : '');
+            pill.textContent = category;
+            pill.onclick = () => setCategory(category);
+            categoryPills.appendChild(pill);
+        });
+
+        function setCategory(category) {
+            currentCategory = category;
+            document.querySelectorAll('.pill').forEach(p => {
+                p.classList.toggle('active', p.textContent === category);
+            });
+            
+            const units = Object.keys(conversions[category]);
+            fromUnit.innerHTML = '';
+            toUnit.innerHTML = '';
+            
+            units.forEach(unit => {
+                fromUnit.add(new Option(unit, unit));
+                toUnit.add(new Option(unit, unit));
+            });
+            
+            if (units.length > 1) toUnit.value = units[1];
+            convert();
+        }
+
+        function convert() {
+            const value = parseFloat(fromValue.value) || 0;
+            const from = fromUnit.value;
+            const to = toUnit.value;
+            const category = conversions[currentCategory];
+
+            let result;
+            if (currentCategory === 'Temperature') {
+                result = category[from].to(value, to);
+            } else {
+                const inBase = value / category[from];
+                result = inBase * category[to];
+            }
+
+            toValue.value = result.toFixed(6).replace(/\.?0+$/, '');
+        }
+
+        function swapUnits() {
+            const temp = fromUnit.value;
+            fromUnit.value = toUnit.value;
+            toUnit.value = temp;
+            convert();
+        }
+
+        fromValue.addEventListener('input', convert);
+        fromUnit.addEventListener('change', convert);
+        toUnit.addEventListener('change', convert);
+
+        setCategory('Length');
+    </script>
+</body>
+</html>

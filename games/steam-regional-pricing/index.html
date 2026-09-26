@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Steam Regional Pricing Calculator | Compare Game Prices by Region</title>
+    <meta name="description" content="Compare game prices across Steam regions. Input a USD price to see equivalent prices in other currencies.">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <link rel="canonical" href="https://neonstack.net/games/steam-regional-pricing/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/steam-regional-pricing/#webpage",
+          "url": "https://neonstack.net/games/steam-regional-pricing/",
+          "name": "Steam Regional Pricing",
+          "description": "Compare game prices across Steam regions. Input a USD price to see equivalent prices in other currencies.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Steam Regional Pricing",
+              "item": "https://neonstack.net/games/steam-regional-pricing/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Steam<span>Price</span></a>
+            <nav class="nav-links"><a href="../../#games">Games</a></nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>💰 Steam Regional Price Comparator</h1>
+                <p>Compare game prices across Steam regions. Input a USD price to see equivalent prices in other currencies.</p>
+            </div>
+
+            <div class="input-group">
+                <label for="usd-price">Game Price in USD ($)</label>
+                <input type="number" id="usd-price" value="60" min="0" step="0.01" oninput="calculate()">
+            </div>
+
+            <div class="table-container">
+                <table class="profit-table">
+                    <thead>
+                        <tr>
+                            <th>Region</th>
+                            <th>Currency</th>
+                            <th>Price</th>
+                            <th>vs USD</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prices-tbody"></tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 1.5rem; padding: 1rem; background: var(--panel-strong); border-radius: 10px;">
+                <h4 style="margin-bottom: 0.5rem;">💡 Note:</h4>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Exchange rates are approximate and vary by payment method. Some regions have Steam regional pricing that may differ from pure currency conversion.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center"><p>&copy; 2026 NeonStack.</p></div>
+    </footer>
+
+    <script>
+        // Real exchange rates (approximate as of 2024)
+        const regions = [
+            { name: "United States", currency: "USD", rate: 1, symbol: "$" },
+            { name: "Argentina", currency: "ARS", rate: 350, symbol: "ARS$" },
+            { name: "Turkey", currency: "TRY", rate: 32, symbol: "₺" },
+            { name: "Brazil", currency: "BRL", rate: 5, symbol: "R$" },
+            { name: "Russia", currency: "RUB", rate: 92, symbol: "₽" },
+            { name: "India", currency: "INR", rate: 83, symbol: "₹" },
+            { name: "China", currency: "CNY", rate: 7.2, symbol: "¥" },
+            { name: "Japan", currency: "JPY", rate: 150, symbol: "¥" },
+            { name: "South Korea", currency: "KRW", rate: 1320, symbol: "₩" },
+            { name: "Eurozone", currency: "EUR", rate: 0.92, symbol: "€" },
+            { name: "United Kingdom", currency: "GBP", rate: 0.79, symbol: "£" },
+            { name: "Canada", currency: "CAD", rate: 1.36, symbol: "C$" },
+            { name: "Australia", currency: "AUD", rate: 1.53, symbol: "A$" },
+            { name: "Mexico", currency: "MXN", rate: 17, symbol: "Mex$" },
+            { name: "Poland", currency: "PLN", rate: 4, symbol: "zł" }
+        ];
+
+        function calculate() {
+            const usdPrice = parseFloat(document.getElementById('usd-price').value) || 0;
+            const tbody = document.getElementById('prices-tbody');
+            tbody.innerHTML = '';
+
+            regions.forEach(region => {
+                const convertedPrice = usdPrice * region.rate;
+                const difference = ((region.rate - 1) * 100).toFixed(1);
+                const diffColor = region.rate < 1 ? '#10b981' : region.rate > 1 ? '#ef4444' : '#64748b';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${region.name}</strong></td>
+                    <td>${region.currency}</td>
+                    <td>${region.symbol}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td style="color: ${diffColor};">${region.rate < 1 ? '-' : '+'}${Math.abs(difference)}%</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        calculate();
+    </script>
+</body>
+</html>

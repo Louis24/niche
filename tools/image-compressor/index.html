@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Image Compressor | Reduce Image File Size Online</title>
+    <meta name="description" content="Compress images in your browser. No uploads, 100% private. Reduce file size while maintaining quality.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .upload-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            margin: 1.5rem 0;
+        }
+        .upload-zone:hover {
+            border-color: var(--accent-color);
+        }
+        .upload-zone.dragging {
+            border-color: var(--accent-color);
+            background: rgba(16,185,129,0.1);
+        }
+        input[type="file"] { display: none; }
+        .preview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .preview-box {
+            background: var(--panel-strong);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+        .preview-box img {
+            width: 100%;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+        .image-info {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .quality-slider {
+            margin: 1rem 0;
+        }
+        @media (max-width: 680px) {
+            .preview-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/image-compressor/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/image-compressor/#webpage",
+          "url": "https://neonstack.net/tools/image-compressor/",
+          "name": "Image Compressor",
+          "description": "Compress images in your browser. No uploads, 100% private. Reduce file size while maintaining quality.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Image Compressor",
+              "item": "https://neonstack.net/tools/image-compressor/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Image<span>Compress</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🖼️ Image Compressor</h1>
+                <p>Compress images in your browser. No uploads, 100% private. Reduce file size while maintaining quality.</p>
+            </div>
+
+            <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+                <div style="font-size: 3rem;">📁</div>
+                <div style="margin-top: 1rem; color: var(--text-primary); font-weight: 600;">Click to upload or drag & drop</div>
+                <div style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">Supports JPG, PNG, WEBP</div>
+                <input type="file" id="file-input" accept="image/*">
+            </div>
+
+            <div id="controls" style="display: none;">
+                <div class="quality-slider">
+                    <div class="slider-label" style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                        <span style="font-size: 0.85rem; color: var(--text-secondary);">Compression Quality</span>
+                        <span style="font-weight: 700; color: var(--accent-color);" id="quality-value">80%</span>
+                    </div>
+                    <input type="range" id="quality-slider" min="10" max="100" value="80" style="width: 100%;">
+                </div>
+
+                <div class="preview-grid" id="preview-grid" style="display: none;">
+                    <div class="preview-box">
+                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">Original</h3>
+                        <img id="original-preview" alt="Original">
+                        <div class="image-info" id="original-info">Size: --</div>
+                    </div>
+                    <div class="preview-box">
+                        <h3 style="font-size: 0.9rem; margin-bottom: 0.75rem;">Compressed</h3>
+                        <img id="compressed-preview" alt="Compressed">
+                        <div class="image-info" id="compressed-info">Size: --</div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary" id="download-btn" style="display: none;" onclick="downloadImage()">⬇️ Download Compressed Image</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const fileInput = document.getElementById('file-input');
+        const uploadZone = document.getElementById('upload-zone');
+        const qualitySlider = document.getElementById('quality-slider');
+        const qualityValue = document.getElementById('quality-value');
+        const controls = document.getElementById('controls');
+        const previewGrid = document.getElementById('preview-grid');
+        const downloadBtn = document.getElementById('download-btn');
+        
+        let originalFile;
+        let compressedBlob;
+
+        fileInput.addEventListener('change', handleFile);
+        qualitySlider.addEventListener('input', () => {
+            qualityValue.textContent = qualitySlider.value + '%';
+            if (originalFile) compressImage(originalFile);
+        });
+
+        uploadZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadZone.classList.add('dragging');
+        });
+
+        uploadZone.addEventListener('dragleave', () => {
+            uploadZone.classList.remove('dragging');
+        });
+
+        uploadZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadZone.classList.remove('dragging');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFile();
+            }
+        });
+
+        function handleFile() {
+            const file = fileInput.files[0];
+            if (!file) return;
+            originalFile = file;
+            
+            controls.style.display = 'block';
+            previewGrid.style.display = 'grid';
+            
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('original-preview').src = e.target.result;
+                document.getElementById('original-info').textContent = `Size: ${(file.size / 1024).toFixed(2)} KB`;
+                compressImage(file);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function compressImage(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    
+                    canvas.toBlob((blob) => {
+                        compressedBlob = blob;
+                        const url = URL.createObjectURL(blob);
+                        document.getElementById('compressed-preview').src = url;
+                        document.getElementById('compressed-info').textContent = `Size: ${(blob.size / 1024).toFixed(2)} KB`;
+                        downloadBtn.style.display = 'inline-flex';
+                    }, 'image/jpeg', qualitySlider.value / 100);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function downloadImage() {
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(compressedBlob);
+            a.download = 'compressed-' + (originalFile.name || 'image.jpg');
+            a.click();
+        }
+    </script>
+</body>
+</html>

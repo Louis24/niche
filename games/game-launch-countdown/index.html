@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Game Launch Countdown | Multi-Region Release Timer</title>
+    <meta name="description" content="Track game releases across different time zones. Never miss a global launch with accurate local time conversion.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .countdown-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            color: white;
+            text-align: center;
+            margin: 2rem 0;
+        }
+        .game-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .time-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1.5rem 1rem;
+        }
+        .time-value {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+        .time-label {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+        .region-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .region-card {
+            background: var(--panel-strong);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+        }
+        .region-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        .region-time {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            font-weight: 700;
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/games/game-launch-countdown/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/games/game-launch-countdown/#webpage",
+          "url": "https://neonstack.net/games/game-launch-countdown/",
+          "name": "Game Launch Countdown",
+          "description": "Track game releases across different time zones. Never miss a global launch with accurate local time conversion.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Games",
+              "item": "https://neonstack.net/games/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Game Launch Countdown",
+              "item": "https://neonstack.net/games/game-launch-countdown/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Game<span>Launch</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🎮 Game Launch Countdown</h1>
+                <p>Track game releases across time zones. Never miss a global launch!</p>
+            </div>
+
+            <div class="input-group">
+                <label>Game Name</label>
+                <input type="text" id="game-name" class="input" placeholder="e.g., Elden Ring DLC" value="Upcoming Game Release">
+            </div>
+
+            <div class="input-group">
+                <label>Launch Date & Time (UTC)</label>
+                <input type="datetime-local" id="launch-time" class="input" onchange="updateCountdown()">
+            </div>
+
+            <div class="countdown-display" id="countdown-display">
+                <div class="game-title" id="display-game-name">Select a launch date</div>
+                <div class="time-grid">
+                    <div class="time-box">
+                        <div class="time-value" id="days">-</div>
+                        <div class="time-label">Days</div>
+                    </div>
+                    <div class="time-box">
+                        <div class="time-value" id="hours">-</div>
+                        <div class="time-label">Hours</div>
+                    </div>
+                    <div class="time-box">
+                        <div class="time-value" id="minutes">-</div>
+                        <div class="time-label">Minutes</div>
+                    </div>
+                    <div class="time-box">
+                        <div class="time-value" id="seconds">-</div>
+                        <div class="time-label">Seconds</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>🌍 Launch Times by Region</label>
+                <div class="region-grid" id="region-times"></div>
+            </div>
+
+            <div class="input-group">
+                <label>📅 Preset Popular Releases</label>
+                <select class="input" onchange="loadPreset(this.value)">
+                    <option value="">Select a game...</option>
+                    <option value="gta6">GTA VI (2025)</option>
+                    <option value="hollow">Hollow Knight: Silksong (TBA)</option>
+                    <option value="custom">Custom Date</option>
+                </select>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const regions = [
+            { name: 'Los Angeles (PST)', offset: -8 },
+            { name: 'New York (EST)', offset: -5 },
+            { name: 'London (GMT)', offset: 0 },
+            { name: 'Paris (CET)', offset: 1 },
+            { name: 'Tokyo (JST)', offset: 9 },
+            { name: 'Sydney (AEDT)', offset: 11 },
+            { name: 'Beijing (CST)', offset: 8 },
+            { name: 'Seoul (KST)', offset: 9 }
+        ];
+
+        let countdownInterval;
+
+        function setDefaultDate() {
+            const now = new Date();
+            now.setDate(now.getDate() + 7);
+            const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            document.getElementById('launch-time').value = localDateTime;
+        }
+
+        function updateCountdown() {
+            clearInterval(countdownInterval);
+            
+            const gameName = document.getElementById('game-name').value || 'Game Release';
+            const launchInput = document.getElementById('launch-time').value;
+            
+            if (!launchInput) return;
+
+            const launchDate = new Date(launchInput);
+            document.getElementById('display-game-name').textContent = gameName;
+
+            countdownInterval = setInterval(() => {
+                const now = new Date();
+                const diff = launchDate - now;
+
+                if (diff <= 0) {
+                    clearInterval(countdownInterval);
+                    document.getElementById('days').textContent = '0';
+                    document.getElementById('hours').textContent = '0';
+                    document.getElementById('minutes').textContent = '0';
+                    document.getElementById('seconds').textContent = '0';
+                    return;
+                }
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }, 1000);
+
+            updateRegionTimes(launchDate);
+        }
+
+        function updateRegionTimes(launchDate) {
+            const container = document.getElementById('region-times');
+            container.innerHTML = regions.map(region => {
+                const regionTime = new Date(launchDate.getTime() + region.offset * 60 * 60 * 1000);
+                const timeStr = regionTime.toLocaleString('en-US', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                });
+
+                return `
+                    <div class="region-card">
+                        <div class="region-name">${region.name}</div>
+                        <div class="region-time">${timeStr}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function loadPreset(value) {
+            if (!value) return;
+
+            const presets = {
+                gta6: { name: 'GTA VI', date: '2025-12-01T00:00' },
+                hollow: { name: 'Hollow Knight: Silksong', date: '2026-12-31T00:00' }
+            };
+
+            if (presets[value]) {
+                document.getElementById('game-name').value = presets[value].name;
+                document.getElementById('launch-time').value = presets[value].date;
+                updateCountdown();
+            }
+        }
+
+        setDefaultDate();
+        updateCountdown();
+    </script>
+</body>
+</html>

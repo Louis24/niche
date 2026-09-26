@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>JSON Formatter &amp; Validator | Beautify &amp; Minify JSON | NeonStack</title>
+    <meta name="description" content="Paste raw or minified JSON on the left — get it beautified, validated, and ready to copy on the right.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .json-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        @media (max-width: 680px) { .json-layout { grid-template-columns: 1fr; } }
+        .pane-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            padding: 0.4rem 0;
+        }
+        #json-input, #json-output {
+            width: 100%;
+            min-height: 360px;
+            resize: vertical;
+            font-family: 'Courier New', monospace;
+            font-size: 0.88rem;
+            line-height: 1.6;
+        }
+        #json-output { background: var(--surface-2); cursor: default; }
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.3rem 0.9rem;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+        }
+        .pill-ok { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid #10b981; }
+        .pill-error { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid #ef4444; }
+        .pill-idle { background: var(--surface-2); color: var(--text-muted); border: 1px solid var(--border); }
+        .toolbar { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 0.75rem; align-items: center; }
+        .tb-btn {
+            padding: 0.35rem 0.8rem; border-radius: 7px; font-size: 0.82rem; cursor: pointer;
+            border: 1px solid var(--border); background: var(--surface-2); transition: all 0.15s;
+        }
+        .tb-btn:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+        .indent-group { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--text-muted); }
+        .indent-group select { padding: 0.3rem; border: 1px solid var(--border); border-radius: 6px; background: var(--surface-2); color: var(--text); }
+        .stats-bar { display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.78rem; color: var(--text-muted); margin: 0.4rem 0; }
+        .stats-bar span strong { color: var(--text); }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/json-formatter/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/json-formatter/#webpage",
+          "url": "https://neonstack.net/tools/json-formatter/",
+          "name": "Json Formatter",
+          "description": "Paste raw or minified JSON on the left — get it beautified, validated, and ready to copy on the right.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Json Formatter",
+              "item": "https://neonstack.net/tools/json-formatter/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">JSON<span>Format</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🔧 JSON Formatter & Validator</h1>
+                <p>Paste raw or minified JSON on the left — get it beautified, validated, and ready to copy on the right.</p>
+            </div>
+
+            <div class="toolbar">
+                <button class="tb-btn" onclick="formatJson()">✨ Format</button>
+                <button class="tb-btn" onclick="minifyJson()">⚡ Minify</button>
+                <button class="tb-btn" onclick="clearAll()">🗑 Clear</button>
+                <button class="tb-btn" onclick="loadSample()">📄 Sample</button>
+                <div class="indent-group">
+                    Indent:
+                    <select id="indent-select">
+                        <option value="2">2 spaces</option>
+                        <option value="4">4 spaces</option>
+                        <option value="tab">Tab</option>
+                    </select>
+                </div>
+                <button class="tb-btn" id="copy-output-btn" onclick="copyOutput()">📋 Copy</button>
+            </div>
+
+            <div id="status-area">
+                <span class="status-pill pill-idle" id="status-pill">⏳ Waiting for input…</span>
+            </div>
+
+            <div class="stats-bar" id="stats-bar" style="display:none">
+                <span>Keys: <strong id="stat-keys">0</strong></span>
+                <span>Arrays: <strong id="stat-arrays">0</strong></span>
+                <span>Depth: <strong id="stat-depth">0</strong></span>
+                <span>Size: <strong id="stat-size">0 B</strong></span>
+            </div>
+
+            <div class="json-layout">
+                <div>
+                    <div class="pane-label">✏️ Input JSON</div>
+                    <textarea id="json-input" placeholder='Paste JSON here, e.g. {"name":"Alice","age":30}'></textarea>
+                </div>
+                <div>
+                    <div class="pane-label">✅ Formatted Output</div>
+                    <textarea id="json-output" readonly placeholder="Formatted JSON will appear here…"></textarea>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const jsonInput = document.getElementById('json-input');
+        const jsonOutput = document.getElementById('json-output');
+        const statusPill = document.getElementById('status-pill');
+        const statsBar = document.getElementById('stats-bar');
+
+        function getIndent() {
+            const v = document.getElementById('indent-select').value;
+            return v === 'tab' ? '\t' : parseInt(v);
+        }
+
+        function setStatus(ok, msg) {
+            statusPill.className = 'status-pill ' + (ok === null ? 'pill-idle' : ok ? 'pill-ok' : 'pill-error');
+            statusPill.textContent = msg;
+        }
+
+        function countStats(obj) {
+            let keys = 0, arrays = 0, depth = 0;
+            function walk(o, d) {
+                depth = Math.max(depth, d);
+                if (Array.isArray(o)) { arrays++; o.forEach(v => walk(v, d+1)); }
+                else if (o && typeof o === 'object') { Object.keys(o).forEach(k => { keys++; walk(o[k], d+1); }); }
+            }
+            walk(obj, 0);
+            return { keys, arrays, depth };
+        }
+
+        function formatJson() {
+            const raw = jsonInput.value.trim();
+            if (!raw) { setStatus(null, '⏳ Waiting for input…'); return; }
+            try {
+                const parsed = JSON.parse(raw);
+                const formatted = JSON.stringify(parsed, null, getIndent());
+                jsonOutput.value = formatted;
+                setStatus(true, '✅ Valid JSON');
+                const stats = countStats(parsed);
+                document.getElementById('stat-keys').textContent = stats.keys;
+                document.getElementById('stat-arrays').textContent = stats.arrays;
+                document.getElementById('stat-depth').textContent = stats.depth;
+                document.getElementById('stat-size').textContent = (new TextEncoder().encode(formatted).length) + ' B';
+                statsBar.style.display = 'flex';
+            } catch(e) {
+                jsonOutput.value = '';
+                setStatus(false, '❌ ' + e.message);
+                statsBar.style.display = 'none';
+            }
+        }
+
+        function minifyJson() {
+            const raw = jsonInput.value.trim();
+            if (!raw) return;
+            try {
+                jsonOutput.value = JSON.stringify(JSON.parse(raw));
+                setStatus(true, '✅ Minified successfully');
+            } catch(e) {
+                setStatus(false, '❌ ' + e.message);
+            }
+        }
+
+        function clearAll() {
+            jsonInput.value = ''; jsonOutput.value = '';
+            setStatus(null, '⏳ Waiting for input…');
+            statsBar.style.display = 'none';
+        }
+
+        function loadSample() {
+            jsonInput.value = JSON.stringify({
+                "user": { "name": "Alice", "age": 28, "active": true },
+                "tags": ["admin", "editor"],
+                "scores": [95, 87, 100],
+                "address": { "city": "San Francisco", "zip": "94102" }
+            });
+            formatJson();
+        }
+
+        function copyOutput() {
+            if (!jsonOutput.value) return;
+            navigator.clipboard.writeText(jsonOutput.value).then(() => {
+                const btn = document.getElementById('copy-output-btn');
+                btn.textContent = '✅ Copied!';
+                setTimeout(() => btn.textContent = '📋 Copy', 2000);
+            });
+        }
+
+        jsonInput.addEventListener('input', () => {
+            if (jsonInput.value.trim()) formatJson();
+            else setStatus(null, '⏳ Waiting for input…');
+        });
+    </script>
+</body>
+</html>

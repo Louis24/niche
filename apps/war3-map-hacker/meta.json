@@ -1,0 +1,21 @@
+{
+  "title": "War3 Map Hacker",
+  "badge": "Desktop",
+  "description": "War3 Map Hacker gives you full vision of the map: the complete minimap, unit positions, and the buildings opponents are raising, even through fog of war. Replays can be replayed with the same full view so you can study your own games. Intended for offline play, replays and practice — respect the rules of whatever ladder or server you play on.",
+  "price": 200,
+  "license": [
+    "one-time"
+  ],
+  "platform": [
+    "Windows"
+  ],
+  "author": "momo",
+  "tags": [
+    "desktop",
+    "war3",
+    "maps",
+    "utility"
+  ],
+  "version": "1.0",
+  "updated": "2026-09"
+}

@@ -1,0 +1,20 @@
+{
+  "title": "Canada28",
+  "badge": "Web app",
+  "description": "Canada28 is a calculator for Canada 28. Enter a draw result and it works out the sum, big or small, odd or even, wave and dragon values, then keeps the history locally so you can check any past period. It calculates your numbers — it does not predict future draws.",
+  "price": 500,
+  "license": [
+    "one-time"
+  ],
+  "platform": [
+    "Browser"
+  ],
+  "author": "boomcat",
+  "tags": [
+    "web",
+    "calculator",
+    "trends"
+  ],
+  "version": "1.0",
+  "updated": "2026-09"
+}

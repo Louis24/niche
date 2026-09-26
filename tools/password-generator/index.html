@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Random Password Generator | Strong &amp; Secure | NeonStack</title>
+    <meta name="description" content="Cryptographically secure passwords generated entirely in your browser. Zero data leaves your device.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .password-display {
+            background: var(--surface-2);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .password-text {
+            flex: 1;
+            font-family: 'Courier New', monospace;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            word-break: break-all;
+            color: var(--accent);
+        }
+        .strength-bar-wrap {
+            margin: 0.5rem 0 1.5rem;
+        }
+        .strength-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+        .strength-track {
+            height: 6px;
+            border-radius: 99px;
+            background: var(--border);
+            overflow: hidden;
+        }
+        .strength-fill {
+            height: 100%;
+            border-radius: 99px;
+            transition: width 0.4s ease, background 0.4s ease;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            margin: 1rem 0 1.5rem;
+        }
+        .option-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: border-color 0.2s;
+            user-select: none;
+        }
+        .option-toggle input[type="checkbox"] {
+            width: 16px; height: 16px; accent-color: var(--accent);
+        }
+        .option-toggle:has(input:checked) {
+            border-color: var(--accent);
+            background: rgba(99,102,241,0.08);
+        }
+        .length-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        .length-row label { font-size: 0.875rem; color: var(--text-muted); min-width: 60px; }
+        .length-row input[type="range"] { flex: 1; accent-color: var(--accent); }
+        .length-val {
+            font-weight: 700;
+            color: var(--accent);
+            min-width: 36px;
+            text-align: center;
+        }
+        .copy-btn { min-width: 90px; }
+        .copy-btn.copied { background: #10b981 !important; }
+        .btn-row { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/password-generator/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/password-generator/#webpage",
+          "url": "https://neonstack.net/tools/password-generator/",
+          "name": "Password Generator",
+          "description": "Cryptographically secure passwords generated entirely in your browser. Zero data leaves your device.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Password Generator",
+              "item": "https://neonstack.net/tools/password-generator/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Pass<span>Gen</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>🔐 Random Password Generator</h1>
+                <p>Cryptographically secure passwords generated <strong>entirely in your browser</strong>. Zero data leaves your device.</p>
+            </div>
+
+            <div class="length-row">
+                <label for="pwd-length">Length</label>
+                <input type="range" id="pwd-length" min="8" max="64" value="20">
+                <span class="length-val" id="length-display">20</span>
+            </div>
+
+            <div class="password-display">
+                <span class="password-text" id="password-output" aria-live="polite">Click Generate</span>
+            </div>
+
+            <div class="strength-bar-wrap">
+                <div class="strength-label">
+                    <span>Password Strength</span>
+                    <span id="strength-text">—</span>
+                </div>
+                <div class="strength-track">
+                    <div class="strength-fill" id="strength-fill" style="width:0%"></div>
+                </div>
+            </div>
+
+            <div class="options-grid">
+                <label class="option-toggle" for="opt-upper">
+                    <input type="checkbox" id="opt-upper" checked> Uppercase (A–Z)
+                </label>
+                <label class="option-toggle" for="opt-lower">
+                    <input type="checkbox" id="opt-lower" checked> Lowercase (a–z)
+                </label>
+                <label class="option-toggle" for="opt-digits">
+                    <input type="checkbox" id="opt-digits" checked> Digits (0–9)
+                </label>
+                <label class="option-toggle" for="opt-symbols">
+                    <input type="checkbox" id="opt-symbols" checked> Symbols (!@#$…)
+                </label>
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-primary" id="generate-btn" onclick="generatePassword()">⚡ Generate</button>
+                <button class="btn btn-secondary copy-btn" id="copy-btn" onclick="copyPassword()">📋 Copy</button>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const lengthSlider = document.getElementById('pwd-length');
+        const lengthDisplay = document.getElementById('length-display');
+        const passwordOutput = document.getElementById('password-output');
+        const strengthFill = document.getElementById('strength-fill');
+        const strengthText = document.getElementById('strength-text');
+        const copyBtn = document.getElementById('copy-btn');
+
+        const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const LOWER = 'abcdefghijklmnopqrstuvwxyz';
+        const DIGITS = '0123456789';
+        const SYMBOLS = '!@#$%^&*()-_=+[]{}|;:,.<>?';
+
+        lengthSlider.addEventListener('input', () => {
+            lengthDisplay.textContent = lengthSlider.value;
+            generatePassword();
+        });
+
+        function getCharset() {
+            let cs = '';
+            if (document.getElementById('opt-upper').checked) cs += UPPER;
+            if (document.getElementById('opt-lower').checked) cs += LOWER;
+            if (document.getElementById('opt-digits').checked) cs += DIGITS;
+            if (document.getElementById('opt-symbols').checked) cs += SYMBOLS;
+            return cs;
+        }
+
+        function generatePassword() {
+            const len = parseInt(lengthSlider.value);
+            const charset = getCharset();
+            if (!charset) { passwordOutput.textContent = 'Select at least one option'; return; }
+
+            const arr = new Uint32Array(len);
+            crypto.getRandomValues(arr);
+            const pwd = Array.from(arr).map(n => charset[n % charset.length]).join('');
+            passwordOutput.textContent = pwd;
+            updateStrength(pwd);
+        }
+
+        function updateStrength(pwd) {
+            let score = 0;
+            if (pwd.length >= 12) score++;
+            if (pwd.length >= 20) score++;
+            if (/[A-Z]/.test(pwd)) score++;
+            if (/[a-z]/.test(pwd)) score++;
+            if (/[0-9]/.test(pwd)) score++;
+            if (/[^A-Za-z0-9]/.test(pwd)) score++;
+
+            const levels = [
+                { pct: '15%', color: '#ef4444', label: 'Very Weak' },
+                { pct: '30%', color: '#f97316', label: 'Weak' },
+                { pct: '50%', color: '#eab308', label: 'Fair' },
+                { pct: '70%', color: '#84cc16', label: 'Good' },
+                { pct: '85%', color: '#22c55e', label: 'Strong' },
+                { pct: '100%', color: '#10b981', label: 'Very Strong' },
+            ];
+            const lvl = levels[Math.min(score, levels.length - 1)];
+            strengthFill.style.width = lvl.pct;
+            strengthFill.style.background = lvl.color;
+            strengthText.textContent = lvl.label;
+        }
+
+        function copyPassword() {
+            const pwd = passwordOutput.textContent;
+            if (!pwd || pwd === 'Click Generate' || pwd === 'Select at least one option') return;
+            navigator.clipboard.writeText(pwd).then(() => {
+                copyBtn.textContent = '✅ Copied!';
+                copyBtn.classList.add('copied');
+                setTimeout(() => { copyBtn.textContent = '📋 Copy'; copyBtn.classList.remove('copied'); }, 2000);
+            });
+        }
+
+        document.querySelectorAll('.option-toggle input').forEach(cb => cb.addEventListener('change', generatePassword));
+        generatePassword();
+    </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Freelance Rate Calculator | Time Rate &amp; Project Quote Calculator</title>
+    <meta name="description" content="Calculate fair hourly and project rates based on your target income, expenses, and working schedule.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <link rel="canonical" href="https://neonstack.net/tools/freelance-rate-calculator/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/freelance-rate-calculator/#webpage",
+          "url": "https://neonstack.net/tools/freelance-rate-calculator/",
+          "name": "Freelance Rate Calculator",
+          "description": "Calculate fair hourly and project rates based on your target income, expenses, and working schedule.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Freelance Rate Calculator",
+              "item": "https://neonstack.net/tools/freelance-rate-calculator/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Rate<span>Calc</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>💼 Freelance Rate Calculator</h1>
+                <p>Calculate fair hourly and project rates based on your target income, expenses, and working schedule.</p>
+            </div>
+
+            <div class="calc-grid">
+                <div class="inputs-panel">
+                    <div class="input-group">
+                        <label for="monthly-income">Desired Monthly Income ($)</label>
+                        <input type="number" id="monthly-income" value="5000" min="0" step="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="work-days">Working Days per Month</label>
+                        <input type="number" id="work-days" value="20" min="1" max="31">
+                    </div>
+                    <div class="input-group">
+                        <label for="hours-per-day">Hours per Day</label>
+                        <input type="number" id="hours-per-day" value="6" min="1" max="24">
+                    </div>
+                    <div class="input-group">
+                        <label for="tax-rate">Tax Rate (%)</label>
+                        <input type="number" id="tax-rate" value="25" min="0" max="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="expenses">Monthly Business Expenses ($)</label>
+                        <input type="number" id="expenses" value="500" min="0" step="50">
+                    </div>
+                </div>
+
+                <div class="output-panel">
+                    <h3>Your Hourly Rate</h3>
+                    <div class="rate-value" id="hourly-rate">$0.00</div>
+                    <p class="rate-note">This is your minimum hourly rate to meet your goals</p>
+                    
+                    <div class="breakdown">
+                        <div class="breakdown-item">
+                            <span>Daily Rate</span>
+                            <strong id="daily-rate">$0.00</strong>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>Project Rate (40 hrs)</span>
+                            <strong id="project-rate">$0.00</strong>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>After-Tax Income</span>
+                            <strong id="after-tax">$0.00</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        const inputs = {
+            monthlyIncome: document.getElementById('monthly-income'),
+            workDays: document.getElementById('work-days'),
+            hoursPerDay: document.getElementById('hours-per-day'),
+            taxRate: document.getElementById('tax-rate'),
+            expenses: document.getElementById('expenses')
+        };
+
+        const outputs = {
+            hourlyRate: document.getElementById('hourly-rate'),
+            dailyRate: document.getElementById('daily-rate'),
+            projectRate: document.getElementById('project-rate'),
+            afterTax: document.getElementById('after-tax')
+        };
+
+        function calculate() {
+            const monthlyIncome = parseFloat(inputs.monthlyIncome.value) || 0;
+            const workDays = parseFloat(inputs.workDays.value) || 1;
+            const hoursPerDay = parseFloat(inputs.hoursPerDay.value) || 1;
+            const taxRate = parseFloat(inputs.taxRate.value) || 0;
+            const expenses = parseFloat(inputs.expenses.value) || 0;
+
+            const totalHours = workDays * hoursPerDay;
+            const grossNeeded = monthlyIncome + expenses + (monthlyIncome * taxRate / 100);
+            const hourlyRate = grossNeeded / totalHours;
+            const dailyRate = hourlyRate * hoursPerDay;
+            const projectRate = hourlyRate * 40;
+
+            outputs.hourlyRate.textContent = `$${hourlyRate.toFixed(2)}`;
+            outputs.dailyRate.textContent = `$${dailyRate.toFixed(2)}`;
+            outputs.projectRate.textContent = `$${projectRate.toFixed(2)}`;
+            outputs.afterTax.textContent = `$${monthlyIncome.toFixed(2)}`;
+        }
+
+        Object.values(inputs).forEach(input => input.addEventListener('input', calculate));
+        calculate();
+    </script>
+</body>
+</html>

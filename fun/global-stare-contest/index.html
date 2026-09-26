@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>Global Stare Contest | Don't Move Challenge</title>
+    <meta name="description" content="How long can you stay still? Compete with others in the global stare contest!">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .timer-display { font-size: 6rem; font-weight: 900; text-align: center; margin: 3rem 0; color: var(--accent-color); }
+        .leaderboard { background: var(--panel-strong); padding: 2rem; border-radius: 12px; }
+        .leader-item { display: flex; justify-content: space-between; padding: 1rem; border-bottom: 1px solid var(--border-color); }
+        .rank { font-size: 1.5rem; font-weight: 800; color: var(--accent-color); }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/fun/global-stare-contest/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/fun/global-stare-contest/#webpage",
+          "url": "https://neonstack.net/fun/global-stare-contest/",
+          "name": "Global Stare Contest",
+          "description": "How long can you stay still? Compete with others in the global stare contest!",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Fun",
+              "item": "https://neonstack.net/fun/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Global Stare Contest",
+              "item": "https://neonstack.net/fun/global-stare-contest/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">Stare<span>Contest</span></a>
+            <nav class="nav-links"><a href="../../#tools">Tools</a><a href="../../#reviews">Reviews</a><a href="../../#games">Games</a><a href="../../about/">About</a></nav>
+        </div>
+    </header>
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>👁️ Global Stare Contest</h1>
+                <p>Don't move your mouse or touch the screen. How long can you last?</p>
+            </div>
+            <div class="timer-display" id="timer">00:00</div>
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="btn btn-primary" onclick="start()" id="start-btn" style="font-size: 1.2rem; padding: 1rem 2rem;">
+                    🎯 Start Challenge
+                </button>
+            </div>
+            <div class="leaderboard">
+                <h3 style="margin-top: 0;">🏆 Today's Top Scores</h3>
+                <div class="leader-item">
+                    <div><span class="rank">#1</span> Anonymous</div>
+                    <div style="font-weight: 700;">15:32</div>
+                </div>
+                <div class="leader-item">
+                    <div><span class="rank">#2</span> StillMaster</div>
+                    <div style="font-weight: 700;">12:18</div>
+                </div>
+                <div class="leader-item">
+                    <div><span class="rank">#3</span> ZenMonk</div>
+                    <div style="font-weight: 700;">09:45</div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links"><a href="../../about/">About</a><a href="../../contact/">Contact</a><a href="../../privacy-policy/">Privacy</a><a href="../../disclaimer/">Disclaimer</a></nav>
+            <p>&copy; 2026 NeonStack</p>
+        </div>
+    </footer>
+    <script>
+        let startTime, interval, running = false;
+        
+        function start() {
+            if (running) return;
+            running = true;
+            startTime = Date.now();
+            document.getElementById('start-btn').disabled = true;
+            document.getElementById('start-btn').textContent = '⏸️ Challenge Active...';
+            
+            interval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const mins = Math.floor(elapsed / 60000);
+                const secs = Math.floor((elapsed % 60000) / 1000);
+                document.getElementById('timer').textContent = 
+                    `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            }, 100);
+            
+            document.addEventListener('mousemove', end);
+            document.addEventListener('touchstart', end);
+            document.addEventListener('keydown', end);
+        }
+        
+        function end() {
+            if (!running) return;
+            running = false;
+            clearInterval(interval);
+            document.removeEventListener('mousemove', end);
+            document.removeEventListener('touchstart', end);
+            document.removeEventListener('keydown', end);
+            
+            const elapsed = Date.now() - startTime;
+            const mins = Math.floor(elapsed / 60000);
+            const secs = Math.floor((elapsed % 60000) / 1000);
+            
+            alert(`🏁 Challenge Over!\nYou lasted: ${mins}m ${secs}s\n\nTip: Try holding your breath to stay even more still!`);
+            
+            document.getElementById('start-btn').disabled = false;
+            document.getElementById('start-btn').textContent = '🎯 Start Challenge';
+            document.getElementById('timer').textContent = '00:00';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <title>BMI Calculator | Body Mass Index Calculator with Health Ranges</title>
+    <meta name="description" content="Calculate your Body Mass Index and understand your health category.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/site.css">
+    <style>
+        .bmi-gauge {
+            height: 20px;
+            background: linear-gradient(to right, #3b82f6 0%, #10b981 33%, #f59e0b 66%, #ef4444 100%);
+            border-radius: 10px;
+            position: relative;
+            margin: 2rem 0;
+        }
+        .bmi-indicator {
+            position: absolute;
+            width: 4px;
+            height: 30px;
+            background: white;
+            border: 2px solid var(--text-primary);
+            top: -5px;
+            border-radius: 2px;
+            transition: left 0.3s;
+        }
+        .bmi-ranges {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+        .unit-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .unit-btn {
+            padding: 0.4rem 1rem;
+            border: 1px solid var(--border-color);
+            background: var(--surface-2);
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        .unit-btn.active {
+            background: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+        }
+    </style>
+    <link rel="canonical" href="https://neonstack.net/tools/bmi-calculator/">
+    <script type="application/ld+json" data-generated-seo>
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "@id": "https://neonstack.net/tools/bmi-calculator/#webpage",
+          "url": "https://neonstack.net/tools/bmi-calculator/",
+          "name": "Bmi Calculator",
+          "description": "Calculate your Body Mass Index and understand your health category.",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": "https://neonstack.net/#website",
+            "name": "NeonStack",
+            "url": "https://neonstack.net/"
+          }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://neonstack.net/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Tools",
+              "item": "https://neonstack.net/tools/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "name": "Bmi Calculator",
+              "item": "https://neonstack.net/tools/bmi-calculator/"
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9797460743497525"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container navbar">
+            <a href="../../" class="logo">BMI<span>Calc</span></a>
+            <nav class="nav-links" aria-label="Primary navigation">
+                <a href="../../#tools">Tools</a>
+                <a href="../../#reviews">Reviews</a>
+                <a href="../../#games">Games</a>
+                <a href="../../about/">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="calculator-card">
+            <div class="card-header">
+                <h1>⚖️ BMI Calculator</h1>
+                <p>Calculate your Body Mass Index and understand your health category.</p>
+            </div>
+
+            <div class="calc-grid">
+                <div class="inputs-panel">
+                    <div class="unit-toggle">
+                        <button class="unit-btn active" onclick="setUnit('metric')">Metric</button>
+                        <button class="unit-btn" onclick="setUnit('imperial')">Imperial</button>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="height" id="height-label">Height (cm)</label>
+                        <input type="number" id="height" value="170" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="weight" id="weight-label">Weight (kg)</label>
+                        <input type="number" id="weight" value="70" min="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="age">Age (optional)</label>
+                        <input type="number" id="age" value="30" min="1" max="120">
+                    </div>
+                </div>
+
+                <div class="output-panel">
+                    <h3>Your BMI</h3>
+                    <div class="rate-value" id="bmi-value">0.0</div>
+                    <p class="rate-note" id="bmi-category">Normal Weight</p>
+                    
+                    <div class="bmi-gauge">
+                        <div class="bmi-indicator" id="bmi-indicator"></div>
+                    </div>
+                    <div class="bmi-ranges">
+                        <span>Underweight<br>&lt;18.5</span>
+                        <span>Normal<br>18.5-24.9</span>
+                        <span>Overweight<br>25-29.9</span>
+                        <span>Obese<br>≥30</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="../../about/">About</a>
+                <a href="../../contact/">Contact</a>
+                <a href="../../privacy-policy/">Privacy Policy</a>
+                <a href="../../disclaimer/">Disclaimer</a>
+            </nav>
+            <p>&copy; 2026 NeonStack. Browser-first tools and focused guides.</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentUnit = 'metric';
+        const heightInput = document.getElementById('height');
+        const weightInput = document.getElementById('weight');
+        const ageInput = document.getElementById('age');
+        const bmiValue = document.getElementById('bmi-value');
+        const bmiCategory = document.getElementById('bmi-category');
+        const bmiIndicator = document.getElementById('bmi-indicator');
+
+        function setUnit(unit) {
+            currentUnit = unit;
+            document.querySelectorAll('.unit-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (unit === 'metric') {
+                document.getElementById('height-label').textContent = 'Height (cm)';
+                document.getElementById('weight-label').textContent = 'Weight (kg)';
+                heightInput.value = 170;
+                weightInput.value = 70;
+            } else {
+                document.getElementById('height-label').textContent = 'Height (inches)';
+                document.getElementById('weight-label').textContent = 'Weight (lbs)';
+                heightInput.value = 67;
+                weightInput.value = 154;
+            }
+            calculate();
+        }
+
+        function calculate() {
+            let height = parseFloat(heightInput.value) || 0;
+            let weight = parseFloat(weightInput.value) || 0;
+
+            let bmi;
+            if (currentUnit === 'metric') {
+                const heightM = height / 100;
+                bmi = weight / (heightM * heightM);
+            } else {
+                bmi = (weight / (height * height)) * 703;
+            }
+
+            bmiValue.textContent = bmi.toFixed(1);
+
+            let category, color;
+            if (bmi < 18.5) {
+                category = 'Underweight';
+                color = '#3b82f6';
+            } else if (bmi < 25) {
+                category = 'Normal Weight';
+                color = '#10b981';
+            } else if (bmi < 30) {
+                category = 'Overweight';
+                color = '#f59e0b';
+            } else {
+                category = 'Obese';
+                color = '#ef4444';
+            }
+
+            bmiCategory.textContent = category;
+            bmiCategory.style.color = color;
+
+            const position = Math.min(Math.max((bmi - 15) / 25 * 100, 0), 100);
+            bmiIndicator.style.left = position + '%';
+        }
+
+        [heightInput, weightInput, ageInput].forEach(input => input.addEventListener('input', calculate));
+        calculate();
+    </script>
+</body>
+</html>
