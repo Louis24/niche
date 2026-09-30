@@ -84,16 +84,16 @@
             </div>
 
             <div class="table-container">
-                <table class="profit-table">
+                <table class="profit-table" id="weapons-table">
                     <thead>
                         <tr>
-                            <th>Weapon</th>
-                            <th>Category</th>
-                            <th>Cost</th>
-                            <th>Head Damage (0-50m)</th>
-                            <th>Body Damage</th>
-                            <th>Fire Rate</th>
-                            <th>Magazine</th>
+                            <th scope="col" class="sortable" data-sort="name">Weapon</th>
+                            <th scope="col" class="sortable" data-sort="category">Category</th>
+                            <th scope="col" class="sortable num" data-sort="cost">Cost (cr)</th>
+                            <th scope="col" class="sortable num" data-sort="headDamage">Head Damage (0-50m)</th>
+                            <th scope="col" class="sortable num" data-sort="bodyDamage">Body Damage</th>
+                            <th scope="col" class="sortable num" data-sort="fireRate">Fire Rate (rds/s)</th>
+                            <th scope="col" class="sortable num" data-sort="magazine">Magazine</th>
                         </tr>
                     </thead>
                     <tbody id="weapons-tbody"></tbody>
@@ -124,30 +124,77 @@
             { name: "Classic", category: "Pistol", cost: 0, headDamage: 78, bodyDamage: 26, fireRate: 6.75, magazine: 12 }
         ];
 
-        function render(filtered = weapons) {
-            const tbody = document.getElementById('weapons-tbody');
-            tbody.innerHTML = '';
+        const SORT_KEYS = {
+            name: w => w.name,
+            category: w => w.category,
+            cost: w => w.cost,
+            headDamage: w => w.headDamage,
+            bodyDamage: w => w.bodyDamage,
+            fireRate: w => w.fireRate,
+            magazine: w => w.magazine
+        };
 
-            filtered.forEach(weapon => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td><strong>${weapon.name}</strong></td>
-                    <td>${weapon.category}</td>
-                    <td>${weapon.cost === 0 ? 'Free' : weapon.cost + ' credits'}</td>
-                    <td style="color: #ef4444;">${weapon.headDamage}</td>
-                    <td>${weapon.bodyDamage}</td>
-                    <td>${weapon.fireRate} rounds/sec</td>
-                    <td>${weapon.magazine}</td>
-                `;
-                tbody.appendChild(row);
+        let sortKey = 'cost';
+        let sortDir = 'asc';
+
+        function render() {
+            const category = document.getElementById('category-filter').value;
+            const filtered = category === 'all' ? weapons : weapons.filter(w => w.category === category);
+            const pick = SORT_KEYS[sortKey] || SORT_KEYS.cost;
+
+            const rows = [...filtered].sort((a, b) => {
+                const av = pick(a);
+                const bv = pick(b);
+                const result = typeof av === 'string' ? av.localeCompare(bv) : av - bv;
+                return sortDir === 'asc' ? result : -result;
+            });
+
+            document.getElementById('weapons-tbody').innerHTML = rows.map(weapon => `
+                <tr>
+                    <td>${weapon.name}</td>
+                    <td><span class="category-tag">${weapon.category}</span></td>
+                    <td class="num">${weapon.cost === 0 ? 'Free' : weapon.cost.toLocaleString()}</td>
+                    <td class="num dmg-head">${weapon.headDamage}</td>
+                    <td class="num">${weapon.bodyDamage}</td>
+                    <td class="num">${weapon.fireRate}</td>
+                    <td class="num">${weapon.magazine}</td>
+                </tr>
+            `).join('');
+
+            document.querySelectorAll('#weapons-table th.sortable').forEach(th => {
+                const isActive = th.dataset.sort === sortKey;
+                th.classList.toggle('active', isActive);
+                th.classList.toggle('asc', isActive && sortDir === 'asc');
+                th.setAttribute('aria-sort', isActive ? (sortDir === 'asc' ? 'ascending' : 'descending') : 'none');
             });
         }
 
-        function filterWeapons() {
-            const category = document.getElementById('category-filter').value;
-            const filtered = category === 'all' ? weapons : weapons.filter(w => w.category === category);
-            render(filtered);
+        function sortBy(key) {
+            if (sortKey === key) {
+                sortDir = sortDir === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortKey = key;
+                sortDir = key === 'name' || key === 'category' ? 'asc' : 'desc';
+            }
+            render();
         }
+
+        function filterWeapons() {
+            render();
+        }
+
+        document.querySelectorAll('#weapons-table th.sortable').forEach(th => {
+            const key = th.dataset.sort;
+            th.tabIndex = 0;
+            th.setAttribute('aria-sort', 'none');
+            th.addEventListener('click', () => sortBy(key));
+            th.addEventListener('keydown', event => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault();
+                    sortBy(key);
+                }
+            });
+        });
 
         render();
     </script>

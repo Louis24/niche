@@ -769,6 +769,16 @@ button:hover,
     padding: 24px 0;
 }
 
+/* Prose rhythm: keep headings closer to the text they introduce
+   and give them more air above, so blocks read as groups. */
+.section-band > .container > h2 {
+    margin-bottom: 12px;
+}
+
+.section-band > .container > p + h2 {
+    margin-top: 32px;
+}
+
 .section-heading {
     display: flex;
     justify-content: space-between;
@@ -779,6 +789,171 @@ button:hover,
 
 .section-heading p {
     color: var(--text-secondary);
+}
+
+/* ── Calculator input rows ───────────────────────────────────── */
+.inputs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.slider-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.slider-wrapper input[type="range"] {
+    flex: 1;
+    min-width: 0;
+    accent-color: var(--accent-color);
+}
+
+.slider-wrapper span {
+    min-width: 68px;
+    text-align: right;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent-hover);
+}
+
+/* ── Calculator data tables ──────────────────────────────────── */
+.table-container {
+    margin-top: 20px;
+    overflow-x: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    background: var(--panel-strong);
+    box-shadow: var(--shadow);
+}
+
+.profit-table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+}
+
+.profit-table th,
+.profit-table td {
+    padding: 12px 16px;
+    text-align: left;
+    white-space: nowrap;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.profit-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background: #0c121f;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+
+.profit-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.profit-table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.profit-table tbody tr:hover {
+    background: rgba(16, 185, 129, 0.07);
+}
+
+.profit-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Round the table's own corners so the solid header band does not
+   square off the rounded container. */
+.profit-table thead th:first-child {
+    border-top-left-radius: calc(var(--radius) - 1px);
+}
+
+.profit-table thead th:last-child {
+    border-top-right-radius: calc(var(--radius) - 1px);
+}
+
+.profit-table tbody tr:last-child td:first-child {
+    border-bottom-left-radius: calc(var(--radius) - 1px);
+}
+
+.profit-table tbody tr:last-child td:last-child {
+    border-bottom-right-radius: calc(var(--radius) - 1px);
+}
+
+.profit-table td:first-child {
+    font-weight: 700;
+}
+
+/* Numeric columns align right so digits line up column to column. */
+.profit-table .num {
+    text-align: right;
+}
+
+.profit-table .profit-val {
+    text-align: right;
+    font-weight: 800;
+    color: var(--accent-hover);
+}
+
+.profit-table .dmg-head {
+    color: var(--danger);
+    font-weight: 700;
+}
+
+.profit-table .delta-up {
+    color: var(--danger);
+}
+
+.profit-table .delta-down {
+    color: var(--accent-hover);
+}
+
+/* Best row gets an accent bar on the left edge. */
+.profit-table tbody tr.profitable td:first-child {
+    box-shadow: inset 3px 0 0 var(--accent-color);
+}
+
+.profit-table tbody tr.empty-row td {
+    color: var(--text-muted);
+}
+
+.profit-table th.sortable {
+    cursor: pointer;
+    user-select: none;
+}
+
+.profit-table th.sortable::after {
+    content: "\2193";
+    margin-left: 6px;
+    opacity: 0.35;
+}
+
+.profit-table th.sortable.asc::after {
+    content: "\2191";
+}
+
+.profit-table th.sortable.active {
+    color: var(--accent-hover);
+}
+
+.profit-table th.sortable.active::after {
+    opacity: 1;
+}
+
+.profit-table th.sortable:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: -2px;
 }
 
 .footer {

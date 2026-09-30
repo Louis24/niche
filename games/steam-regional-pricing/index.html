@@ -80,10 +80,10 @@
                 <table class="profit-table">
                     <thead>
                         <tr>
-                            <th>Region</th>
-                            <th>Currency</th>
-                            <th>Price</th>
-                            <th>vs USD</th>
+                            <th scope="col">Region</th>
+                            <th scope="col">Currency</th>
+                            <th scope="col" class="num">Local Price</th>
+                            <th scope="col" class="num">vs USD</th>
                         </tr>
                     </thead>
                     <tbody id="prices-tbody"></tbody>
@@ -129,14 +129,15 @@
             regions.forEach(region => {
                 const convertedPrice = usdPrice * region.rate;
                 const difference = ((region.rate - 1) * 100).toFixed(1);
-                const diffColor = region.rate < 1 ? '#10b981' : region.rate > 1 ? '#ef4444' : '#64748b';
+                const deltaClass = region.rate === 1 ? '' : region.rate < 1 ? ' delta-down' : ' delta-up';
+                const deltaText = region.rate === 1 ? '\u2014' : `${region.rate < 1 ? '-' : '+'}${Math.abs(difference)}%`;
                 
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td><strong>${region.name}</strong></td>
+                    <td>${region.name}</td>
                     <td>${region.currency}</td>
-                    <td>${region.symbol}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
-                    <td style="color: ${diffColor};">${region.rate < 1 ? '-' : '+'}${Math.abs(difference)}%</td>
+                    <td class="num">${region.symbol}${convertedPrice.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
+                    <td class="num${deltaClass}">${deltaText}</td>
                 `;
                 tbody.appendChild(row);
             });

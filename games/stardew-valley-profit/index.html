@@ -111,12 +111,14 @@
                 <table class="profit-table">
                     <thead>
                         <tr>
-                            <th>Crop Name</th>
-                            <th>Seed Cost</th>
-                            <th>Sell Price (Min)</th>
-                            <th>Growth Time</th>
-                            <th>Harvests</th>
-                            <th class="sortable active" onclick="calculateAndSort()">Total Net Profit / Tile</th>
+                            <th scope="col">Crop Name</th>
+                            <th scope="col" class="num">Seed Cost</th>
+                            <th scope="col" class="num">Value / Harvest</th>
+                            <th scope="col" class="num">Growth Time</th>
+                            <th scope="col" class="num">Harvests</th>
+                            <th scope="col" class="sortable active num" aria-sort="descending" tabindex="0"
+                                onclick="calculateAndSort()"
+                                onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); calculateAndSort(); }">Net Profit / Tile</th>
                         </tr>
                     </thead>
                     <tbody id="crop-tbody">
@@ -124,6 +126,7 @@
                     </tbody>
                 </table>
             </div>
+
         </section>
     </main>
 
@@ -226,17 +229,20 @@
             calculatedCrops.sort((a, b) => b.netProfit - a.netProfit);
 
             tbody.innerHTML = '';
-            calculatedCrops.forEach(crop => {
+            calculatedCrops.forEach((crop, index) => {
                 const row = document.createElement('tr');
-                if (crop.netProfit > 0) {
+                if (index === 0 && crop.netProfit > 0) {
                     row.className = 'profitable';
                 }
+                if (crop.netProfit <= 0) {
+                    row.classList.add('empty-row');
+                }
                 row.innerHTML = `
-                    <td><strong>${crop.name}</strong></td>
-                    <td>${crop.seedCost}g</td>
-                    <td>${Math.round(crop.sellPrice * crop.yieldCount * priceMultiplier)}g</td>
-                    <td>${crop.growthTime} days</td>
-                    <td>${crop.harvests}</td>
+                    <td>${crop.name}</td>
+                    <td class="num">${crop.seedCost}g</td>
+                    <td class="num">${Math.round(crop.sellPrice * crop.yieldCount * priceMultiplier)}g</td>
+                    <td class="num">${crop.growthTime} days</td>
+                    <td class="num">${crop.harvests}</td>
                     <td class="profit-val">${crop.netProfit > 0 ? `${crop.netProfit}g` : '0g (No yield)'}</td>
                 `;
                 tbody.appendChild(row);
